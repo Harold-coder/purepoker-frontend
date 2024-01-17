@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+import NavigationMenu from './components/NavigationMenu';
+import CommunityPage from './pages/CommunityPage';
+import GroupsPage from './pages/GroupsPage';
+import ProfilePage from './pages/ProfilePage';
+import PokerGamePage from './pages/PokerGamePage';
+import DetailedPostView from './pages/DetailedPostView';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <Router>
+            <NavigationMenu />
+            <Routes>
+                <Route path="/" element={<CommunityPage />} />
+                <Route path="/groups" element={<GroupsPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/poker-game" element={<PokerGamePage />} />
+                <Route path="/posts/:postId" element={<DetailedPostView />} />
+            </Routes>
+        </Router>
+    );
 }
 
 export default App;

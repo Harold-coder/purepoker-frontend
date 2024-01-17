@@ -1,0 +1,56 @@
+.navigation-menu {
+    background-color: #2a5298; /* Placeholder for the blue color from the image */
+    color: white;
+    padding: 15px;
+    min-height: 100vh; /* Full height */
+}
+
+.navigation-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navigation-item {
+    padding: 10px 0;
+}
+
+.navigation-item:first-of-type {
+    padding-top: 20px;
+}
+
+.navigation-item:last-of-type {
+    padding-bottom: 20px;
+}
+
+.navigation-link {
+    color: white;
+    text-decoration: none;
+    display: block;
+    transition: color 0.3s ease;
+}
+
+.navigation-link:hover,
+.navigation-link:focus {
+    color: #d9e3f0; /* Lighter shade of blue for hover/focus states */
+    text-decoration: none;
+}
+
+/* Assuming there's a logo at the top of the menu */
+.logo {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Responsive adjustments as needed */
+@media (max-width: 768px) {
+    .navigation-menu {
+        padding: 10px;
+    }
+    .navigation-list {
+        display: flex;
+        flex-direction: column;
+    }
+}
