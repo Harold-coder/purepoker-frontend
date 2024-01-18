@@ -1,5 +1,5 @@
 .post {
-    padding: 2rem;
+    padding-left: 2rem;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     background-color: #fff;
@@ -13,7 +13,24 @@
     align-items: center;
 }
 
+.author-and-date {
+    display: flex;
+    align-items: center;
+}
+
+.author-and-date h3 {
+    /* margin: 0 0 0.5rem 0; */
+    color: #1d2d50; /* Example color */
+    margin-right: 10px;  /* Adjust spacing as needed */
+}
+
+.post-date {
+    /* margin: 0 0 0.5rem 0; */
+    font-size: 0.8rem;
+}
+
 .delete-icon {
+    padding-right: 1rem;
     cursor: pointer;
     transition: transform 0.3s ease;
 }
@@ -21,12 +38,6 @@
 .delete-icon:hover {
     transform: scale(1.2); /* Example hover effect */
     color: rgb(166, 21, 21); /* Change color on hover */
-}
-
-
-.post h3 {
-    margin: 0 0 0.5rem 0;
-    color: #1d2d50; /* Example color */
 }
 
 .post p {

@@ -2,8 +2,18 @@ import React from 'react';
 import './PostsList.css';
 import axios from 'axios';
 import { urlServer } from '../App';
+import moment from 'moment';
 
 const PostsList = ( { posts, setPosts }) => {
+
+    const formatDate = (utcDateString) => {
+        const localDate = moment.utc(utcDateString).local();
+        const now = moment();
+        if (now.diff(localDate, 'hours') < 24) {
+            return localDate.fromNow();  // Correctly uses the local time
+        }
+        return localDate.format('MMMM Do YYYY');  // e.g., 'January 3rd 2021'
+    };
 
     const handleLike = (post) => {
         const isLiked = post.liked;
@@ -31,7 +41,10 @@ const PostsList = ( { posts, setPosts }) => {
             {posts.map(post => (
                 <div key={post.id} className="post">
                 <div className="post-header">
-                    <h3>{post.author}</h3>
+                    <div className="author-and-date">
+                        <h3>{post.author}</h3>
+                        <span className="post-date">{formatDate(post.created_at)}</span>
+                    </div>
                     <span className="delete-icon" onClick={() => handleDelete(post.id)}>
                         <i className="fas fa-trash-alt"></i>
                     </span>
