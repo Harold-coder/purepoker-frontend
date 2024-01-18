@@ -7,6 +7,23 @@
     position: relative;
 }
 
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.delete-icon {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.delete-icon:hover {
+    transform: scale(1.2); /* Example hover effect */
+    color: rgb(166, 21, 21); /* Change color on hover */
+}
+
+
 .post h3 {
     margin: 0 0 0.5rem 0;
     color: #1d2d50; /* Example color */
