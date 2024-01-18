@@ -9,6 +9,8 @@ import ProfilePage from './pages/ProfilePage';
 import PokerGamePage from './pages/PokerGamePage';
 import DetailedPostView from './pages/DetailedPostView';
 
+export const urlServer = "http://127.0.0.1:8012";
+
 function App() {
     return (
         <Router>
