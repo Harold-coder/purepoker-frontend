@@ -1,8 +1,18 @@
 .navigation-menu {
-    background-color: #2a5298; /* Placeholder for the blue color from the image */
-    color: white;
-    padding: 15px;
-    min-height: 100vh; /* Full height */
+    /* Colors and styles from the Pure Poker image */
+    background-color: #1a449d; /* Adjusted dark blue based on the new screenshot */
+    color: #fff;
+    flex: 0 0 25%; /* 25% */
+    padding: 1rem; /* Adjusted width for a sidebar */
+    min-height: 100vh;
+    min-width: 21rem;
+    /* Rest of the styles remain the same */
+}
+
+.title {
+    font-size: 1.75rem;
+    padding-top: 1rem;
+    margin: 0;
 }
 
 .navigation-list {
@@ -12,15 +22,17 @@
 }
 
 .navigation-item {
-    padding: 10px 0;
+    padding-left: 10rem;
+    padding-top: 2rem;
+    font-size: 1.5rem;
 }
 
 .navigation-item:first-of-type {
-    padding-top: 20px;
+    padding-top: 1rem;
 }
 
 .navigation-item:last-of-type {
-    padding-bottom: 20px;
+    padding-bottom: 1rem;
 }
 
 .navigation-link {
@@ -45,12 +57,20 @@
 }
 
 /* Responsive adjustments as needed */
-@media (max-width: 768px) {
-    .navigation-menu {
-        padding: 10px;
+@media (max-width: 1200px) {
+    .navigation-item {
+        padding-left: 5rem;
     }
-    .navigation-list {
-        display: flex;
-        flex-direction: column;
+    .navigation-menu {
+        min-width: 15rem;
+    }
+}
+
+@media (max-width: 950px) {
+    .navigation-item {
+        padding-left: 1rem;
+    }
+    .navigation-menu {
+        min-width: 11rem;
     }
 }

@@ -7,6 +7,9 @@ const NavigationMenu = () => {
         <nav className="navigation-menu">
             <ul className="navigation-list">
                 <li className="navigation-item">
+                    <h1 className='title'>Pure Poker</h1>
+                </li>
+                <li className="navigation-item">
                     <Link to="/" className="navigation-link">Community</Link>
                 </li>
                 <li className="navigation-item">

@@ -1,0 +1,25 @@
+.right-sidebar {
+    flex: 0 0 33%;
+    padding: 1rem;
+    padding-left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    margin-left: 5%;
+    height: 100vh;
+    border-left: 1px solid #ccc;
+    border-radius: 0%;
+}
+
+.search-tweets .search-input {
+    width: 80%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
+    border: 1px solid #ccc;
+}
+
+.most-liked-tweets {
+    font-size: 1rem;
+    /* Add additional styling as needed */
+}

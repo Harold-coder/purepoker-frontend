@@ -1,0 +1,33 @@
+.post-composer {
+    position: relative; /* Set the .post-composer to position relative */
+    padding-bottom: 2rem;
+    /* border-bottom: 1px solid #ccc; */
+}
+
+.post-textarea {
+    width: calc(100% - 1rem); /* Adjust width to account for padding */
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    margin-bottom: 1.5rem; /* Increased spacing between textarea and button */
+    border: 1px solid #ccc;
+    height: 5rem; /* Fixed height for the textarea */
+}
+
+.post-button {
+    position: absolute; /* Absolute position for the button */
+    right: 0rem; /* Position from the right */
+    bottom: 1rem; /* Position from the bottom */
+    padding: 0.5rem 1rem;
+    background-color: #1d2d50;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    /* Ensure the button is above other elements if necessary */
+    z-index: 10;
+}
+
+.post-button:hover {
+    background-color: #162238;
+}
+

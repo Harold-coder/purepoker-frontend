@@ -1,0 +1,6 @@
+.posts-list {
+    padding: 1rem;
+    background-color: #f5f8fa;
+    border-radius: 0.5rem; /* Optional: adds rounded corners */
+    /* Add any additional styles you want for the posts list */
+}
