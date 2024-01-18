@@ -1,21 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 import './PostsList.css';
-import { urlServer } from '../App';
 
-const PostsList = () => {
-    const [posts, setPosts] = useState([]);
-
-    useEffect(() => {
-        axios.get(`${urlServer}/posts`)
-            .then(response => {
-                const sortedPosts = response.data.sort((a, b) => b.id - a.id);
-                setPosts(sortedPosts);
-            })
-            .catch(error => {
-                console.error('Error fetching posts:', error);
-            });
-    }, []);
+const PostsList = ( {posts }) => {
 
     return (
         <div className="posts-list">

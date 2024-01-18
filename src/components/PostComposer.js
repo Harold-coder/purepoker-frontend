@@ -3,7 +3,7 @@ import axios from 'axios';
 import "./PostComposer.css";
 import { urlServer } from '../App';
 
-const PostComposer = () => {
+const PostComposer = ({ onPostCreated }) => {
     const [content, setContent] = useState('');
 
     const handleSubmit = () => {
@@ -15,6 +15,8 @@ const PostComposer = () => {
         axios.post(`${urlServer}/posts`, postData)
             .then(response => {
                 console.log('Success:', response.data);
+                setContent('');
+                onPostCreated();
                 // Update UI accordingly
             })
             .catch(error => {
