@@ -11,7 +11,7 @@
     border-radius: 0%;
 }
 
-.search-tweets .search-input {
+.search-posts .search-input {
     width: 80%;
     padding: 0.5rem;
     margin-bottom: 1rem;
@@ -19,7 +19,7 @@
     border: 1px solid #ccc;
 }
 
-.most-liked-tweets {
+.most-liked-posts {
     font-size: 1rem;
     /* Add additional styling as needed */
 }

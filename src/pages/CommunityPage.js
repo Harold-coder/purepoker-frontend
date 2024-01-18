@@ -8,11 +8,13 @@ import { urlServer } from '../App';
 
 const CommunityPage = () => {
     const [posts, setPosts] = useState([]);
+    const [filteredPosts, setFilteredPosts] = useState([]);
 
     const fetchPosts = () => {
         axios.get(`${urlServer}/posts`)
             .then(response => {
                 setPosts(response.data.sort((a, b) => b.id - a.id));
+                setFilteredPosts(response.data.sort((a, b) => b.id - a.id));  // Initialize filtered posts
             })
             .catch(error => console.error('Error fetching posts:', error));
     };
@@ -21,13 +23,25 @@ const CommunityPage = () => {
         fetchPosts();
     }, []);
 
+    const handleSearch = (searchTerm) => {
+        if (searchTerm) {
+            const filtered = posts.filter(post => 
+                post.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                post.author.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            setFilteredPosts(filtered);
+        } else {
+            setFilteredPosts(posts);
+        }
+    };
+
     return (
         <div className="community-page-container">
             <div className="feed-container">
                 <PostComposer onPostCreated={fetchPosts} />
-                <PostsList posts={posts} setPosts={setPosts}/>
+                <PostsList posts={filteredPosts} setPosts={setPosts}/>
             </div>
-            <RightSidebar />
+            <RightSidebar onSearch={handleSearch}/>
         </div>
     );
 };
