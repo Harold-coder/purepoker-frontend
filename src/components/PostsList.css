@@ -42,3 +42,7 @@
 .likes i:hover {
     color: #e84118; /* Red color on hover */
 }
+
+.likes i.liked {
+    color: red; /* Color when liked */
+}

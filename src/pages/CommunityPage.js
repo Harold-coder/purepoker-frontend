@@ -25,7 +25,7 @@ const CommunityPage = () => {
         <div className="community-page-container">
             <div className="feed-container">
                 <PostComposer onPostCreated={fetchPosts} />
-                <PostsList posts={posts} />
+                <PostsList posts={posts} setPosts={setPosts}/>
             </div>
             <RightSidebar />
         </div>
