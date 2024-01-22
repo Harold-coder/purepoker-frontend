@@ -5,6 +5,7 @@
     background-color: #fff;
     border-bottom: 1px solid #ccc;
     position: relative;
+    cursor: pointer;
 }
 
 .post-header {

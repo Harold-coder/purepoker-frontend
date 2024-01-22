@@ -7,7 +7,6 @@ import CommunityPage from './pages/CommunityPage';
 import GroupsPage from './pages/GroupsPage';
 import ProfilePage from './pages/ProfilePage';
 import PokerGamePage from './pages/PokerGamePage';
-import DetailedPostView from './pages/DetailedPostView';
 
 export const urlServer = "http://127.0.0.1:8012";
 
@@ -21,7 +20,6 @@ function App() {
                   <Route path="/groups" element={<GroupsPage />} />
                   <Route path="/profile" element={<ProfilePage />} />
                   <Route path="/poker-game" element={<PokerGamePage />} />
-                  <Route path="/posts/:postId" element={<DetailedPostView />} />
               </Routes>
           </div>
         </Router>

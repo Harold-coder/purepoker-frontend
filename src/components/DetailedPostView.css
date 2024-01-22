@@ -1,0 +1,71 @@
+.detailed-post-view {
+    background-color: white;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.post-content {
+    margin-bottom: 0.5rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+}
+
+.comments-section {
+    border-top: 1px solid #ccc;
+    padding-top: 0.5rem;
+}
+
+.comment {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #ccc;
+}
+
+.comment-submission {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    display: flex;
+    align-items: center; /* Align items vertically */
+    margin-top: 10px;
+}
+
+.comment-submission input {
+    flex-grow: 1;
+    margin-right: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.comment-submission button {
+    padding: 5px 10px;
+    background-color: #2961d7;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.comment-submission button:hover {
+    background-color: #1d4ba0;
+}
+
+/* Navigation element at the top */
+.navigation-back {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1.25rem; /* Adjust padding as needed */
+    border-bottom: 1px solid #ccc; /* Separator from the post content */
+}
+
+.navigation-back i {
+    cursor: pointer; /* Make the arrow clickable */
+}
+
+.navigation-back span {
+    margin-left: 1rem; /* Space between the arrow and the label */
+    font-weight: bold; /* Optional styling */
+}

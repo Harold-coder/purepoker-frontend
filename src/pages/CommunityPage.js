@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PostsList from '../components/PostsList';
 import PostComposer from '../components/PostComposer';
 import RightSidebar from '../components/RightSidebar';
+import DetailedPostView from '../components/DetailedPostView';
 import './CommunityPage.css';
 import axios from 'axios';
 import { urlServer } from '../App';
@@ -9,6 +10,22 @@ import { urlServer } from '../App';
 const CommunityPage = () => {
     const [posts, setPosts] = useState([]);
     const [filteredPosts, setFilteredPosts] = useState([]);
+    const [selectedPost, setSelectedPost] = useState(null);
+
+    // Mock comments data
+    const comments = [
+        { author: "User1", content: "Great post!" },
+        { author: "User2", content: "Interesting perspective." }
+        // You would fetch real comments from your backend
+    ];
+
+    const handlePostClick = (post) => {
+        setSelectedPost(post);
+    };
+
+    const handleCloseDetailedView = () => {
+        setSelectedPost(null);
+    };
 
     const fetchPosts = () => {
         axios.get(`${urlServer}/posts`)
@@ -67,11 +84,19 @@ const CommunityPage = () => {
 
     return (
         <div className="community-page-container">
-            <div className="feed-container">
-                <PostComposer onPostCreated={fetchPosts} />
-                <PostsList posts={filteredPosts} setPosts={setPosts} onLike={handleLike} onDelete={handleDelete}/>
-            </div>
-            <RightSidebar onSearch={handleSearch}/>
+            {selectedPost ? (
+                <DetailedPostView 
+                    post={selectedPost} 
+                    onClose={handleCloseDetailedView} 
+                    comments={comments} 
+                />
+            ) : (
+                <div className="feed-container">
+                    <PostComposer onPostCreated={fetchPosts} />
+                    <PostsList posts={filteredPosts} setPosts={setPosts} onLike={handleLike} onDelete={handleDelete} onPostClick={handlePostClick}/>
+                </div>
+            )}
+            <RightSidebar onSearch={handleSearch} posts={posts} onClose={handleCloseDetailedView}/>
         </div>
     );
 };
