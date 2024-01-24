@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './RightSidebar.css';
 
-const RightSidebar = ({ onSearch, posts, onClose, onSelectPost }) => {
+const RightSidebar = ({ onSearch, posts }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [mostLikedPosts, setMostLikedPosts] = useState([]);
+    const navigate = useNavigate(); // Initialize useNavigate
 
     useEffect(() => {
-        // Sort the posts by likes and take the top N posts
         const sortedPosts = [...posts].sort((a, b) => b.likes - a.likes);
-        setMostLikedPosts(sortedPosts.slice(0, 5)); // Adjust the number as needed
+        setMostLikedPosts(sortedPosts.slice(0, 5));
     }, [posts]);
 
     const handleSearchChange = (event) => {
-        onClose();
         setSearchTerm(event.target.value);
-        onSearch(event.target.value);  // Trigger search
+        onSearch(event.target.value);
     };
 
     const handlePostSelect = (postId) => {
-        onSelectPost(postId);
+        navigate(`/post/${postId}`); // Navigate to the selected post
     };
 
     return (

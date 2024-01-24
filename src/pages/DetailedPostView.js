@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { urlServer } from '../App';
-import './DetailedPostView.css'; // Importing the specific CSS file for this component
+import './DetailedPostView.css';
 import moment from 'moment';
 
-const DetailedPostView = ({ post, onClose, comments, setComments, likeComment, deleteComment }) => {
+
+const DetailedPostView = () => {
+    const { postId } = useParams();
+    const navigate = useNavigate();
+    const [post, setPost] = useState(null);
+    const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
-    const [visibleCommentsCount, setVisibleCommentsCount] = useState(5); // Initially show 5 comments
+    const [visibleCommentsCount, setVisibleCommentsCount] = useState(5);
 
     const formatDate = (utcDateString) => {
         const localDate = moment.utc(utcDateString).local();
@@ -15,6 +21,23 @@ const DetailedPostView = ({ post, onClose, comments, setComments, likeComment, d
             return localDate.fromNow();  // Correctly uses the local time
         }
         return localDate.format('MMMM Do YYYY');  // e.g., 'January 3rd 2021'
+    };
+
+    const fetchPostAndComments = async () => {
+        try {
+            axios.get(`${urlServer}/posts/${postId}`)
+            .then(response => {
+                setPost(response.data);
+            })
+            .catch(error => console.error('Error fetching post:', error));
+
+            const commentsResponse = await axios.get(`${urlServer}/posts/${postId}/comments`);
+            setComments(commentsResponse.data.sort((a, b) => 
+                new Date(b.created_at) - new Date(a.created_at)
+            ));
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
     };
 
     const submitComment = () => {
@@ -43,6 +66,38 @@ const DetailedPostView = ({ post, onClose, comments, setComments, likeComment, d
             .catch(error => console.error('Error posting comment:', error));
     };
 
+    useEffect(() => {
+        fetchPostAndComments();
+    }, [postId]);
+
+    const likeComment = (commentId) => {
+        axios.post(`${urlServer}/comments/${commentId}/like`, { like: true })
+            .then(response => {
+                const updatedComments = comments.map(comment => {
+                    if (comment.id === commentId) {
+                        // Assuming the backend returns the updated like count
+                        return { ...comment, likes: response.data.likes };
+                    }
+                    return comment;
+                });
+                setComments(updatedComments);
+            })
+            .catch(error => console.error('Error liking comment:', error));
+    };
+
+    const deleteComment = (commentId) => {
+        axios.delete(`${urlServer}/comments/${commentId}`)
+            .then(() => {
+                const updatedComments = comments.filter(comment => comment.id !== commentId);
+                setComments(updatedComments);
+            })
+            .catch(error => console.error('Error deleting comment:', error));
+    }; 
+
+    const handleClose = () => {
+        navigate(-1); // Go back to the previous page
+    };
+
     const handleLikeClick = (e, comment) => {
         e.stopPropagation(); // Prevent event from bubbling up to the comment element
         likeComment(comment.id);
@@ -64,10 +119,14 @@ const DetailedPostView = ({ post, onClose, comments, setComments, likeComment, d
         setVisibleCommentsCount(prevCount => prevCount + 5); // Load 5 more comments
     };
 
+    if (!post) {
+        return <div>Loading...</div>; // Or any other loading indicator
+    }
+
     return (
         <div className="detailed-post-view">
             <div className="navigation-back">
-                <i className="fas fa-arrow-left" onClick={onClose}></i>
+                <i className="fas fa-arrow-left" onClick={handleClose}></i>
                 <span>Post</span>
             </div>
             <div className="post-content">

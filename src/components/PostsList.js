@@ -1,8 +1,10 @@
 import React from 'react';
 import './PostsList.css';
+import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
 const PostsList = ( { posts, onLike, onDelete, onPostClick }) => {
+    const navigate = useNavigate();
 
     const formatDate = (utcDateString) => {
         const localDate = moment.utc(utcDateString).local();
@@ -11,6 +13,10 @@ const PostsList = ( { posts, onLike, onDelete, onPostClick }) => {
             return localDate.fromNow();  // Correctly uses the local time
         }
         return localDate.format('MMMM Do YYYY');  // e.g., 'January 3rd 2021'
+    };
+
+    const handlePostClick = (postId) => {
+        navigate(`/post/${postId}`); // Navigate to the detailed view of the post
     };
 
     const handleLikeClick = (e, post) => {
@@ -26,7 +32,7 @@ const PostsList = ( { posts, onLike, onDelete, onPostClick }) => {
     return (
         <div className="posts-list">
             {posts.map(post => (
-                <div key={post.id} className="post" onClick={() => onPostClick(post)}>
+                <div key={post.id} className="post" onClick={() => handlePostClick(post.id)}>
                     <div className="post-header">
                         <div className="author-and-date">
                             <h3>{post.author}</h3>
