@@ -6,6 +6,7 @@ import moment from 'moment';
 
 const DetailedPostView = ({ post, onClose, comments, setComments, likeComment, deleteComment }) => {
     const [newComment, setNewComment] = useState('');
+    const [visibleCommentsCount, setVisibleCommentsCount] = useState(5); // Initially show 5 comments
 
     const formatDate = (utcDateString) => {
         const localDate = moment.utc(utcDateString).local();
@@ -32,7 +33,7 @@ const DetailedPostView = ({ post, onClose, comments, setComments, likeComment, d
         };
 
         // Optimistically update the local state
-        setComments([...comments, commentToAdd]);
+        setComments([commentToAdd, ...comments]);
 
         axios.post(`${urlServer}/posts/${post.id}/comments`, { author: "TemporaryAuthor", content: newComment })
             .then(response => {
@@ -59,6 +60,10 @@ const DetailedPostView = ({ post, onClose, comments, setComments, likeComment, d
         }
     };
 
+    const loadMoreComments = () => {
+        setVisibleCommentsCount(prevCount => prevCount + 5); // Load 5 more comments
+    };
+
     return (
         <div className="detailed-post-view">
             <div className="navigation-back">
@@ -69,8 +74,13 @@ const DetailedPostView = ({ post, onClose, comments, setComments, likeComment, d
                 <h3>{post.author}</h3>
                 <p>{post.content}</p>
             </div>
+            <div className="post-info-banner">
+                <span><i className="fas fa-calendar-alt"></i> {formatDate(post.created_at)}</span>
+                <span><i className="fas fa-heart"></i> {post.likes} Like{post.likes !== 1 ? 's' : ''}</span>
+                <span><i className="fas fa-comments"></i> {comments.length} Comment{comments.length !== 1 ? 's' : ''}</span>
+            </div>
             <div className="comments-section">
-                {comments.map((comment) => (
+                {comments.slice(0, visibleCommentsCount).map((comment) => (
                     <div key={comment.id} className="comment">
                         <div className="comment-header">
                             <div className="author-and-date">
@@ -89,6 +99,11 @@ const DetailedPostView = ({ post, onClose, comments, setComments, likeComment, d
                         </div>
                     </div>
                 ))}
+                {visibleCommentsCount < comments.length && (
+                    <button className="load-more-comments" onClick={loadMoreComments}>
+                        Load More Comments
+                    </button>
+                )}
                 {/* Comment submission area */}
                 <div className="comment-submission">
                     <input 

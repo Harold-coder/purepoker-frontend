@@ -17,7 +17,11 @@ const CommunityPage = () => {
     const fetchComments = (postId) => {
         axios.get(`${urlServer}/posts/${postId}/comments`)
             .then(response => {
-                setComments(response.data);
+                // Sort comments by creation date in descending order
+                const sortedComments = response.data.sort((a, b) => 
+                    new Date(b.created_at) - new Date(a.created_at)
+                );
+                setComments(sortedComments);
             })
             .catch(error => console.error('Error fetching comments:', error));
     };
