@@ -12,14 +12,42 @@ const CommunityPage = () => {
     const [filteredPosts, setFilteredPosts] = useState([]);
     const [selectedPost, setSelectedPost] = useState(null);
 
-    // Mock comments data
-    const comments = [
-        { author: "User1", content: "Great post!" },
-        { author: "User2", content: "Interesting perspective." }
-        // You would fetch real comments from your backend
-    ];
+    const [comments, setComments] = useState([]);
+
+    const fetchComments = (postId) => {
+        axios.get(`${urlServer}/posts/${postId}/comments`)
+            .then(response => {
+                setComments(response.data);
+            })
+            .catch(error => console.error('Error fetching comments:', error));
+    };
+
+    const likeComment = (commentId) => {
+        axios.post(`${urlServer}/comments/${commentId}/like`, { like: true })
+            .then(response => {
+                const updatedComments = comments.map(comment => {
+                    if (comment.id === commentId) {
+                        // Assuming the backend returns the updated like count
+                        return { ...comment, likes: response.data.likes };
+                    }
+                    return comment;
+                });
+                setComments(updatedComments);
+            })
+            .catch(error => console.error('Error liking comment:', error));
+    };
+
+    const deleteComment = (commentId) => {
+        axios.delete(`${urlServer}/comments/${commentId}`)
+            .then(() => {
+                const updatedComments = comments.filter(comment => comment.id !== commentId);
+                setComments(updatedComments);
+            })
+            .catch(error => console.error('Error deleting comment:', error));
+    };    
 
     const handlePostClick = (post) => {
+        fetchComments(post.id);
         setSelectedPost(post);
     };
 
@@ -82,6 +110,13 @@ const CommunityPage = () => {
             .catch(error => console.error('Error updating like:', error));
     };
 
+    const selectPostFromSidebar = (postId) => {
+        const post = posts.find(p => p.id === postId);
+        if (post) {
+            setSelectedPost(post);
+        }
+    };
+
     return (
         <div className="community-page-container">
             {selectedPost ? (
@@ -89,6 +124,9 @@ const CommunityPage = () => {
                     post={selectedPost} 
                     onClose={handleCloseDetailedView} 
                     comments={comments} 
+                    setComments={setComments}
+                    likeComment={likeComment}
+                    deleteComment={deleteComment}
                 />
             ) : (
                 <div className="feed-container">
@@ -96,7 +134,12 @@ const CommunityPage = () => {
                     <PostsList posts={filteredPosts} setPosts={setPosts} onLike={handleLike} onDelete={handleDelete} onPostClick={handlePostClick}/>
                 </div>
             )}
-            <RightSidebar onSearch={handleSearch} posts={posts} onClose={handleCloseDetailedView}/>
+            <RightSidebar 
+                onSearch={handleSearch} 
+                posts={posts} 
+                onClose={handleCloseDetailedView} 
+                onSelectPost={selectPostFromSidebar}
+            />
         </div>
     );
 };

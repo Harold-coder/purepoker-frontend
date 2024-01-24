@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './RightSidebar.css';
 
-const RightSidebar = ({ onSearch, posts, onClose }) => {
+const RightSidebar = ({ onSearch, posts, onClose, onSelectPost }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [mostLikedPosts, setMostLikedPosts] = useState([]);
 
@@ -15,6 +15,10 @@ const RightSidebar = ({ onSearch, posts, onClose }) => {
         onClose();
         setSearchTerm(event.target.value);
         onSearch(event.target.value);  // Trigger search
+    };
+
+    const handlePostSelect = (postId) => {
+        onSelectPost(postId);
     };
 
     return (
@@ -32,7 +36,7 @@ const RightSidebar = ({ onSearch, posts, onClose }) => {
                 <h3>Most Liked Posts</h3>
                 <ul>
                     {mostLikedPosts.map(post => (
-                        <li key={post.id}>
+                        <li key={post.id} onClick={() => handlePostSelect(post.id)}>
                             <span>{post.author}: </span>
                             <span>{post.likes} likes</span>
                         </li>
