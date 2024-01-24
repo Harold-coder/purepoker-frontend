@@ -32,6 +32,10 @@
     align-items: center;
 }
 
+.comment-content {
+    margin-top: 0.3rem;
+}
+
 .comment-interactions {
     position: absolute; /* Position the interactions container */
     right: 2rem; /* Align to the right */
@@ -45,23 +49,24 @@
     padding-right: 1.25rem;
     display: flex;
     align-items: center; /* Align items vertically */
-    margin-top: 10px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 .comment-submission input {
     flex-grow: 1;
     margin-right: 10px;
-    padding: 5px;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
 .comment-submission button {
-    padding: 5px 10px;
+    padding: 10px;
     background-color: #2961d7;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 20px;
     cursor: pointer;
 }
 

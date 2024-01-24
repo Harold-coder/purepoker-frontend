@@ -38,7 +38,7 @@ const DetailedPostView = ({ post, onClose, comments, setComments, likeComment, d
         axios.post(`${urlServer}/posts/${post.id}/comments`, { author: "TemporaryAuthor", content: newComment })
             .then(response => {
                 setNewComment('');
-                setComments([...comments, response.data]); // Use data from the backend
+                setComments([response.data, ...comments]); // Use data from the backend
             })
             .catch(error => console.error('Error posting comment:', error));
     };
@@ -79,6 +79,16 @@ const DetailedPostView = ({ post, onClose, comments, setComments, likeComment, d
                 <span><i className="fas fa-heart"></i> {post.likes} Like{post.likes !== 1 ? 's' : ''}</span>
                 <span><i className="fas fa-comments"></i> {comments.length} Comment{comments.length !== 1 ? 's' : ''}</span>
             </div>
+            <div className="comment-submission">
+                <input 
+                    type="text" 
+                    placeholder="Write a comment..." 
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                    onKeyDown={handleKeyPress}
+                />
+                <button onClick={submitComment}>Submit</button>
+            </div>
             <div className="comments-section">
                 {comments.slice(0, visibleCommentsCount).map((comment) => (
                     <div key={comment.id} className="comment">
@@ -91,7 +101,7 @@ const DetailedPostView = ({ post, onClose, comments, setComments, likeComment, d
                                 <i className="fas fa-trash-alt"></i>
                             </span>
                         </div>
-                        <p>{comment.content}</p>
+                        <p className='comment-content'>{comment.content}</p>
                         <div className="comment-interactions">
                             <span className="likes" onClick={(e) => handleLikeClick(e, comment)}>
                                 <i className={comment.liked ? "fas fa-heart liked" : "fas fa-heart"}></i> {comment.likes}
@@ -104,17 +114,6 @@ const DetailedPostView = ({ post, onClose, comments, setComments, likeComment, d
                         Load More Comments
                     </button>
                 )}
-                {/* Comment submission area */}
-                <div className="comment-submission">
-                    <input 
-                        type="text" 
-                        placeholder="Write a comment..." 
-                        value={newComment}
-                        onChange={(e) => setNewComment(e.target.value)}
-                        onKeyDown={handleKeyPress}
-                    />
-                    <button onClick={submitComment}>Submit</button>
-                </div>
             </div>
         </div>
     );
