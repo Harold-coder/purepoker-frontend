@@ -1,7 +1,9 @@
 .post-composer {
     position: relative; /* Set the .post-composer to position relative */
     padding-bottom: 2rem;
+    margin-top: 1rem;
     border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
 }
 
 .post-textarea {
@@ -19,7 +21,7 @@
     right: 1rem; /* Position from the right */
     bottom: 1rem; /* Position from the bottom */
     padding: 0.5rem 1rem;
-    background-color: #1d2d50;
+    background-color: #2961d7;
     color: white;
     border: none;
     border-radius: 0.25rem;
@@ -29,6 +31,6 @@
 }
 
 .post-button:hover {
-    background-color: #162238;
+    background-color: #1f52bf;
 }
 

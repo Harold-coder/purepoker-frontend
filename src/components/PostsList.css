@@ -1,6 +1,6 @@
 .post {
     padding-left: 2rem;
-    padding-top: 1.5rem;
+    padding-top: 1rem;
     padding-bottom: 1.5rem;
     background-color: #fff;
     border-bottom: 1px solid #ccc;
@@ -21,7 +21,7 @@
 
 .author-and-date h3 {
     /* margin: 0 0 0.5rem 0; */
-    color: #1d2d50; /* Example color */
+    color: #2961d7; /* Example color */
     margin-right: 10px;  /* Adjust spacing as needed */
 }
 

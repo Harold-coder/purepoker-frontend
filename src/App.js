@@ -8,6 +8,7 @@ import GroupsPage from './pages/GroupsPage';
 import ProfilePage from './pages/ProfilePage';
 import PokerGamePage from './pages/PokerGamePage';
 import DetailedPostView from './pages/DetailedPostView';
+import PostFeed from './components/PostFeed';
 
 export const urlServer = "http://127.0.0.1:8012";
 
@@ -17,7 +18,10 @@ function App() {
           <div className="app-container">
             <NavigationMenu />
               <Routes>
-                  <Route path="/" element={<CommunityPage />} />
+                  <Route path="/" element={<CommunityPage />}>
+                    <Route index element={<PostFeed />} />
+                    <Route path="post/:postId" element={<DetailedPostView />} />
+                  </Route>
                   <Route path="/groups" element={<GroupsPage />} />
                   <Route path="/profile" element={<ProfilePage />} />
                   <Route path="/poker-game" element={<PokerGamePage />} />
