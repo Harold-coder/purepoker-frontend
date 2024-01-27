@@ -69,8 +69,8 @@ const PostFeed = () => {
     };
 
     return (
-        <>  
-            <SearchPost onSearch={handleSearch} posts={posts}/>
+        <div className="post-feed-container">  
+            <SearchPost onSearch={handleSearch} />
             <PostComposer onPostCreated={fetchPosts} />
             <PostsList 
                 posts={filteredPosts} 
@@ -78,7 +78,7 @@ const PostFeed = () => {
                 onDelete={handleDelete} 
                 onPostClick={handlePostClick}
             />
-        </>
+        </div>
     );
 };
 

@@ -4,9 +4,11 @@
     color: #fff;
     flex: 0 0 25%; /* 25% */
     padding: 1rem; /* Adjusted width for a sidebar */
-    min-height: 100vh;
+    padding-top: 0;
+    padding-bottom: 0;
     min-width: 21rem;
-    /* Rest of the styles remain the same */
+    height: 100vh; /* Fixed height */
+    overflow-y: hidden; /* Disable scrolling */
 }
 
 .title {
