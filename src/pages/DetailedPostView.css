@@ -4,9 +4,10 @@
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    position: relative;
 }
 
-.post-content {
+.post-content-detailed {
     margin-bottom: 0.5rem;
     padding-left: 1.25rem;
     padding-right: 1.25rem;
@@ -80,6 +81,10 @@
     align-items: center;
     padding: 0.5rem 1.25rem; /* Adjust padding as needed */
     border-bottom: 1px solid #ccc; /* Separator from the post content */
+    position: sticky;
+    top: 0; /* Stick to the top of the container */
+    background: white; /* Set a background to overlap content below */
+    z-index: 100; /* Ensure it stays on top of other content */
 }
 
 .navigation-back i {

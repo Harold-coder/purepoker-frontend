@@ -4,6 +4,7 @@ import axios from 'axios';
 import { urlServer } from '../App';
 import './DetailedPostView.css';
 import moment from 'moment';
+import Loading from '../components/Loading';
 
 
 const DetailedPostView = () => {
@@ -120,7 +121,7 @@ const DetailedPostView = () => {
     };
 
     if (!post) {
-        return <div>Loading...</div>; // Or any other loading indicator
+        return <Loading />; // Or any other loading indicator
     }
 
     return (
@@ -129,7 +130,7 @@ const DetailedPostView = () => {
                 <i className="fas fa-arrow-left" onClick={handleClose}></i>
                 <span>Post</span>
             </div>
-            <div className="post-content">
+            <div className="post-content-detailed">
                 <h3>{post.author}</h3>
                 <p>{post.content}</p>
             </div>

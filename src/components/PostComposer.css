@@ -1,9 +1,8 @@
 .post-composer {
     position: relative; /* Set the .post-composer to position relative */
     padding-bottom: 2rem;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     border-bottom: 1px solid #ccc;
-    border-top: 1px solid #ccc;
 }
 
 .post-textarea {

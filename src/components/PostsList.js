@@ -42,7 +42,9 @@ const PostsList = ( { posts, onLike, onDelete, onPostClick }) => {
                             <i className="fas fa-trash-alt"></i>
                         </span>
                     </div>
-                    <p>{post.content}</p>
+                    <div className="post-content">
+                        {post.content}
+                    </div>
                     <div className="post-interactions">
                         <span className="likes" onClick={(e) => handleLikeClick(e, post)}>
                             <i className={post.liked ? "fas fa-heart liked" : "fas fa-heart"}></i> {post.likes}
