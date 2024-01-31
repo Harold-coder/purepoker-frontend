@@ -11,6 +11,7 @@
     margin-bottom: 0.5rem;
     padding-left: 1.25rem;
     padding-right: 1.25rem;
+    white-space: pre-wrap; /* Preserves whitespace and wraps text */
 }
 
 .comments-section {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './RightSidebar.css';
 
-const RightSidebar = ({ onSearch, posts }) => {
+const RightSidebar = ({ posts }) => {
     const [mostLikedPosts, setMostLikedPosts] = useState([]);
     const navigate = useNavigate(); // Initialize useNavigate
 
