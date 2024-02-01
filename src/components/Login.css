@@ -1,0 +1,106 @@
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-form {
+    background: #fff;
+    padding: 40px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.login-logo {
+    font-size: 1.5em;
+    color: #0070ba;
+    margin-bottom: 2rem;
+}
+
+.login-input {
+    width: 92%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.login-btn, .signup-btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.login-btn {
+    background-color: #0070ba;
+    color: white;
+}
+
+.signup-btn {
+    background-color: #f5f5f5;
+    color: #0070ba;
+}
+
+.divider {
+    color: rgb(90, 89, 89);
+    margin: 20px 0;
+}
+
+.login-btn:hover {
+    background-color: #005ea6;
+}
+
+.signup-btn:hover {
+    background-color: #e4e4e4;
+}
+
+.login-form.loading {
+    border: none; /* Remove border when loading */
+    box-shadow: none; /* Optional: Remove shadow when loading */
+    /* Add any other style changes you need when loading is true */
+}
+
+.username-confirm {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.username-confirm span {
+    font-size: 0.9rem;
+    color: rgb(51, 51, 51);
+    margin-right: 0.25rem;
+    font-weight: bold;
+}
+
+.change-btn {
+    background-color: transparent;
+    color: #2961d7;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-top: 0.2rem;
+}
+
+.change-btn:hover {
+    text-decoration: none;
+}
+
+@media (max-width: 500px) {
+    .login-form {
+        width: 90%;
+        padding: 20px;
+    }
+}

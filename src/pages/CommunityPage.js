@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import RightSidebar from '../components/RightSidebar';
 import './CommunityPage.css';
 import axios from 'axios';
+import NavigationMenu from '../components/NavigationMenu';
 import { urlServer } from '../App';
 
 const CommunityPage = () => {
@@ -23,6 +24,7 @@ const CommunityPage = () => {
 
     return (
         <div className="community-page-container">
+            <NavigationMenu />
             <div className="feed-container">
                 <Outlet />
             </div>

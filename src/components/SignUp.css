@@ -1,0 +1,65 @@
+/* SignUp.css */
+.signup-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
+}
+
+.signup-container h2 {
+    font-size: 1.75rem;
+    color: #0070ba;
+    margin-bottom: 2rem;
+}
+
+.signup-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 100%;
+}
+
+.signup-container input {
+    width: 92%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.signup-container button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0070ba;
+    color: white;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.signup-container button:hover {
+    background-color: #005ea6;
+}
+
+.error-message {
+    color: red;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 500px) {
+    .signup-container form {
+        width: 90%;
+        padding: 20px;
+    }
+}

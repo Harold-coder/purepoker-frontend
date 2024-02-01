@@ -8,7 +8,7 @@
 .feed-container {
     display: flex;
     flex-direction: column;
-    flex: 0 0 57%;
+    flex: 0 0 45%;
     height: 100vh; /* Set the height to fill the viewport */
     overflow-y: auto; /* Enable vertical scrolling within this container */
     overflow-x: hidden;

@@ -23,7 +23,7 @@ const PostsList = ( { posts, onLike, onDelete, onPostClick }) => {
     return (
         <div className="posts-list">
             {posts.map(post => (
-                <Post data={post} onLike={handleLikeClick} onDelete={handleDeleteClick} onPostClick={handlePostClick} />
+                <Post key={post.id} data={post} onLike={handleLikeClick} onDelete={handleDeleteClick} onPostClick={handlePostClick} />
             ))}
         </div>
     );
