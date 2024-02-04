@@ -35,7 +35,7 @@ function App() {
                             <Route path="post/:postId" element={<DetailedPostView />} />
                         </Route>
                         <Route path="/groups" element={<ProtectedRoute><GroupsPage /></ProtectedRoute>} />
-                        <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+                        <Route path="/profile" element={<ProfilePage />} /> {/*TODO: Add protected route!!!! */}
                         <Route path="/poker-game" element={<ProtectedRoute><PokerGamePage /></ProtectedRoute>} />
                         <Route path="/post/:postId" element={<ProtectedRoute><DetailedPostView /></ProtectedRoute>} />
                     </Routes>

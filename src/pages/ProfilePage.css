@@ -1,0 +1,43 @@
+.profile-page-container {
+    width: 100%;
+    height: 100vh;
+    background: rgb(111, 12, 12);
+    color: white;
+}
+.profile-title {
+    padding: 1rem;
+    padding-left: 1.5rem;
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+.profile-info { 
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+.profile-image {
+    width: 10rem;
+    height: 10rem;
+    border: 2px solid white;
+    padding: 0.5rem;
+    border-radius: 50%;
+}
+.profile-info-text {
+    background: white;
+    color: black;
+    padding: 10px 5px;
+    border: 2px solid white;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 400px;
+}
+.info-label {
+    font-weight: bold;
+}
+.pnl {
+    color: green;
+}

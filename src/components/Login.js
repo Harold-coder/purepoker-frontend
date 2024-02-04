@@ -11,6 +11,7 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(''); // State to track error message
     const navigate = useNavigate();
     const { login } = useAuth();
 
@@ -27,6 +28,7 @@ const Login = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setError(''); // Clear any existing error messages
         if (stage === 1) {
             setStage(2); // Move to password entry stage
         } else {
@@ -36,8 +38,8 @@ const Login = () => {
                 navigate('/'); // Navigate to homepage after successful login
             } catch (error) {
                 console.error("Login Error:", error);
+                setError('Login failed. Please check your username and password.'); // Set error message
             }
-            console.log('Login attempt with', username, password);
         }
     };
 
@@ -54,6 +56,7 @@ const Login = () => {
         <div className="login-wrapper">
             <form className={`login-form ${loading ? 'loading' : ''}`} onSubmit={handleSubmit}>
                 <h1 className="login-logo">Pure Poker</h1>
+                {error && <div className="login-error">{error}</div>} {/* Display error message */}
                 {loading ? (
                     <Loading /> // Replace with your actual loading component
                 ) : (

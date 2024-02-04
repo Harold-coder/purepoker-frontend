@@ -19,7 +19,7 @@
 
 .login-logo {
     font-size: 1.5em;
-    color: #0070ba;
+    color: rgb(111, 12, 12);
     margin-bottom: 2rem;
 }
 
@@ -43,13 +43,13 @@
 }
 
 .login-btn {
-    background-color: #0070ba;
+    background-color: rgb(111, 12, 12);
     color: white;
 }
 
 .signup-btn {
     background-color: #f5f5f5;
-    color: #0070ba;
+    color: rgb(111, 12, 12);
 }
 
 .divider {
@@ -58,7 +58,7 @@
 }
 
 .login-btn:hover {
-    background-color: #005ea6;
+    background-color: rgb(111, 12, 12);
 }
 
 .signup-btn:hover {
@@ -86,7 +86,7 @@
 
 .change-btn {
     background-color: transparent;
-    color: #2961d7;
+    color: rgb(111, 12, 12);
     border: none;
     cursor: pointer;
     font-size: 0.9rem;
@@ -96,6 +96,11 @@
 
 .change-btn:hover {
     text-decoration: none;
+}
+
+.login-error {
+    color: red;
+    margin-bottom: 1rem;
 }
 
 @media (max-width: 500px) {
