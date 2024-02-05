@@ -20,7 +20,7 @@
     right: 1rem; /* Position from the right */
     bottom: 1rem; /* Position from the bottom */
     padding: 0.5rem 1rem;
-    background-color: #2961d7;
+    background-color: rgb(111, 12, 12);
     color: white;
     border: none;
     border-radius: 0.25rem;
@@ -30,6 +30,6 @@
 }
 
 .post-button:hover {
-    background-color: #1f52bf;
+    background-color: rgb(92, 5, 5);
 }
 

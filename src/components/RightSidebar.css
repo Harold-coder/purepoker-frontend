@@ -13,7 +13,7 @@
 
 .most-liked-posts h3 {
     margin-bottom: 15px;
-    color: #2961d7; /* Twitter-like dark blue */
+    color: rgb(111, 12, 12); /* Twitter-like dark blue */
     font-size: 1.2rem; /* Slightly larger font size for the heading */
 }
 
@@ -61,7 +61,7 @@
 
 /* Icon before the author's name */
 .most-liked-posts .author-icon {
-    color: #2961d7; /* Twitter-like blue for icons */
+    color: rgb(111, 12, 12); /* Twitter-like blue for icons */
     margin-right: 5px;
 }
 
