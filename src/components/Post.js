@@ -20,7 +20,7 @@ const Post = ({ data, isComment, onLike, onDelete, onPostClick }) => {
 
     const handleDeleteClick = (e) => {
         e.stopPropagation(); // Prevents the post click when deleting
-        onDelete(data.id);
+        onDelete(e, data.id);
     };
 
     return (
