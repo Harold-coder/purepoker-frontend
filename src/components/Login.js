@@ -20,7 +20,7 @@ const Login = () => {
             setLoading(true);
             const timer = setTimeout(() => {
                 setLoading(false);
-            }, 1000); // Show loading for 1 second
+            }, 250); // Show loading for 1 second
 
             return () => clearTimeout(timer);
         }
@@ -33,7 +33,7 @@ const Login = () => {
             setStage(2); // Move to password entry stage
         } else {
             try {
-                const { data } = await axios.post(`${urlServerAuth}/login`, { username, password });
+                const { data } = await axios.post(`${urlServerAuth}/login`, { username, password }, { withCredentials: true });
                 login(data); // Update AuthContext state
                 navigate('/'); // Navigate to homepage after successful login
             } catch (error) {
