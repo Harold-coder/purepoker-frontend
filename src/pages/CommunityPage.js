@@ -11,7 +11,7 @@ const CommunityPage = () => {
     useEffect(() => {
         const validateUserSession = async () => {
         try {
-            const response = await axios.get(`${urlServerAuth}/validate_token`, { withCredentials: true });
+            const response = await axios.post(`${urlServerAuth}/validate_token`, { withCredentials: true });
             if (response.data.message === 'Token is valid') {
             // User is authenticated, update state accordingly
             console.log(response);
