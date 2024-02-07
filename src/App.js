@@ -19,9 +19,9 @@ export const urlServer = "https://b03ruvxz55.execute-api.us-east-1.amazonaws.com
 export const urlServerAuth = "https://oqqznkdgb3.execute-api.us-east-1.amazonaws.com/dev";
 
 const ProtectedRoute = ({ children }) => {
-    const { user } = useAuth();
-    return user ? children : <Navigate to="/login" />;
-    // return children;
+    // const { user } = useAuth();
+    // return user ? children : <Navigate to="/login" />;
+    return children;
 };
 
 function App() {
