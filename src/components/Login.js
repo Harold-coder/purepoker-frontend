@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { urlServerAuth } from '../App';
 import Loading from './Loading';
 import './Login.css';
 
@@ -13,6 +11,7 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(''); // State to track error message
     const navigate = useNavigate();
+
     const { login } = useAuth();
 
     useEffect(() => {
@@ -32,13 +31,14 @@ const Login = () => {
         if (stage === 1) {
             setStage(2); // Move to password entry stage
         } else {
+            setLoading(true); // Show loading indicator
             try {
-                const { data } = await axios.post(`${urlServerAuth}/login`, { username, password }, { withCredentials: true });
-                login(data); // Update AuthContext state
+                await login(username, password); // Call the updated login function
                 navigate('/'); // Navigate to homepage after successful login
             } catch (error) {
                 console.error("Login Error:", error);
                 setError('Login failed. Please check your username and password.'); // Set error message
+                setLoading(false); // Hide loading indicator
             }
         }
     };
