@@ -11,6 +11,7 @@ const PostFeed = () => {
     const [posts, setPosts] = useState([]);
     const [filteredPosts, setFilteredPosts] = useState([]);
     const navigate = useNavigate();
+    axios.defaults.withCredentials = true;
 
     const fetchPosts = () => {
         axios.get(`${urlServer}/posts`)

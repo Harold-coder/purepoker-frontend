@@ -15,6 +15,8 @@ const SignUp = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
 
+    axios.defaults.withCredentials = true;
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (password !== confirmPassword) {

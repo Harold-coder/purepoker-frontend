@@ -7,6 +7,7 @@ import NavigationMenu from '../components/NavigationMenu';
 import { urlServer } from '../App';
 
 const CommunityPage = () => {
+    axios.defaults.withCredentials = true;
     const [posts, setPosts] = useState([]);
 
     const fetchPosts = () => {

@@ -5,6 +5,7 @@ import { urlServer } from '../App';
 
 const PostComposer = ({ onPostCreated }) => {
     const [content, setContent] = useState('');
+    axios.defaults.withCredentials = true;
 
     const handleSubmit = () => {
         const postData = {
