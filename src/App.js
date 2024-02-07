@@ -16,7 +16,7 @@ import { useAuth } from './context/AuthContext';
 // export const urlServer = "http://127.0.0.1:8012";
 export const urlServer = "https://b03ruvxz55.execute-api.us-east-1.amazonaws.com/dev";
 // export const urlServerAuth = "http://127.0.0.1:8013";
-export const urlServerAuth = "https://oqqznkdgb3.execute-api.us-east-1.amazonaws.com/dev";
+export const urlServerAuth = "https://authentication-api.purepoker.world/";
 
 const ProtectedRoute = ({ children }) => {
     // const { user } = useAuth();
