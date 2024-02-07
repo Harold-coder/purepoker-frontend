@@ -22,7 +22,7 @@ const SignUp = () => {
             return;
         }
         try {
-            const { data } = await axios.post(`${urlServerAuth}/signup`, { username, email, password });
+            const { data } = await axios.post(`${urlServerAuth}/signup`, { username, email, password }, { withCredentials: true });
             login(data); // Update AuthContext state and login the user
             navigate('/'); // Redirect to home page after signup
         } catch (error) {
