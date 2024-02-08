@@ -12,6 +12,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 
 import { useAuth } from './context/AuthContext';
+import Loading from './components/Loading';
 
 // export const urlServer = "http://127.0.0.1:8012";
 export const urlServer = "https://community-api.purepoker.world";
@@ -21,15 +22,11 @@ export const urlServerAuth = "https://authentication-api.purepoker.world";
 const ProtectedRoute = ({ children }) => {
   console.log("Start Test!");
   const { user, isLoading } = useAuth();
-  console.log("USER:", user)
   if (isLoading) {
-    console.log("Loading...")
+    return <Loading />
   }
-  else if (user == null && !isLoading) {
-    console.log("NOOOOOOOO");
-  }
-  else if (user && !isLoading) {
-    console.log("Logged in.");
+  if (!user) {
+    <Navigate to="/login" />;
   }
   return children
 };
