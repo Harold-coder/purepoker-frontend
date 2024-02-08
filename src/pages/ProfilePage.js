@@ -8,6 +8,10 @@ import "./ProfilePage.css";
 const ProfilePage = () => {
     const navigate = useNavigate();
     const { user, logout } = useAuth();
+    // const user = {
+    //     username: "debug local",
+    //     email: "test local"
+    // }
 
     const handleLogout = async () => {
         await logout();
@@ -19,7 +23,7 @@ const ProfilePage = () => {
             <div className='header'>
                 <p className='profile-title' onClick={() => navigate('/')}>Pure Poker</p>
                 <button onClick={handleLogout} className="logout-button">
-                    <FontAwesomeIcon icon={faSignOutAlt} />
+                    <FontAwesomeIcon icon={faSignOutAlt} size="2x" />
                 </button>
             </div>
             <div className='profile-info'>
