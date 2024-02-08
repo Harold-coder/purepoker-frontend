@@ -22,7 +22,13 @@ const ProtectedRoute = ({ children }) => {
   console.log("Start Test!");
   const { user } = useAuth();
   console.log("USER:", user)
-  return user ? children : <Navigate to="/login" />;
+  if (user == null) {
+    console.log("NOOOOOOOO");
+  }
+  else {
+    console.log("Logged in.");
+  }
+  return children
 };
 
 function App() {
