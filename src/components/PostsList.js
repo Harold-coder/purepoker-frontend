@@ -3,7 +3,7 @@ import './PostsList.css';
 import { useNavigate } from 'react-router-dom';
 import Post from './Post';
 
-const PostsList = ( { posts, onLike, onDelete, onPostClick }) => {
+const PostsList = ( { posts, onLike, onDelete }) => {
     const navigate = useNavigate();
 
     const handlePostClick = (postId) => {

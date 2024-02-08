@@ -4,7 +4,7 @@ import RightSidebar from '../components/RightSidebar';
 import './CommunityPage.css';
 import axios from 'axios';
 import NavigationMenu from '../components/NavigationMenu';
-import { urlServer, urlServerAuth } from '../App';
+import { urlServer } from '../App';
 
 const CommunityPage = () => {
     const [posts, setPosts] = useState([]);

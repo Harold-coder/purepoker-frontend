@@ -20,7 +20,6 @@ export const urlServer = "https://community-api.purepoker.world";
 export const urlServerAuth = "https://authentication-api.purepoker.world";
 
 const ProtectedRoute = ({ children }) => {
-  console.log("Start Test!");
   const { user, isLoading } = useAuth();
   if (isLoading) {
     return <Loading />

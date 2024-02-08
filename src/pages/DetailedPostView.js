@@ -5,7 +5,7 @@ import { urlServer } from '../App';
 import './DetailedPostView.css';
 import moment from 'moment';
 import Loading from '../components/Loading';
-
+import { useAuth } from '../context/AuthContext';
 
 const DetailedPostView = () => {
     const { postId } = useParams();
@@ -14,6 +14,8 @@ const DetailedPostView = () => {
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
     const [visibleCommentsCount, setVisibleCommentsCount] = useState(5);
+
+    const { user } = useAuth(); 
 
     const formatDate = (utcDateString) => {
         const localDate = moment.utc(utcDateString).local();
@@ -50,7 +52,7 @@ const DetailedPostView = () => {
             // You can include an id if available from the response, or a temporary one
             id: Date.now(), 
             post_id: post.id,
-            author: "TemporaryAuthor", // Replace with actual author data once authentication is implemented
+            author: user.username, // Replace with actual author data once authentication is implemented
             content: newComment,
             likes: 0,
             created_at: new Date().toISOString()
@@ -59,7 +61,7 @@ const DetailedPostView = () => {
         // Optimistically update the local state
         setComments([commentToAdd, ...comments]);
 
-        axios.post(`${urlServer}/posts/${post.id}/comments`, { author: "TemporaryAuthor", content: newComment })
+        axios.post(`${urlServer}/posts/${post.id}/comments`, { author: user.username, content: newComment })
             .then(response => {
                 setNewComment('');
                 setComments([response.data, ...comments]); // Use data from the backend
