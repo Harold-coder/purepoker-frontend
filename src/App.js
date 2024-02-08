@@ -28,6 +28,8 @@ const ProtectedRoute = ({ children }) => {
   if (!user) {
     <Navigate to="/login" />;
   }
+  console.log("We are good.");
+  console.log("User:", user);
   return children
 };
 
