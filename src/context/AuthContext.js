@@ -8,6 +8,7 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     const fetchUserDetails = async () => {
         try {
@@ -23,6 +24,8 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
             console.error('Token validation failed:', error);
             logout();
+        } finally {
+            setIsLoading(false); // Stop loading regardless of the outcome
         }
     };
 
@@ -55,7 +58,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider value={{ user, login, logout, isLoading }}>
             {children}
         </AuthContext.Provider>
     );
