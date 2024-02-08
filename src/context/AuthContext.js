@@ -23,8 +23,6 @@ export const AuthProvider = ({ children }) => {
         } catch (error) {
             console.error('Token validation failed:', error);
             logout();
-        } finally {
-            setLoading(false); // Ensure loading is set to false after fetch
         }
     };
 
