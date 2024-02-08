@@ -7,25 +7,6 @@ import NavigationMenu from '../components/NavigationMenu';
 import { urlServer, urlServerAuth } from '../App';
 
 const CommunityPage = () => {
-    // In your main App component or in a useEffect within your AuthProvider
-    useEffect(() => {
-        const validateUserSession = async () => {
-        try {
-            const response = await axios.post(`${urlServerAuth}/validate_token`, { withCredentials: true });
-            if (response.data.message === 'Token is valid') {
-            // User is authenticated, update state accordingly
-            console.log(response);
-            }
-        } catch (error) {
-            console.error('Session validation error:', error);
-            // Handle error, possibly logging the user out or redirecting to login
-        }
-        };
-    
-        validateUserSession();
-    }, []); // Empty dependency array ensures this runs once on mount
-  
-    axios.defaults.withCredentials = true;
     const [posts, setPosts] = useState([]);
 
     const fetchPosts = () => {
