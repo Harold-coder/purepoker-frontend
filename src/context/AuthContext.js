@@ -12,11 +12,17 @@ export const AuthProvider = ({ children }) => {
     const fetchUserDetails = async () => {
         try {
             const { data } = await axios.get(`${urlServerAuth}/validate_token`, { withCredentials: true });
-            setUser(data.user);  // Assuming the backend sends back user data
-            localStorage.setItem('user', JSON.stringify(data.user));  // Update local storage if token still valid
+            if (data && data.user) {
+                setUser(data.user);
+                localStorage.setItem('user', JSON.stringify(data.user));
+            } else {
+                throw new Error('User validation failed');
+            }
         } catch (error) {
             console.error('Token validation failed:', error);
-            logout();  // Ensure clean state if token is invalid
+            logout();
+        } finally {
+            setLoading(false); // Ensure loading is set to false after fetch
         }
     };
 
