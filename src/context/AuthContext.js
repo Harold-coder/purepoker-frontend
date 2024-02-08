@@ -11,7 +11,9 @@ export const AuthProvider = ({ children }) => {
 
     const fetchUserDetails = async () => {
         try {
-            const { data } = await axios.get(`${urlServerAuth}/validate_token`, { withCredentials: true });
+            const response = await axios.get(`${urlServerAuth}/validate_token`, { withCredentials: true });
+            const data = response.data;
+            console.log("AUTH DATA:", data);
             if (data && data.user) {
                 setUser(data.user);
                 localStorage.setItem('user', JSON.stringify(data.user));
