@@ -30,7 +30,6 @@ const ProfilePage = () => {
                 <img src={require("../images/avatar.png")} className="profile-image" alt='avatar' />
                 <p className='profile-info-text'><span className='info-label'>Username: </span>{user.username}</p>
                 <p className='profile-info-text'><span className='info-label'>Email: </span>{user.email}</p>
-                <p className='profile-info-text'><span className='info-label'>Profit Net Loss: </span><span className='pnl'>+$500</span></p>
             </div>
         </div>
     )
