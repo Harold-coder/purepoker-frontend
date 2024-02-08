@@ -1,30 +1,32 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import "./ProfilePage.css";
 
 const ProfilePage = () => {
     const navigate = useNavigate();
-    const { user, logout } = useAuth();  // Destructure logout from useAuth
-
-    const navigateToCommunity = () => {
-        navigate('/');
-    };
+    const { user, logout } = useAuth();
 
     const handleLogout = async () => {
-        await logout();  // Call the logout function from AuthProvider
-        navigate('/login');  // Redirect to login page after logout
+        await logout();
+        navigate('/login');
     };
 
     return (
         <div className='profile-page-container'>
-            <p className='profile-title' onClick={navigateToCommunity}>Pure Poker</p>
+            <div className='header'>
+                <p className='profile-title' onClick={() => navigate('/')}>Pure Poker</p>
+                <button onClick={handleLogout} className="logout-button">
+                    <FontAwesomeIcon icon={faSignOutAlt} />
+                </button>
+            </div>
             <div className='profile-info'>
-                <img src={require("../images/avatar.png")} className="profile-image" alt='avatar'></img>
+                <img src={require("../images/avatar.png")} className="profile-image" alt='avatar' />
                 <p className='profile-info-text'><span className='info-label'>Username: </span>{user.username}</p>
-                <p className='profile-info-text'><span className='info-label'>Email: </span>{user.email}</p> {/* Use user.email */}
+                <p className='profile-info-text'><span className='info-label'>Email: </span>{user.email}</p>
                 <p className='profile-info-text'><span className='info-label'>Profit Net Loss: </span><span className='pnl'>+$500</span></p>
-                <button onClick={handleLogout} className="logout-button">Logout</button> {/* Add Logout Button */}
             </div>
         </div>
     )
