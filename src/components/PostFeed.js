@@ -20,7 +20,6 @@ const PostFeed = () => {
         try {
             // Assuming you have an endpoint to get IDs of liked posts
             const { data: likedPostsIds } = await axios.post(`${urlServer}/posts/likes`, { user_id: user.id });
-            console.log(likedPostsIds);
             return likedPostsIds;
         } catch (error) {
             console.error('Error fetching liked posts:', error);
@@ -69,7 +68,6 @@ const PostFeed = () => {
                 // Extracting the action and likes count from the response
                 const { status, likes } = response.data;
                 
-                console.log(status);
                 // Determine if the post was liked or unliked based on the 'status' returned from the server
                 const isLiked = status === 'liked';
     
