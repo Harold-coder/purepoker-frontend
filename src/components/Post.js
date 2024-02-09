@@ -43,7 +43,7 @@ const Post = ({ data, isComment, onLike, onDelete, onPostClick }) => {
                 </span>
                 {!isComment && (
                     <span className="comments">
-                        <i className="fas fa-comments"></i> {data.commentsCount || 0}
+                        <i className="fas fa-comments"></i> {data.comments_count || 0}
                     </span>
                 )}
             </div>
