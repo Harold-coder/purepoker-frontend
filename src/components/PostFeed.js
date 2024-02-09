@@ -6,10 +6,13 @@ import PostComposer from '../components/PostComposer';
 import axios from 'axios';
 import { urlServer } from '../App';
 import SearchPost from './SearchPost';
+import { useAuth } from '../context/AuthContext';
 
 const PostFeed = () => {
     const [posts, setPosts] = useState([]);
     const [filteredPosts, setFilteredPosts] = useState([]);
+
+    const { user } = useAuth(); 
     const navigate = useNavigate();
     axios.defaults.withCredentials = true;
 
@@ -46,7 +49,7 @@ const PostFeed = () => {
         const isLiked = likedPost.liked;
         const updatedPost = { ...likedPost, liked: !isLiked };
 
-        axios.post(`${urlServer}/posts/${likedPost.id}/like`, { like: !isLiked })
+        axios.post(`${urlServer}/posts/${likedPost.id}/like`, { user_id: user.id, like: !isLiked })
             .then(response => {
                 // Update both posts and filteredPosts
                 const updatedPosts = posts.map(p => 
