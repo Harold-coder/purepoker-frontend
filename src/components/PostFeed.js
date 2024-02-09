@@ -19,7 +19,7 @@ const PostFeed = () => {
     const fetchLikedPosts = async () => {
         try {
             // Assuming you have an endpoint to get IDs of liked posts
-            const { data: likedPostsIds } = await axios.get(`${urlServer}/posts/likes`, { user_id: user.id });
+            const { data: likedPostsIds } = await axios.post(`${urlServer}/posts/likes`, { user_id: user.id });
             console.log(likedPostsIds);
             return likedPostsIds;
         } catch (error) {
