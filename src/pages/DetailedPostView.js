@@ -14,6 +14,7 @@ const DetailedPostView = () => {
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
     const [visibleCommentsCount, setVisibleCommentsCount] = useState(5);
+    const [likedComments, setLikedComments] = useState(new Set()); // Store liked comment IDs
 
     const { user } = useAuth(); 
 
@@ -38,10 +39,16 @@ const DetailedPostView = () => {
             setComments(commentsResponse.data.sort((a, b) => 
                 new Date(b.created_at) - new Date(a.created_at)
             ));
+            const likedCommentsResponse = await axios.post(`${urlServer}/comments/likes`, { user_id: user.id });
+            setLikedComments(new Set(likedCommentsResponse.data));
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
+
+    useEffect(() => {
+        fetchPostAndComments();
+    }, [postId]);
 
     const submitComment = () => {
         if (!newComment.trim()) {
@@ -69,23 +76,22 @@ const DetailedPostView = () => {
             .catch(error => console.error('Error posting comment:', error));
     };
 
-    useEffect(() => {
-        fetchPostAndComments();
-    }, [postId]);
-
-    const likeComment = (commentId) => {
-        axios.post(`${urlServer}/comments/${commentId}/like`, { like: true })
-            .then(response => {
-                const updatedComments = comments.map(comment => {
-                    if (comment.id === commentId) {
-                        // Assuming the backend returns the updated like count
-                        return { ...comment, likes: response.data.likes };
-                    }
-                    return comment;
-                });
-                setComments(updatedComments);
-            })
-            .catch(error => console.error('Error liking comment:', error));
+    const likeComment = async (commentId) => {
+        try {
+            await axios.post(`${urlServer}/comments/${commentId}/like`, { user_id: user.id });
+            setLikedComments(prev => {
+                const newLikes = new Set(prev);
+                if (newLikes.has(commentId)) {
+                    newLikes.delete(commentId);
+                } else {
+                    newLikes.add(commentId);
+                }
+                return newLikes;
+            });
+            // Optionally, refetch comments or adjust like counts locally
+        } catch (error) {
+            console.error('Error liking comment:', error);
+        }
     };
 
     const deleteComment = (commentId) => {
@@ -166,7 +172,7 @@ const DetailedPostView = () => {
                         <p className='comment-content'>{comment.content}</p>
                         <div className="comment-interactions">
                             <span className="likes" onClick={(e) => handleLikeClick(e, comment)}>
-                                <i className={comment.liked ? "fas fa-heart liked" : "fas fa-heart"}></i> {comment.likes}
+                                <i className={likedComments.has(comment.id) ? "fas fa-heart liked" : "fas fa-heart"}></i> {comment.likes}
                             </span>
                         </div>
                     </div>
