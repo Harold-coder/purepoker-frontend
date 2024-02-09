@@ -41,6 +41,8 @@ const DetailedPostView = () => {
             ));
             const likedCommentsResponse = await axios.post(`${urlServer}/comments/likes`, { user_id: user.id });
             setLikedComments(new Set(likedCommentsResponse.data));
+            console.log(likedCommentsResponse.data);
+            console.log(commentsResponse);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -89,6 +91,18 @@ const DetailedPostView = () => {
                 return newLikes;
             });
             // Optionally, refetch comments or adjust like counts locally
+            setComments(prevComments => prevComments.map(comment => {
+                if (comment.id === commentId) {
+                    // If the comment is currently liked, decrease its like count
+                    // Otherwise, increase its like count
+                    return {
+                        ...comment,
+                        likes: likedComments.has(commentId) ? comment.likes - 1 : comment.likes + 1
+                    };
+                }
+                return comment; // Return unchanged for other comments
+            }));
+            
         } catch (error) {
             console.error('Error liking comment:', error);
         }
