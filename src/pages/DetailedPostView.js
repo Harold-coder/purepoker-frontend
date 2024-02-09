@@ -41,8 +41,6 @@ const DetailedPostView = () => {
             ));
             const likedCommentsResponse = await axios.post(`${urlServer}/comments/likes`, { user_id: user.id });
             setLikedComments(new Set(likedCommentsResponse.data));
-            console.log(likedCommentsResponse.data);
-            console.log(commentsResponse);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -102,7 +100,7 @@ const DetailedPostView = () => {
                 }
                 return comment; // Return unchanged for other comments
             }));
-            
+
         } catch (error) {
             console.error('Error liking comment:', error);
         }
