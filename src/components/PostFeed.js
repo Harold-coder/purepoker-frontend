@@ -16,19 +16,36 @@ const PostFeed = () => {
     const navigate = useNavigate();
     axios.defaults.withCredentials = true;
 
-    const fetchPosts = () => {
-        axios.get(`${urlServer}/posts`)
-            .then(response => {
-                const sortedPosts = response.data.sort((a, b) => b.id - a.id);
-                setPosts(sortedPosts);
-                setFilteredPosts(sortedPosts);
-            })
-            .catch(error => console.error('Error fetching posts:', error));
+    const fetchLikedPosts = async () => {
+        try {
+            // Assuming you have an endpoint to get IDs of liked posts
+            const { data: likedPostsIds } = await axios.get(`${urlServer}/posts/likes`, { params: { userId: user.id }});
+            console.log(likedPostsIds);
+            return likedPostsIds;
+        } catch (error) {
+            console.error('Error fetching liked posts:', error);
+            return [];
+        }
+    };
+
+    const fetchPosts = async () => {
+        try {
+            const likedPostsIds = await fetchLikedPosts();
+            const { data } = await axios.get(`${urlServer}/posts`);
+            const postsWithLikeStatus = data.map(post => ({
+                ...post,
+                liked: likedPostsIds.includes(post.id) // Add liked status
+            }));
+            setPosts(postsWithLikeStatus);
+            setFilteredPosts(postsWithLikeStatus);
+        } catch (error) {
+            console.error('Error fetching posts:', error);
+        }
     };
 
     useEffect(() => {
         fetchPosts();
-    }, []);   
+    }, []);
 
     const handlePostClick = (postId) => {
         navigate(`/post/${postId}`);
@@ -45,24 +62,32 @@ const PostFeed = () => {
             .catch(error => console.error('Error deleting post:', error));
     };
 
-    const handleLike = (likedPost) => {
-        const isLiked = likedPost.liked;
-        const updatedPost = { ...likedPost, liked: !isLiked };
-
-        axios.post(`${urlServer}/posts/${likedPost.id}/like`, { user_id: user.id, like: !isLiked })
+    const handleLike = (postToToggle) => {
+        axios.post(`${urlServer}/posts/${postToToggle.id}/like`, { user_id: user.id })
             .then(response => {
-                // Update both posts and filteredPosts
-                const updatedPosts = posts.map(p => 
-                    p.id === likedPost.id ? { ...updatedPost, likes: response.data.likes } : p
-                );
-                const updatedFilteredPosts = filteredPosts.map(p => 
-                    p.id === likedPost.id ? { ...updatedPost, likes: response.data.likes } : p
-                );
-                setPosts(updatedPosts);
-                setFilteredPosts(updatedFilteredPosts);
+                // Extracting the action and likes count from the response
+                const { status, likes } = response.data;
+                
+                console.log(status);
+                // Determine if the post was liked or unliked based on the 'status' returned from the server
+                const isLiked = status === 'liked';
+    
+                // Update the posts and filteredPosts state to reflect the new like status and count
+                const updatePosts = (posts) => posts.map(post => {
+                    if (post.id === postToToggle.id) {
+                        // Update the post with the new like status and count
+                        return { ...post, liked: isLiked, likes };
+                    }
+                    return post;
+                });
+    
+                setPosts(updatePosts(posts));
+                setFilteredPosts(updatePosts(filteredPosts));
             })
             .catch(error => console.error('Error updating like:', error));
     };
+    
+    
 
     const handleSearch = (searchTerm) => {
         const filtered = posts.filter(post => 
