@@ -36,8 +36,9 @@ const PostFeed = () => {
                 ...post,
                 liked: likedPostsIds.includes(post.id) // Add liked status
             }));
-            setPosts(postsWithLikeStatus);
-            setFilteredPosts(postsWithLikeStatus);
+            const sortedPosts = postsWithLikeStatus.sort((a, b) => b.id - a.id);
+            setPosts(sortedPosts);
+            setFilteredPosts(sortedPosts);
         } catch (error) {
             console.error('Error fetching posts:', error);
         }
