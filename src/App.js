@@ -13,6 +13,7 @@ import SignUp from './components/SignUp';
 
 import { useAuth } from './context/AuthContext';
 import Loading from './components/Loading';
+import ChatPage from './pages/ChatPage';
 
 // export const urlServer = "http://127.0.0.1:8012";
 export const urlServer = "https://community-api.purepoker.world";
@@ -42,7 +43,8 @@ function App() {
                             <Route index element={<PostFeed />} />
                             <Route path="post/:postId" element={<DetailedPostView />} />
                         </Route>
-                        <Route path="/groups" element={<ProtectedRoute><GroupsPage /></ProtectedRoute>} />
+                        <Route path="/groups" element={<GroupsPage />} />                                   {/* TODO: Add the protectedRoute back */}
+                        <Route path="/chat" element={<ChatPage />} />
                         <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
                         <Route path="/poker-game" element={<ProtectedRoute><PokerGamePage /></ProtectedRoute>} />
                         <Route path="/post/:postId" element={<ProtectedRoute><DetailedPostView /></ProtectedRoute>} />

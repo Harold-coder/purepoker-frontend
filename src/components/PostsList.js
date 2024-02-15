@@ -20,8 +20,6 @@ const PostsList = ( { posts, onLike, onDelete }) => {
         onDelete(postId);
     };
 
-    console.log(posts);
-
     return (
         <div className="posts-list">
             {posts.map(post => (
