@@ -1,0 +1,84 @@
+.pokerGamePage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    padding: 20px;
+}
+
+.pageTitle {
+    color: rgb(111, 12, 12);
+    margin-bottom: 30px;
+}
+
+.inputGameInfoSection {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.joinGameSection {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+
+.createGameSection {
+    /* margin-left: 5rem; */
+}
+
+.formInput {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.gameInput {
+    margin-bottom: 2rem;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.actionButton {
+    background-color: rgb(111, 12, 12);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.toggleFormButton,
+.submitButton {
+    background-color: rgb(111, 12, 12);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.actionButton:hover,
+.toggleFormButton:hover,
+.submitButton:hover {
+    background-color: rgb(95, 7, 7);
+}
+
+.createForm {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+.createForm .formInput {
+    margin-bottom: 10px;
+}
