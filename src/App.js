@@ -5,7 +5,7 @@ import { AuthProvider } from './context/AuthContext';
 import CommunityPage from './pages/CommunityPage';
 import GroupsPage from './pages/GroupsPage';
 import ProfilePage from './pages/ProfilePage';
-import PokerGamePage from './pages/PokerGamePage';
+import PokerLobby from './pages/PokerLobby';
 import DetailedPostView from './pages/DetailedPostView';
 import PostFeed from './components/PostFeed';
 import Login from './components/Login'; 
@@ -46,7 +46,7 @@ function App() {
                         <Route path="/groups" element={<GroupsPage />} />                                   {/* TODO: Add the protectedRoute back */}
                         <Route path="/chat" element={<ChatPage />} />
                         <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-                        <Route path="/poker-game" element={<PokerGamePage />} />                             {/* TODO: Add the protectedRoute back */}
+                        <Route path="/poker-game" element={<PokerLobby />} />                             {/* TODO: Add the protectedRoute back */}
                         <Route path="/post/:postId" element={<ProtectedRoute><DetailedPostView /></ProtectedRoute>} />
                     </Routes>
                 </div>
