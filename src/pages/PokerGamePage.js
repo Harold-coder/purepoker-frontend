@@ -20,7 +20,7 @@ const PokerGamePage = () => {
 
     return (
         <div className="pokerGamePage">
-            <h1 className="pageTitle">Pure Poker</h1>
+            <h1 className="pageTitle">Pure Poker</h1>     {/* TODO: MAKE THIS SHIT LEAD TO THE COMMUNITY PAGE */}              
             <div className="inputGameInfoSection">
                 <div className="joinGameSection">
                     <input
@@ -32,6 +32,7 @@ const PokerGamePage = () => {
                     />
                     <button className="actionButton" onClick={handleJoinGame}>Join Game</button>
                 </div>
+                <p className="or-text">or</p>
                 <div className="createGameSection">
                     <button className="toggleFormButton" onClick={() => setShowCreateForm(!showCreateForm)}>Create New Game</button>
                     {showCreateForm && (
@@ -57,7 +58,7 @@ const PokerGamePage = () => {
                                 value={buyIn}
                                 onChange={(e) => setBuyIn(e.target.value)}
                             />
-                            <button className="submitButton" onClick={handleCreateGame}>Submit</button>
+                            <button className="submitButton" onClick={handleCreateGame}>Create</button>
                         </div>
                     )}
                 </div>
