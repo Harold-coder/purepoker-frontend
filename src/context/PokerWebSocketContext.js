@@ -22,12 +22,12 @@ export const WebSocketProvider = ({ children }) => {
               case 'createGame':
                 localStorage.setItem('gameId', data.gameDetails.gameId);
                 setGameState(data.gameDetails);
-                navigate(`/poker-game/${data.gameDetails.gameId}`);
+                navigate(`/poker-game/${data.gameDetails.gameId}`);  // Should be handled somewhere else
                 break;
               case 'joinGame':
                 localStorage.setItem('gameId', data.gameDetails.gameId);
                 setGameState(data.gameDetails);
-                navigate(`/poker-game/${data.gameDetails.gameId}`);
+                navigate(`/poker-game/${data.gameDetails.gameId}`); // Should be handled somewhere else
                 break;
               default:
                 console.log('Unhandled message action:', data.action);
@@ -48,8 +48,12 @@ export const WebSocketProvider = ({ children }) => {
         };
     }, []);
 
+    const sendPlayerAction = (action, payload) => {
+        websocketService.sendMessage(action, payload);
+    };
+
     return (
-        <WebSocketContext.Provider value={{ gameState }}>
+        <WebSocketContext.Provider value={{ gameState, sendPlayerAction }}>
             {children}
         </WebSocketContext.Provider>
     );

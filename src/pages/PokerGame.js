@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import { useWebSocket } from '../context/PokerWebSocketContext'; 
 import './PokerGame.css';
+import PokerPlay from './PokerPlay';
 
 const PokerGame = () => {
   const { gameId } = useParams();
@@ -10,7 +10,6 @@ const PokerGame = () => {
 //   const [isLoading, setIsLoading] = useState(true);
 
   // Ensure this URL is correct and points to your deployed API
-  const apiUrl = "https://gxwbfjkt95.execute-api.us-east-1.amazonaws.com/dev";
 
   const { gameState } = useWebSocket(); // Use gameState from context
 
@@ -28,7 +27,7 @@ const PokerGame = () => {
 
   if (gameState.gameStarted) {
     // Placeholder for when the game component is ready
-    return <div>Game has started! (Render actual game component here)</div>;
+    return <div><PokerPlay /></div>;
   }
 
   return (
