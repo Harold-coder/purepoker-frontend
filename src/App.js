@@ -36,8 +36,8 @@ const ProtectedRoute = ({ children }) => {
 function App() {
     return (
         <AuthProvider>
-            <WebSocketProvider>
                 <Router>
+                <WebSocketProvider>
                     <div className="app-container">
                         <Routes>
                             <Route path="/login" element={<Login />} />
@@ -54,8 +54,8 @@ function App() {
                             <Route path="/post/:postId" element={<ProtectedRoute><DetailedPostView /></ProtectedRoute>} />
                         </Routes>
                     </div>
+                    </WebSocketProvider>
                 </Router>
-            </WebSocketProvider>
         </AuthProvider>
     );
 }

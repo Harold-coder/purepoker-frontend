@@ -21,10 +21,12 @@ export const WebSocketProvider = ({ children }) => {
                 break;
               case 'createGame':
                 localStorage.setItem('gameId', data.gameDetails.gameId);
+                setGameState(data.gameDetails);
                 navigate(`/poker-game/${data.gameDetails.gameId}`);
                 break;
               case 'joinGame':
                 localStorage.setItem('gameId', data.gameDetails.gameId);
+                setGameState(data.gameDetails);
                 navigate(`/poker-game/${data.gameDetails.gameId}`);
                 break;
               default:
@@ -41,6 +43,7 @@ export const WebSocketProvider = ({ children }) => {
             // The readyState of 1 indicates that the connection is open.
             if (websocketService.ws && websocketService.ws.readyState === WebSocket.OPEN) {
                 websocketService.disconnect();
+                websocketService.removeMessageListener(handleMessage);
             }
         };
     }, []);
