@@ -30,7 +30,7 @@ const PokerLobby = () => {
 
     const handleJoinGame = () => {
         console.log(`Joining game with ID: ${gameId}`);
-        websocketService.sendMessage("joinGame", { gameId, playerUsername: user.username }); // Adjust `playerUsername` as needed
+        websocketService.sendMessage("joinGame", { gameId, playerId: user.username }); // Adjust `playerUsername` as needed
     };
 
     const handleCreateGame = () => {
