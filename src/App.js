@@ -49,8 +49,8 @@ function App() {
                             <Route path="/groups" element={<GroupsPage />} />                                                   {/* TODO: Add the protectedRoute back */}
                             <Route path="/chat" element={<ChatPage />} />
                             <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-                                <Route path="/poker-game" element={<PokerLobby />} />                                               {/* TODO: Add the protectedRoute back */}
-                                <Route path="/poker-game/:gameId" element={<PokerGame />} />                                        {/* TODO: Add the protectedRoute back */}
+                            <Route path="/poker-game" element={<PokerLobby />} />                                               {/* TODO: Add the protectedRoute back */}
+                            <Route path="/poker-game/:gameId" element={<PokerGame />} />                                        {/* TODO: Add the protectedRoute back */}
                             <Route path="/post/:postId" element={<ProtectedRoute><DetailedPostView /></ProtectedRoute>} />
                         </Routes>
                     </div>

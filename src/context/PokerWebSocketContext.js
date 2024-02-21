@@ -6,10 +6,16 @@ const WebSocketContext = createContext();
 
 export const WebSocketProvider = ({ children }) => {
     useEffect(() => {
-        websocketService.connect();
-
+        if (!websocketService.ws) {
+            websocketService.connect();
+        }
+    
         return () => {
-            websocketService.disconnect();
+            // Ensure we only attempt to disconnect if the connection is open.
+            // The readyState of 1 indicates that the connection is open.
+            if (websocketService.ws && websocketService.ws.readyState === WebSocket.OPEN) {
+                websocketService.disconnect();
+            }
         };
     }, []);
 

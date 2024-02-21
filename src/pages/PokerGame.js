@@ -34,8 +34,8 @@ const PokerGame = () => {
         setIsLoading(true);
         try {
         const response = await axios.get(`${apiUrl}/games/${gameId}/state`);
-        console.log(`${apiUrl}/games/${gameId}/state`);
-        console.log(response.data);
+        // console.log(`${apiUrl}/games/${gameId}/state`);
+        // console.log(response.data);
         setGameState(response.data);
         } catch (error) {
         console.error('Error fetching game state:', error);

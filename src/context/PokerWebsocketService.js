@@ -6,6 +6,10 @@ class PokerWebsocketService {
       this.onGameCreateSuccess = null;
       this.onGameCreateError = null;
     }
+
+    isConnected() {
+      return this.ws && (this.ws.readyState === WebSocket.OPEN || this.ws.readyState === WebSocket.CONNECTING);
+    }
   
     connect() {
       if (this.isConnected) {
@@ -15,13 +19,19 @@ class PokerWebsocketService {
 
       const gameId = localStorage.getItem('gameId');
       const user = localStorage.getItem('user');
-      const playerUsername = user.username;
+      console.log(user);
+      var playerUsername = '';
+      if (user) {
+        playerUsername = user.username;
+        console.log(playerUsername);
+      }
       const queryParams = [];
 
       if (gameId) {
           queryParams.push(`gameId=${encodeURIComponent(gameId)}`);
       }
       if (playerUsername) {
+        console.log("YEYEYE")
           queryParams.push(`playerUsername=${encodeURIComponent(playerUsername)}`);
       }
 
@@ -48,6 +58,7 @@ class PokerWebsocketService {
         if (data.statusCode === 200) {
           this.onGameCreateSuccess && this.onGameCreateSuccess(data);
         } else {
+          console.log(data);
           this.onGameCreateError && this.onGameCreateError(data.message);
         }
       } catch (error) {
