@@ -1,37 +1,24 @@
 class PokerWebsocketService {
     constructor() {
       this.ws = null;
-      this.isConnected = false;
-      // Add callbacks to handle success and error
-      this.onGameCreateSuccess = null;
-      this.onGameCreateError = null;
-    }
-
-    isConnected() {
-      return this.ws && (this.ws.readyState === WebSocket.OPEN || this.ws.readyState === WebSocket.CONNECTING);
+      this.listeners = [];
     }
   
     connect() {
-      if (this.isConnected) {
-        console.log("WebSocket is already connected.");
-        return;
-      }
 
       const gameId = localStorage.getItem('gameId');
-      const user = localStorage.getItem('user');
-      console.log(user);
+      const user = JSON.parse(localStorage.getItem('user'));
       var playerUsername = '';
       if (user) {
         playerUsername = user.username;
-        console.log(playerUsername);
       }
+
       const queryParams = [];
 
       if (gameId) {
           queryParams.push(`gameId=${encodeURIComponent(gameId)}`);
       }
       if (playerUsername) {
-        console.log("YEYEYE")
           queryParams.push(`playerUsername=${encodeURIComponent(playerUsername)}`);
       }
 
@@ -53,23 +40,20 @@ class PokerWebsocketService {
     // Modify onMessage to handle custom logic
     onMessage = (event) => {
       console.log("Message received:", event.data);
-      try {
-        const data = JSON.parse(event.data);
-        if (data.statusCode === 200) {
-          this.onGameCreateSuccess && this.onGameCreateSuccess(data);
-        } else {
-          console.log(data);
-          this.onGameCreateError && this.onGameCreateError(data.message);
-        }
-      } catch (error) {
-        this.onGameCreateError && this.onGameCreateError("Failed to parse message");
-      }
+      const data = JSON.parse(event.data);
+      this.listeners.forEach((listener) => listener(data));
     };
+
+    addMessageListener(listener) {
+      this.listeners.push(listener);
+    }
+  
+    removeMessageListener(listener) {
+      this.listeners = this.listeners.filter((l) => l !== listener);
+    }
   
     onClose = (event) => {
       console.log("WebSocket connection closed", `Code: ${event.code}`, `Reason: ${event.reason}`);
-      this.isConnected = false;
-      // Consider implementing reconnection logic here
     };
   
     onError = (error) => {
@@ -85,7 +69,6 @@ class PokerWebsocketService {
       } else {
         console.error("WebSocket is not connected. Attempting to reconnect...");
         this.connect(); // Attempt to reconnect if not connected
-        // Consider delaying the send operation until the connection is established
       }
     }
   
@@ -93,7 +76,6 @@ class PokerWebsocketService {
       if (this.ws) {
         console.log("Disconnecting WebSocket...");
         this.ws.close();
-        this.isConnected = false;
       }
     }
   }

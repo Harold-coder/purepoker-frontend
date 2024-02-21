@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { websocketService } from '../context/PokerWebsocketService'; // Adjust the path as needed
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useWebSocket } from '../context/PokerWebSocketContext'; // Import the context
 import './PokerLobby.css'; // Importing CSS stylesheet
 
 const PokerLobby = () => {
@@ -13,20 +14,13 @@ const PokerLobby = () => {
 
     const navigate = useNavigate();
 
+    const { gameState } = useWebSocket(); // Use gameState from context
+
     const { user } = useAuth();
 
     useEffect(() => {
-        // Set up the success callback
-        websocketService.onGameCreateSuccess = (data) => {
-            localStorage.setItem('gameId', data.gameDetails.gameId);
-            navigate(`/poker-game/${data.gameDetails.gameId}`);
-        };
-
-        // Set up the error callback
-        websocketService.onGameCreateError = (message) => {
-            alert(message); // For simplicity, using an alert to show the error
-        };
-    }, [navigate]);
+        // No need to handle WebSocket messages here. Use gameState as needed.
+      }, [gameState, navigate]);
 
     const handleJoinGame = () => {
         console.log(`Joining game with ID: ${gameId}`);
