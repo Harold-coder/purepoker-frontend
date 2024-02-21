@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { websocketService } from '../context/PokerWebsocketService'; // Adjust the path as needed
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import './PokerLobby.css'; // Importing CSS stylesheet
 
 const PokerLobby = () => {
@@ -10,15 +11,22 @@ const PokerLobby = () => {
     const [maxPlayers, setMaxPlayers] = useState('');
     const [buyIn, setBuyIn] = useState('');
 
+    const navigate = useNavigate();
+
     const { user } = useAuth();
 
     useEffect(() => {
-        websocketService.connect();
-
-        return () => {
-            websocketService.disconnect();
+        // Set up the success callback
+        websocketService.onGameCreateSuccess = (data) => {
+            localStorage.setItem('gameId', data.gameDetails.gameId);
+            navigate(`/poker-game/${data.gameDetails.gameId}`);
         };
-    }, []);
+
+        // Set up the error callback
+        websocketService.onGameCreateError = (message) => {
+            alert(message); // For simplicity, using an alert to show the error
+        };
+    }, [navigate]);
 
     const handleJoinGame = () => {
         console.log(`Joining game with ID: ${gameId}`);
@@ -32,7 +40,8 @@ const PokerLobby = () => {
 
     return (
         <div className="PokerLobby">
-            <h1 className="pageTitle">Pure Poker</h1>     {/* TODO: MAKE THIS SHIT LEAD TO THE COMMUNITY PAGE */}              
+            {/* TODO: Add a home icon that leads to the community page. */}   
+            <h1 className="pageTitle">Pure Poker</h1>           
             <div className="inputGameInfoSection">
                 <div className="joinGameSection">
                     <input

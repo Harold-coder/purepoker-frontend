@@ -2,6 +2,9 @@ class PokerWebsocketService {
     constructor() {
       this.ws = null;
       this.isConnected = false;
+      // Add callbacks to handle success and error
+      this.onGameCreateSuccess = null;
+      this.onGameCreateError = null;
     }
   
     connect() {
@@ -10,7 +13,22 @@ class PokerWebsocketService {
         return;
       }
 
-      this.ws = new WebSocket("wss://6r5wma2l7i.execute-api.us-east-1.amazonaws.com/dev/");
+      const gameId = localStorage.getItem('gameId');
+      const user = localStorage.getItem('user');
+      const playerUsername = user.username;
+      const queryParams = [];
+
+      if (gameId) {
+          queryParams.push(`gameId=${encodeURIComponent(gameId)}`);
+      }
+      if (playerUsername) {
+          queryParams.push(`playerUsername=${encodeURIComponent(playerUsername)}`);
+      }
+
+      const queryString = queryParams.length ? `?${queryParams.join('&')}` : '';
+      this.ws = new WebSocket(`wss://6r5wma2l7i.execute-api.us-east-1.amazonaws.com/dev/${queryString}`);
+
+      // this.ws = new WebSocket("wss://6r5wma2l7i.execute-api.us-east-1.amazonaws.com/dev/");
       this.ws.onopen = this.onOpen;
       this.ws.onmessage = this.onMessage;
       this.ws.onclose = this.onClose;
@@ -21,9 +39,20 @@ class PokerWebsocketService {
       console.log("WebSocket connection opened");
       this.isConnected = true;
     };
-  
+
+    // Modify onMessage to handle custom logic
     onMessage = (event) => {
-      console.log("Message received:", JSON.parse(event.data));
+      console.log("Message received:", event.data);
+      try {
+        const data = JSON.parse(event.data);
+        if (data.statusCode === 200) {
+          this.onGameCreateSuccess && this.onGameCreateSuccess(data);
+        } else {
+          this.onGameCreateError && this.onGameCreateError(data.message);
+        }
+      } catch (error) {
+        this.onGameCreateError && this.onGameCreateError("Failed to parse message");
+      }
     };
   
     onClose = (event) => {

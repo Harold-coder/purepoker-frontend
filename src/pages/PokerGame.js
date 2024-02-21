@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { websocketService } from '../context/PokerWebsocketService'; 
 import './PokerGame.css';
 
 const PokerGame = () => {
@@ -12,21 +13,39 @@ const PokerGame = () => {
   const apiUrl = "https://gxwbfjkt95.execute-api.us-east-1.amazonaws.com/dev";
 
   useEffect(() => {
-    const fetchGameState = async () => {
-      setIsLoading(true);
+    // Define the handler function
+    const handleGameStateUpdate = (data) => {
+      if (data.action === 'updateGameState') {
+        setGameState(data.data);
+      }
+    };
+  
+    // Set the onMessage handler to the new function
+    websocketService.onMessage = (event) => {
       try {
+        const data = JSON.parse(event.data);
+        handleGameStateUpdate(data);
+      } catch (error) {
+        console.error('Error parsing message', error);
+      }
+    };
+
+    const fetchGameState = async () => {
+        setIsLoading(true);
+        try {
         const response = await axios.get(`${apiUrl}/games/${gameId}/state`);
         console.log(`${apiUrl}/games/${gameId}/state`);
         console.log(response.data);
         setGameState(response.data);
-      } catch (error) {
+        } catch (error) {
         console.error('Error fetching game state:', error);
-      }
-      setIsLoading(false);
+        }
+        setIsLoading(false);
     };
 
     fetchGameState();
-  }, [gameId, apiUrl]);
+  
+  }, [gameId]);
 
   if (isLoading) {
     return <div>Loading game state...</div>;
