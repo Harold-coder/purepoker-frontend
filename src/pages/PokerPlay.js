@@ -12,7 +12,6 @@ const PokerPlayer = () => {
     const tableRef = useRef(null);
     const { user } = useAuth();
     const currentPlayerId = user.username;
-    console.log(currentPlayerId);
 
     const { gameState, sendPlayerAction } = useWebSocket(); // Use gameState and sendPlayerAction from context
 

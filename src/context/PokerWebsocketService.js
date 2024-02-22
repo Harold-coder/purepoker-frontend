@@ -15,6 +15,7 @@ class PokerWebsocketService {
 
       const queryParams = [];
 
+      
       if (gameId) {
           queryParams.push(`gameId=${encodeURIComponent(gameId)}`);
       }

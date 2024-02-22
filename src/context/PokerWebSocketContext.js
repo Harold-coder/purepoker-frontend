@@ -29,6 +29,9 @@ export const WebSocketProvider = ({ children }) => {
                 setGameState(data.gameDetails);
                 navigate(`/poker-game/${data.gameDetails.gameId}`); // Should be handled somewhere else
                 break;
+              case 'playerCall': // Handle playerCall action
+                setGameState(parsedData.game); // Update the gameState with the new game state received
+                break;
               default:
                 console.log('Unhandled message action:', data.action);
             }
