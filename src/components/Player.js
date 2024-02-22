@@ -7,7 +7,8 @@ const getSuitClass = (card) => {
     if (card.includes('♣')) return 'clubs';
 };
 
-const Player = ({ player, position, isCurrentTurn, handlePlayerAction, isCurrentPlayer, canCall, canCheck, affordMinRaise, affordCall, minRaiseAmount, gameStage, highestBet, hasFolded,smallBlindIndex, playerCount, isReady, winners, handDescription, bestHand}) => {
+const Player = ({ player, position, isCurrentTurn, sendPlayerAction, currentPlayerId, canCall, canCheck, affordMinRaise, affordCall, minRaiseAmount, gameStage, highestBet, hasFolded,smallBlindIndex, playerCount, isReady, winners, handDescription, bestHand}) => {
+    const isCurrentPlayer = (player.id === currentPlayerId);
     const [raiseValue, setRaiseValue] = useState(minRaiseAmount); // Initial raise amount
     const maxRaiseValue = player.chips - (highestBet - player.bet);
     const isWinner = winners.includes(player.id);
@@ -16,12 +17,12 @@ const Player = ({ player, position, isCurrentTurn, handlePlayerAction, isCurrent
     const isSmallBlind = player.position === smallBlindIndex;
     const isBigBlind = player.position === bigBlindIndex;
     const isBtn = player.position === btnIdx
-    const onFold = () => handlePlayerAction('fold', { playerId: player.id });
-    const onCall = () => handlePlayerAction('call', { playerId: player.id });
-    const onCheck = () => handlePlayerAction('check', { playerId: player.id });
-    const onRaise = () => handlePlayerAction('raise', { playerId: player.id, amount: raiseValue });
-    const onRaiseAllIn = () => handlePlayerAction('raise', { playerId: player.id, amount: maxRaiseValue });
-    const handleReady = () => handlePlayerAction('playerReady', { playerId: player.id });
+    const onFold = () => sendPlayerAction('fold', { playerId: player.id });
+    const onCall = () => sendPlayerAction('call', { playerId: player.id });
+    const onCheck = () => sendPlayerAction('check', { playerId: player.id });
+    const onRaise = () => sendPlayerAction('raise', { playerId: player.id, amount: raiseValue });
+    const onRaiseAllIn = () => sendPlayerAction('raise', { playerId: player.id, amount: maxRaiseValue });
+    const handleReady = () => sendPlayerAction('playerReady', { playerId: player.id });
     const cardClass = isCurrentPlayer ? "current-player-card" : "other-player-card";
 
     const onRaiseChange = (event) => {
@@ -109,12 +110,16 @@ const Player = ({ player, position, isCurrentTurn, handlePlayerAction, isCurrent
         <div className={`player ${isCurrentTurn ? 'current-turn' : ''}`} style={playerStyle}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                 <div>
-                    <h3 style={{ margin: '0' }}>
+                <h3 style={{ margin: '0', color: 'black', display: 'flex', alignItems: 'center' }}>
+                    <div style={{ marginRight: '10px' }}> {/* This div wraps the labels */}
                         {isSmallBlind && <span style={labelStyle}>SB</span>}
                         {isBigBlind && <span style={labelStyle}>BB</span>}
                         {isBtn && <span style={labelStyle}>BTN</span>}
-                        {player.name}
-                    </h3>
+                    </div>
+                    <span style={{ padding: '3px 8px', marginLeft: isSmallBlind || isBigBlind || isBtn ? '10px' : '0' }}>
+                        {player.id}
+                    </span>
+                </h3>
                     <p style={{ margin: '0' }}>Chips: {player.chips}</p>
                     {gameStage !== 'gameOver' && (
                        <p style={{ margin: '0' }}>Bet: {player.bet}</p>

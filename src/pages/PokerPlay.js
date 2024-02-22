@@ -11,7 +11,8 @@ const PokerPlayer = () => {
     const [playerPositions, setPlayerPositions] = useState([]);
     const tableRef = useRef(null);
     const { user } = useAuth();
-    const currentPlayerId = user ? user.username : null;
+    const currentPlayerId = user.username;
+    console.log(currentPlayerId);
 
     const { gameState, sendPlayerAction } = useWebSocket(); // Use gameState and sendPlayerAction from context
 
@@ -27,7 +28,7 @@ const PokerPlayer = () => {
         updatePositions(); // Initial call to set player positions
         window.addEventListener('resize', updatePositions); // Update positions on window resize
         return () => window.removeEventListener('resize', updatePositions); // Cleanup on component unmount
-    }, [gameState]);
+    }, [gameState, currentPlayerId]);
 
     const handleCall = (playerId) => {
         // Assuming 'gameState' has a property 'gameId' that identifies the current game
@@ -57,7 +58,7 @@ const PokerPlayer = () => {
                     <Player
                         key={index}
                         player={player}
-                        isCurrentPlayer={player.id === currentPlayerId}
+                        currentPlayerId={currentPlayerId}
                         isCurrentTurn={gameState.currentTurn === player.position}
                         position={playerPositions[index] || { left: 0, top: 0 }}
                         sendPlayerAction={sendPlayerAction}

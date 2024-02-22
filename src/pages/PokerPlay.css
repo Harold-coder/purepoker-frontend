@@ -50,7 +50,7 @@
     position: relative;
     width: 1100px; /* Reduced width */
     height: 450px; /* Reduced height */
-    margin: 12vh auto; /* Adjusted vertical margin */
+    margin: 11vh 29vh; /* Adjusted vertical margin */
     background-color: #006400;
     border-radius: 15%/50%;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
