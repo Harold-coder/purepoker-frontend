@@ -11,9 +11,8 @@ const PokerPlayer = () => {
     const [playerPositions, setPlayerPositions] = useState([]);
     const tableRef = useRef(null);
     const { user } = useAuth();
-    console.log(user);
-    const currentPlayerId = user ? user.id : null;
-    console.log(user);
+    const currentPlayerId = user ? user.username : null;
+    console.log(currentPlayerId);
 
     const { gameState, sendPlayerAction } = useWebSocket(); // Use gameState and sendPlayerAction from context
 
@@ -21,7 +20,7 @@ const PokerPlayer = () => {
         const updatePositions = () => {
             if (gameState && gameState.players.length > 0 && tableRef.current) {
                 const { width, height } = tableRef.current.getBoundingClientRect();
-                const newPositions = calculatePlayerPositions(gameState.players, width / 2, height / 2, width / 2, height / 2, 0);
+                const newPositions = calculatePlayerPositions(gameState.players, width / 2, height / 2, width / 2, height / 2, gameState.players.find(player => player.id === currentPlayerId).position);
                 setPlayerPositions(newPositions);
             }
         };
