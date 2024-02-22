@@ -7,7 +7,7 @@ const getSuitClass = (card) => {
     if (card.includes('♣')) return 'clubs';
 };
 
-const Player = ({ player, position, isCurrentTurn, sendPlayerAction, canCall, canCheck, affordMinRaise, affordCall, minRaiseAmount, gameStage, highestBet, hasFolded,smallBlindIndex, playerCount, isReady, winners, handDescription, bestHand}) => {
+const Player = ({ player, position, isCurrentTurn, handlePlayerAction, isCurrentPlayer, canCall, canCheck, affordMinRaise, affordCall, minRaiseAmount, gameStage, highestBet, hasFolded,smallBlindIndex, playerCount, isReady, winners, handDescription, bestHand}) => {
     const [raiseValue, setRaiseValue] = useState(minRaiseAmount); // Initial raise amount
     const maxRaiseValue = player.chips - (highestBet - player.bet);
     const isWinner = winners.includes(player.id);
@@ -16,13 +16,13 @@ const Player = ({ player, position, isCurrentTurn, sendPlayerAction, canCall, ca
     const isSmallBlind = player.position === smallBlindIndex;
     const isBigBlind = player.position === bigBlindIndex;
     const isBtn = player.position === btnIdx
-    const onFold = () => sendPlayerAction('fold', { playerId: player.id });
-    const onCall = () => sendPlayerAction('call', { playerId: player.id });
-    const onCheck = () => sendPlayerAction('check', { playerId: player.id });
-    const onRaise = () => sendPlayerAction('raise', { playerId: player.id, amount: raiseValue });
-    const onRaiseAllIn = () => sendPlayerAction('raise', { playerId: player.id, amount: maxRaiseValue });
-    const handleReady = () => sendPlayerAction('playerReady', { playerId: player.id });
-    const cardClass = isCurrentTurn ? "current-player-card" : "other-player-card";
+    const onFold = () => handlePlayerAction('fold', { playerId: player.id });
+    const onCall = () => handlePlayerAction('call', { playerId: player.id });
+    const onCheck = () => handlePlayerAction('check', { playerId: player.id });
+    const onRaise = () => handlePlayerAction('raise', { playerId: player.id, amount: raiseValue });
+    const onRaiseAllIn = () => handlePlayerAction('raise', { playerId: player.id, amount: maxRaiseValue });
+    const handleReady = () => handlePlayerAction('playerReady', { playerId: player.id });
+    const cardClass = isCurrentPlayer ? "current-player-card" : "other-player-card";
 
     const onRaiseChange = (event) => {
         setRaiseValue(Number(event.target.value));
@@ -65,7 +65,7 @@ const Player = ({ player, position, isCurrentTurn, sendPlayerAction, canCall, ca
         whiteSpace: 'nowrap', // Keep content on a single line until there's no more space
     };
 
-    const playerStyle = isCurrentTurn ? currentPlayerStyle : otherPlayerStyle;
+    const playerStyle = isCurrentPlayer ? currentPlayerStyle : otherPlayerStyle;
 
     const labelStyle = {
         fontWeight: 'bold',
@@ -119,17 +119,17 @@ const Player = ({ player, position, isCurrentTurn, sendPlayerAction, canCall, ca
                     {gameStage !== 'gameOver' && (
                        <p style={{ margin: '0' }}>Bet: {player.bet}</p>
                     )}
-                    {isCurrentTurn && (
+                    {isCurrentPlayer && (
                         <p style={{ margin: '0' }}>Pot Contribution: {player.potContribution}</p>
                     )}
-                    {gameStage === 'gameOver' && isCurrentTurn && (
+                    {gameStage === 'gameOver' && isCurrentPlayer && (
                         <>
                             <p style={{ margin: '0' }}>Amount Won: {player.amountWon}</p>
                             <p style={{ margin: '0' }}>Amount Gained: {player.amountWon - player.potContribution}</p>
                         </>
                     )}
                 </div>
-                { (isCurrentTurn || (gameStage === 'gameOver' && !hasFolded)) && (
+                { (isCurrentPlayer || (gameStage === 'gameOver' && !hasFolded)) && (
                     <div className="player-hand" style={{ display: 'flex', overflowX: 'auto' }}>
                         {player.hand.map((card, index) => {
                             const suitClass = getSuitClass(card);
@@ -145,7 +145,7 @@ const Player = ({ player, position, isCurrentTurn, sendPlayerAction, canCall, ca
             </div>
             {player.isAllIn && <div style={allInStyle}>All-In</div>}
             {hasFolded && <span style={foldStyle}>X</span>}
-            {gameStage !== 'gameOver' && isCurrentTurn && !hasFolded && isCurrentTurn && (
+            {gameStage !== 'gameOver' && isCurrentTurn && !hasFolded && isCurrentPlayer && (
         <div className="action-container">
             {canCheck && <button onClick={onCheck}>Check</button>}
             {canCall && (
@@ -186,7 +186,7 @@ const Player = ({ player, position, isCurrentTurn, sendPlayerAction, canCall, ca
                     )}
                 </>
             )}
-            {gameStage === 'gameOver' && isCurrentTurn && (
+            {gameStage === 'gameOver' && isCurrentPlayer && (
                 <div style={readyButtonContainerStyle}> {/* Use the container style here */}
                     <button
                         className={`ready-button ${isReady ? 'button-pressed' : ''}`}

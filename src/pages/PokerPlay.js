@@ -3,12 +3,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useWebSocket } from '../context/PokerWebSocketContext'; // Adjust the path as needed
 import Player from '../components/Player';
 import Pot from '../components/Pot';
+import { useAuth } from '../context/AuthContext';
 import CommunityCards from '../components/CommunityCards';
 import './PokerPlay.css'; 
 
 const PokerPlayer = () => {
     const [playerPositions, setPlayerPositions] = useState([]);
     const tableRef = useRef(null);
+    const { user } = useAuth();
+    console.log(user);
+    const currentPlayerId = user ? user.id : null;
+    console.log(user);
 
     const { gameState, sendPlayerAction } = useWebSocket(); // Use gameState and sendPlayerAction from context
 
@@ -16,7 +21,7 @@ const PokerPlayer = () => {
         const updatePositions = () => {
             if (gameState && gameState.players.length > 0 && tableRef.current) {
                 const { width, height } = tableRef.current.getBoundingClientRect();
-                const newPositions = calculatePlayerPositions(gameState.players, width / 2, height / 2, width / 2, height / 2);
+                const newPositions = calculatePlayerPositions(gameState.players, width / 2, height / 2, width / 2, height / 2, 0);
                 setPlayerPositions(newPositions);
             }
         };
@@ -52,8 +57,9 @@ const PokerPlayer = () => {
             <div className="poker-table" ref={tableRef}>
                 {gameState.players.map((player, index) => (
                     <Player
-                        key={index} //TEMPORARY
+                        key={index}
                         player={player}
+                        isCurrentPlayer={player.id === currentPlayerId}
                         isCurrentTurn={gameState.currentTurn === player.position}
                         position={playerPositions[index] || { left: 0, top: 0 }}
                         sendPlayerAction={sendPlayerAction}
