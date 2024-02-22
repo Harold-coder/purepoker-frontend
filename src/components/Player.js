@@ -17,12 +17,12 @@ const Player = ({ player, position, isCurrentTurn, handlePlayerAction, currentPl
     const isSmallBlind = player.position === smallBlindIndex;
     const isBigBlind = player.position === bigBlindIndex;
     const isBtn = player.position === btnIdx
-    const onFold = () => handlePlayerAction('fold', player.id);
-    const onCall = () => handlePlayerAction('call', player.id);
-    const onCheck = () => handlePlayerAction('check', player.id);
-    const onRaise = () => handlePlayerAction('raise', player.id, { raiseAmount: raiseValue });
-    const onRaiseAllIn = () => handlePlayerAction('raise', player.id, { raiseAmount: maxRaiseValue });
-    const handleReady = () => handlePlayerAction('playerReady', player.id);
+    const onFold = () => handlePlayerAction('fold', { playerId: player.id });
+    const onCall = () => handlePlayerAction('call', { playerId: player.id });
+    const onCheck = () => handlePlayerAction('check', { playerId: player.id });
+    const onRaise = () => handlePlayerAction('raise', { playerId: player.id, amount: raiseValue });
+    const onRaiseAllIn = () => handlePlayerAction('raise', { playerId: player.id, amount: maxRaiseValue });
+    const handleReady = () => handlePlayerAction('playerReady', { playerId: player.id });
     const cardClass = isCurrentPlayer ? "current-player-card" : "other-player-card";
 
     const onRaiseChange = (event) => {

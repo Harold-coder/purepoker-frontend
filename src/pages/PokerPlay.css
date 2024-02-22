@@ -1,49 +1,101 @@
-/* PokerPlay.css */
-.pokerPlay {
-    padding: 20px;
-}
-
-.table {
-    margin-top: 20px;
-    border: 1px solid #ccc;
-    padding: 20px;
-    border-radius: 10px;
-}
-
-.communityCards {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
 .card {
-    margin: 0 5px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 75px;
+    margin: 5px;
     padding: 10px;
-    background-color: #fff;
-    border: 1px solid #eee;
-    border-radius: 5px;
-}
-
-.players {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
-.player {
     border: 1px solid #ddd;
-    margin: 10px;
-    padding: 10px;
     border-radius: 5px;
-}
-
-.actions {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.actions button {
-    margin: 0 10px;
+    background-color: #f9f9f9;
+    color: #333;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  .community-card, .current-player-card {
+    width: 50px;
+    height: 75px;
+  }
+  
+  .other-player-card {
+    width: 25px;
+    height: 37.5px;
+    font-size: 1rem;
+  }
+  
+  .hearts::after{
+    content: "♥";
+    color: red;
+  }
+  
+  .spades::after{
+    content: "♠";
+    color: black;
+  }
+  
+  .diamonds::after {
+    content: "♦";
+    color: red;
+  }
+  
+  .clubs::after {
+    content: "♣";
+    color: black;
+  }
+  
+  .poker-table {
+    position: relative;
+    width: 1100px; /* Reduced width */
+    height: 450px; /* Reduced height */
+    margin: 12vh auto; /* Adjusted vertical margin */
+    background-color: #006400;
+    border-radius: 15%/50%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  .player {
+    position: absolute;
+    width: 260px; /* Reduced width */
+    height: 149px; /* Reduced height */
+    background-color: #d7d7b7;
+    border: 1px solid #ddd;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    z-index: 1;
+  }
+  
+  .action-container {
+    display: flex;
+    flex-wrap: nowrap; /* Prevent wrapping */
+    align-items: center; /* Align items vertically */
+    justify-content: space-between; /* Distribute space between items */
+  }
+  
+  .raise-slider {
+    width: calc(100% - 150px); /* Assuming there's a total of 20px horizontal padding */
+    max-width: 100%; /* Ensure it doesn't exceed its parent */
+    display: block; /* Make it a block element to take the full available width */
+    margin-right: 10px; /* Center align if there's any extra space */
+    flex: 1
+  }
+  
+  .ready-button {
     padding: 10px 20px;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-}
+    margin-top: 10px;
+    z-index: 1;
+  }
+  
+  .button-pressed {
+    background-color: #cccccc; /* Grey background */
+    color: #666666; /* Darker text color for contrast */
+    opacity: 0.7; /* Optional: Slightly reduce opacity */
+    cursor: default; /* Change cursor to default to indicate the button is inactive */
+  }
