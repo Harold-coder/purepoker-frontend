@@ -40,8 +40,9 @@ const PokerPlayer = () => {
     };
     
     const handleRaise = (playerId, amount) => {
+        console.log(amount);
         // 'amount' parameter should be the raise amount specified by the player
-        sendPlayerAction('playerRaise', { gameId: gameState.gameId, playerId, amount });
+        sendPlayerAction('playerRaise', { gameId: gameState.gameId, playerId, raiseAmount: amount });
     };
     
     const handleFold = (playerId) => {
