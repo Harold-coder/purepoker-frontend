@@ -56,7 +56,7 @@ const PokerPlayer = () => {
                         player={player}
                         isCurrentTurn={gameState.currentTurn === player.position}
                         position={playerPositions[index] || { left: 0, top: 0 }}
-                        handlePlayerAction={sendPlayerAction}
+                        sendPlayerAction={sendPlayerAction}
                         canCheck={gameState.currentTurn === player.position && player.bet === gameState.highestBet}
                         canCall={player.position === gameState.currentTurn && gameState.highestBet > player.bet && gameState.bettingStarted}
                         affordMinRaise={player.position === gameState.currentTurn && (player.chips + player.bet - gameState.highestBet) > gameState.minRaiseAmount}

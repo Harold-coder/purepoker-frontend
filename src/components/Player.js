@@ -7,7 +7,7 @@ const getSuitClass = (card) => {
     if (card.includes('♣')) return 'clubs';
 };
 
-const Player = ({ player, position, isCurrentTurn, handlePlayerAction, canCall, canCheck, affordMinRaise, affordCall, minRaiseAmount, gameStage, highestBet, hasFolded,smallBlindIndex, playerCount, isReady, winners, handDescription, bestHand}) => {
+const Player = ({ player, position, isCurrentTurn, sendPlayerAction, canCall, canCheck, affordMinRaise, affordCall, minRaiseAmount, gameStage, highestBet, hasFolded,smallBlindIndex, playerCount, isReady, winners, handDescription, bestHand}) => {
     const [raiseValue, setRaiseValue] = useState(minRaiseAmount); // Initial raise amount
     const maxRaiseValue = player.chips - (highestBet - player.bet);
     const isWinner = winners.includes(player.id);
@@ -16,12 +16,12 @@ const Player = ({ player, position, isCurrentTurn, handlePlayerAction, canCall, 
     const isSmallBlind = player.position === smallBlindIndex;
     const isBigBlind = player.position === bigBlindIndex;
     const isBtn = player.position === btnIdx
-    const onFold = () => handlePlayerAction('fold', { playerId: player.id });
-    const onCall = () => handlePlayerAction('call', { playerId: player.id });
-    const onCheck = () => handlePlayerAction('check', { playerId: player.id });
-    const onRaise = () => handlePlayerAction('raise', { playerId: player.id, amount: raiseValue });
-    const onRaiseAllIn = () => handlePlayerAction('raise', { playerId: player.id, amount: maxRaiseValue });
-    const handleReady = () => handlePlayerAction('playerReady', { playerId: player.id });
+    const onFold = () => sendPlayerAction('fold', { playerId: player.id });
+    const onCall = () => sendPlayerAction('call', { playerId: player.id });
+    const onCheck = () => sendPlayerAction('check', { playerId: player.id });
+    const onRaise = () => sendPlayerAction('raise', { playerId: player.id, amount: raiseValue });
+    const onRaiseAllIn = () => sendPlayerAction('raise', { playerId: player.id, amount: maxRaiseValue });
+    const handleReady = () => sendPlayerAction('playerReady', { playerId: player.id });
     const cardClass = isCurrentTurn ? "current-player-card" : "other-player-card";
 
     const onRaiseChange = (event) => {
