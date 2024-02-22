@@ -52,7 +52,7 @@ const PokerPlayer = () => {
             <div className="poker-table" ref={tableRef}>
                 {gameState.players.map((player, index) => (
                     <Player
-                        key={player.id}
+                        key={index} //TEMPORARY
                         player={player}
                         isCurrentTurn={gameState.currentTurn === player.position}
                         position={playerPositions[index] || { left: 0, top: 0 }}

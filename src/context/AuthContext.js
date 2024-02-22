@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         fetchUserDetails();  // Validate token and fetch user details on component mount
-    }, [fetchUserDetails]);
+    }, []);
 
     return (
         <AuthContext.Provider value={{ user, login, logout, isLoading }}>
