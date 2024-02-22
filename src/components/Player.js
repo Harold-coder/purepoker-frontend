@@ -7,9 +7,8 @@ const getSuitClass = (card) => {
     if (card.includes('♣')) return 'clubs';
 };
 
-const Player = ({ player, position, isCurrentTurn, handlePlayerAction, currentPlayerId, canCall, canCheck, affordMinRaise, affordCall, minRaiseAmount, gameStage, highestBet, hasFolded,smallBlindIndex, playerCount, isReady, winners, handDescription, bestHand}) => {
+const Player = ({ player, position, isCurrentTurn, handlePlayerAction, canCall, canCheck, affordMinRaise, affordCall, minRaiseAmount, gameStage, highestBet, hasFolded,smallBlindIndex, playerCount, isReady, winners, handDescription, bestHand}) => {
     const [raiseValue, setRaiseValue] = useState(minRaiseAmount); // Initial raise amount
-    const isCurrentPlayer = player.id === currentPlayerId;
     const maxRaiseValue = player.chips - (highestBet - player.bet);
     const isWinner = winners.includes(player.id);
     const btnIdx = (smallBlindIndex + playerCount - 1) % playerCount;
@@ -23,7 +22,7 @@ const Player = ({ player, position, isCurrentTurn, handlePlayerAction, currentPl
     const onRaise = () => handlePlayerAction('raise', { playerId: player.id, amount: raiseValue });
     const onRaiseAllIn = () => handlePlayerAction('raise', { playerId: player.id, amount: maxRaiseValue });
     const handleReady = () => handlePlayerAction('playerReady', { playerId: player.id });
-    const cardClass = isCurrentPlayer ? "current-player-card" : "other-player-card";
+    const cardClass = isCurrentTurn ? "current-player-card" : "other-player-card";
 
     const onRaiseChange = (event) => {
         setRaiseValue(Number(event.target.value));
@@ -66,7 +65,7 @@ const Player = ({ player, position, isCurrentTurn, handlePlayerAction, currentPl
         whiteSpace: 'nowrap', // Keep content on a single line until there's no more space
     };
 
-    const playerStyle = isCurrentPlayer ? currentPlayerStyle : otherPlayerStyle;
+    const playerStyle = isCurrentTurn ? currentPlayerStyle : otherPlayerStyle;
 
     const labelStyle = {
         fontWeight: 'bold',
@@ -120,17 +119,17 @@ const Player = ({ player, position, isCurrentTurn, handlePlayerAction, currentPl
                     {gameStage !== 'gameOver' && (
                        <p style={{ margin: '0' }}>Bet: {player.bet}</p>
                     )}
-                    {isCurrentPlayer && (
+                    {isCurrentTurn && (
                         <p style={{ margin: '0' }}>Pot Contribution: {player.potContribution}</p>
                     )}
-                    {gameStage === 'gameOver' && isCurrentPlayer && (
+                    {gameStage === 'gameOver' && isCurrentTurn && (
                         <>
                             <p style={{ margin: '0' }}>Amount Won: {player.amountWon}</p>
                             <p style={{ margin: '0' }}>Amount Gained: {player.amountWon - player.potContribution}</p>
                         </>
                     )}
                 </div>
-                { (isCurrentPlayer || (gameStage === 'gameOver' && !hasFolded)) && (
+                { (isCurrentTurn || (gameStage === 'gameOver' && !hasFolded)) && (
                     <div className="player-hand" style={{ display: 'flex', overflowX: 'auto' }}>
                         {player.hand.map((card, index) => {
                             const suitClass = getSuitClass(card);
@@ -146,7 +145,7 @@ const Player = ({ player, position, isCurrentTurn, handlePlayerAction, currentPl
             </div>
             {player.isAllIn && <div style={allInStyle}>All-In</div>}
             {hasFolded && <span style={foldStyle}>X</span>}
-            {gameStage !== 'gameOver' && isCurrentTurn && !hasFolded && isCurrentPlayer && (
+            {gameStage !== 'gameOver' && isCurrentTurn && !hasFolded && isCurrentTurn && (
         <div className="action-container">
             {canCheck && <button onClick={onCheck}>Check</button>}
             {canCall && (
@@ -187,7 +186,7 @@ const Player = ({ player, position, isCurrentTurn, handlePlayerAction, currentPl
                     )}
                 </>
             )}
-            {gameStage === 'gameOver' && isCurrentPlayer && (
+            {gameStage === 'gameOver' && isCurrentTurn && (
                 <div style={readyButtonContainerStyle}> {/* Use the container style here */}
                     <button
                         className={`ready-button ${isReady ? 'button-pressed' : ''}`}

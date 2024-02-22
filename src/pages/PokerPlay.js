@@ -1,11 +1,10 @@
 // PokerPlay.js
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
 import { useWebSocket } from '../context/PokerWebSocketContext'; // Adjust the path as needed
 import Player from '../components/Player';
 import Pot from '../components/Pot';
 import CommunityCards from '../components/CommunityCards';
-import './PokerPlayer.css'; 
+import './PokerPlay.css'; 
 
 const PokerPlayer = () => {
     const [playerPositions, setPlayerPositions] = useState([]);
@@ -57,8 +56,7 @@ const PokerPlayer = () => {
                         player={player}
                         isCurrentTurn={gameState.currentTurn === player.position}
                         position={playerPositions[index] || { left: 0, top: 0 }}
-                        handlePlayerAction={handlePlayerAction}
-                        currentPlayerId={currentPlayerId}
+                        handlePlayerAction={sendPlayerAction}
                         canCheck={gameState.currentTurn === player.position && player.bet === gameState.highestBet}
                         canCall={player.position === gameState.currentTurn && gameState.highestBet > player.bet && gameState.bettingStarted}
                         affordMinRaise={player.position === gameState.currentTurn && (player.chips + player.bet - gameState.highestBet) > gameState.minRaiseAmount}
