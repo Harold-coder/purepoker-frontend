@@ -19,7 +19,7 @@ class PokerWebsocketService {
           queryParams.push(`gameId=${encodeURIComponent(gameId)}`);
       }
       if (playerUsername) {
-          queryParams.push(`playerUsername=${encodeURIComponent(playerUsername)}`);
+          queryParams.push(`playerId=${encodeURIComponent(playerUsername)}`);
       }
 
       const queryString = queryParams.length ? `?${queryParams.join('&')}` : '';
