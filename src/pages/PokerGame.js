@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useWebSocket } from '../context/PokerWebSocketContext'; 
 import './PokerGame.css';
+import axios from 'axios';
 import PokerPlay from './PokerPlay';
 
 const PokerGame = () => {
@@ -11,10 +12,21 @@ const PokerGame = () => {
 
   // Ensure this URL is correct and points to your deployed API
 
-  const { gameState } = useWebSocket(); // Use gameState from context
+  const apiUrl = "https://gxwbfjkt95.execute-api.us-east-1.amazonaws.com/dev";
+
+  const { gameState, setGameState } = useWebSocket(); // Use gameState from context
 
   useEffect(() => {
+    const fetchGameState = async () => {
+        try {
+        const response = await axios.get(`${apiUrl}/games/${gameId}/state`);
+        setGameState(response.data);
+        } catch (error) {
+        console.error('Error fetching game state:', error);
+        }
+      };
   
+      fetchGameState();
   }, [gameState]);
 
 //   if (isLoading) {

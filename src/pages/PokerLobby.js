@@ -19,7 +19,7 @@ const PokerLobby = () => {
     const { user } = useAuth();
 
     useEffect(() => {
-        // No need to handle WebSocket messages here. Use gameState as needed.
+        // No need to do anything
       }, [gameState, navigate]);
 
     const handleJoinGame = () => {

@@ -36,8 +36,6 @@ export const WebSocketProvider = ({ children }) => {
 
         websocketService.addMessageListener(handleMessage);
 
-
-    
         return () => {
             // Ensure we only attempt to disconnect if the connection is open.
             // The readyState of 1 indicates that the connection is open.
@@ -53,7 +51,7 @@ export const WebSocketProvider = ({ children }) => {
     };
 
     return (
-        <WebSocketContext.Provider value={{ gameState, sendPlayerAction }}>
+        <WebSocketContext.Provider value={{ gameState, sendPlayerAction, setGameState }}>
             {children}
         </WebSocketContext.Provider>
     );
