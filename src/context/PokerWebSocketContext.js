@@ -22,7 +22,7 @@ export const WebSocketProvider = ({ children }) => {
               case 'createGame':
                 localStorage.setItem('gameId', data.gameDetails.gameId);
                 setGameState(data.gameDetails);
-                navigate(`/poker-game/${data.gameDetails.gameId}`);  // Should be handled somewhere else
+                navigate(`/poker-game/${data.gameDetails.gameId}`);  
                 break;
               case 'joinGame':
                 localStorage.setItem('gameId', data.gameDetails.gameId);
