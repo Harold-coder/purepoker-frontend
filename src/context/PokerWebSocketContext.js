@@ -29,16 +29,16 @@ export const WebSocketProvider = ({ children }) => {
                 setGameState(data.gameDetails);
                 navigate(`/poker-game/${data.gameDetails.gameId}`); // Should be handled somewhere else
                 break;
-              case 'playerCall': // Handle playerCall action
+              case 'playerCall':
                 setGameState(data.game); // Update the gameState with the new game state received
                 break;
-              case 'playerRaise': // Handle playerCall action
+              case 'playerRaise':
                 setGameState(data.game); // Update the gameState with the new game state received
                 break;
-              case 'playerFold': // Handle playerCall action
+              case 'playerFold':
                 setGameState(data.game); // Update the gameState with the new game state received
                 break;
-              case 'playerCheck': // Handle playerCall action
+              case 'playerCheck':
                 setGameState(data.game); // Update the gameState with the new game state received
                 break;
               default:

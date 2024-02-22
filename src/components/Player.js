@@ -7,7 +7,7 @@ const getSuitClass = (card) => {
     if (card.includes('♣')) return 'clubs';
 };
 
-const Player = ({ player, position, isCurrentTurn, sendPlayerAction, currentPlayerId, canCall, canCheck, affordMinRaise, affordCall, minRaiseAmount, gameStage, highestBet, hasFolded,smallBlindIndex, playerCount, isReady, winners, handDescription, bestHand, handleCall, handleCheck, handleRaise, handleFold}) => {
+const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, canCheck, affordMinRaise, affordCall, minRaiseAmount, gameStage, highestBet, hasFolded,smallBlindIndex, playerCount, isReady, winners, handDescription, bestHand, handleCall, handleCheck, handleRaise, handleFold}) => {
     const isCurrentPlayer = (player.id === currentPlayerId);
     const [raiseValue, setRaiseValue] = useState(minRaiseAmount); // Initial raise amount
     const maxRaiseValue = player.chips - (highestBet - player.bet);
@@ -180,7 +180,7 @@ const Player = ({ player, position, isCurrentTurn, sendPlayerAction, currentPlay
                         className="raise-slider"
                     />
                     <output>{raiseValue}</output>
-                    <button onClick={onRaise}>Raise</button>
+                    <button onClick={() => onRaise(raiseValue)}>Raise</button>
                 </>
             )}
             {!affordMinRaise && affordCall && (
