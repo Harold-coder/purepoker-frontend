@@ -1,42 +1,127 @@
 .pokerGameContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh;
-    background-color: #f7f7f7;
-    color: #333;
-    font-family: 'Arial', sans-serif;
-    margin: 0 auto;
-    width: 100%
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background-color: rgb(111, 12, 12);
+  color: #333;
+  font-family: 'Arial', sans-serif;
+  margin: 0 auto;
+  width: 100%;
+  padding: 20px; /* Padding for smaller screens */
+}
+
+.pokerLobbyButton {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 36px; /* Adjust size as needed */
+  color: white; /* Or any color that fits your theme */
+}
+
+.gameTitle {
+  font-size: 2.5rem;
+  color: white;
+  margin-top: 20px;
+  margin-bottom: 5rem; /* Reduced margin */
+}
+
+.gameStatus {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 80%; /* Define a max-width for larger screens */
+  max-width: 600px; /* Maximum width */
+}
+
+.gameStatus h2 {
+  margin-bottom: 1.5rem; /* Increased spacing */
+  color: #444;
+  font-size: 1.8rem; /* Larger font size */
+}
+
+.bold-text {
+  font-weight: bold;
+}
+
+.gameStatus p {
+  margin: 0.5rem 0; /* Consistent margin */
+  font-size: 1.4rem; /* Larger font size for better readability */
+}
+
+.gameStatus ul {
+  list-style-type: none; /* Remove bullet points */
+  padding: 0; /* Remove padding */
+  margin-top: 1.5rem; /* Space above the list */
+  font-size: 1.4rem;
+}
+
+.gameStatus li {
+  background-color: #e7e7e7; /* Slight background color for list items */
+  padding: 0.5rem 1rem; /* Padding around text */
+  margin: 0.5rem 0; /* Space between items */
+  border-radius: 5px; /* Rounded corners for list items */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
+  transition: background-color 0.2s; /* Transition for hover effect */
+}
+
+.gameStatus li:hover {
+  background-color: #dedede; /* Slightly darker on hover */
+}
+
+.copy-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #646464; /* Change as needed */
+  font-size: 1rem; /* Change as needed */
+  padding-left: 8px;
+}
+
+.copy-button:hover {
+  color: #000; /* Change as needed */
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
   }
-  
-  .gameTitle {
-    font-size: 2.5rem;
-    color: rgb(111, 12, 12);
-    margin-bottom: 5rem;
+  50% {
+    transform: translateY(-3px);
   }
-  
+}
+
+.dot {
+  display: inline-block;
+  animation: bounce 1.5s infinite;
+}
+
+#dot1 {
+  animation-delay: 0s;
+}
+
+#dot2 {
+  animation-delay: 0.5s;
+}
+
+#dot3 {
+  animation-delay: 0.8s;
+}
+
+@media (max-width: 768px) {
+  .pokerGameContainer {
+    justify-content: flex-start; /* Align to the top on small screens */
+    height: auto; /* Height auto for smaller screens */
+    min-height: 100vh; /* Ensure it takes at least the viewport height */
+  }
+
   .gameStatus {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    width: 100%; /* Full width on smaller screens */
+    max-width: none; /* Remove max-width */
   }
-  
-  .gameStatus h2 {
-    margin-bottom: 1rem;
-    color: #444;
-  }
-  
-  @media (max-width: 768px) {
-    .pokerGameContainer {
-      padding: 20px;
-    }
-  
-    .gameStatus {
-      width: 100%;
-      box-sizing: border-box;
-    }
-  }
-  
+}

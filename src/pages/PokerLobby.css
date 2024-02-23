@@ -8,9 +8,20 @@
     background-color: #f7f7f7;
 }
 
+.homeButton {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 36px; /* Adjust size as needed */
+    color: rgb(111, 12, 12); /* Or any color that fits your theme */
+  }
+
 .pageTitle {
     color: rgb(111, 12, 12);
-    margin-top: 1rem;
+    margin-top: 20px;
     margin-bottom: 5rem;
     font-size: 2rem;
 }
@@ -43,18 +54,18 @@
 }
 
 .formInput {
-    padding: 8px 12px;
+    padding: 12px 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
 }
 
 .gameInput {
     margin-bottom: 2rem;
-    padding: 8px 12px;
+    padding: 12px 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
 }
 
 .actionButton {
@@ -65,10 +76,10 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
-    width: 10rem;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
-    font-size: 1.1rem;
+    font-size: 1.4rem;
 }
 
 .toggleFormButton {
@@ -77,12 +88,12 @@
     border: none;
     padding: 10px 15px;
     border-radius: 4px;
-    width: 10rem;
+    width: 100%;
     cursor: pointer;
     transition: background-color 0.3s;
     margin-left: auto;
     margin-right: auto;
-    font-size: 1.1rem;
+    font-size: 1.4rem;
 }
 
 .submitButton {
@@ -96,7 +107,7 @@
     transition: background-color 0.3s;
     margin-left: auto;
     margin-right: auto;
-    font-size: 1.1rem;
+    font-size: 1.4rem;
 }
 
 .actionButton:hover,
@@ -125,6 +136,10 @@
     .pageTitle {
         font-size: 1.5rem; /* Smaller title font on smaller screens */
         text-align: center; /* Center title */
+    }
+
+    .homeButton {
+        font-size: 30px;
     }
 
     .inputGameInfoSection,

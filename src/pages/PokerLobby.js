@@ -32,9 +32,14 @@ const PokerLobby = () => {
         websocketService.sendMessage("createGame", { minNumberOfPlayers: minPlayers, maxNumberOfPlayers: maxPlayers, buyIn, playerId: user.username }); // Adjust `playerId` as needed
     };
 
+    // Function to navigate home
+    const navigateHome = () => navigate('/');
+
     return (
         <div className="PokerLobby">
-            {/* TODO: Add a home icon that leads to the community page. */}   
+            <button className="homeButton" onClick={navigateHome} title="Go to home">
+                <i className="fas fa-home"></i>
+            </button>
             <h1 className="pageTitle">Pure Poker</h1>           
             <div className="inputGameInfoSection">
                 <div className="joinGameSection">
@@ -49,7 +54,7 @@ const PokerLobby = () => {
                 </div>
                 <p className="or-text">or</p>
                 <div className="createGameSection">
-                    <button className="toggleFormButton" onClick={() => setShowCreateForm(!showCreateForm)}>Create New Game</button>
+                    <button className="toggleFormButton" onClick={() => setShowCreateForm(!showCreateForm)}>Create New <br></br> Game</button>
                     {showCreateForm && (
                         <div className="createForm">
                             <input
