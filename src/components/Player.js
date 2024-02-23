@@ -33,7 +33,7 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
         handleFold(player.id);
     };
     const handleReady = () => {
-        handleFold(player.id); //TODO
+        handleReady(player.id);
     };
     const cardClass = isCurrentPlayer ? "current-player-card" : "other-player-card";
 

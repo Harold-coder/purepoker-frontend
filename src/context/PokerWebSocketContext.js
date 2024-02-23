@@ -41,6 +41,9 @@ export const WebSocketProvider = ({ children }) => {
               case 'playerCheck':
                 setGameState(data.game); // Update the gameState with the new game state received
                 break;
+              case 'playerReady':
+                setGameState(data.game); // Update the gameState with the new game state received
+                break;
               default:
                 console.log('Unhandled message action:', data.action);
             }

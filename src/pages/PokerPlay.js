@@ -49,7 +49,11 @@ const PokerPlayer = () => {
         // Send a 'playerFold' action; adjust the action name if your backend expects something different
         sendPlayerAction('playerFold', { gameId: gameState.gameId, playerId });
     };
-    
+
+    const handleReady = (playerId) => {
+        // Send a 'playerFold' action; adjust the action name if your backend expects something different
+        sendPlayerAction('playerReady', { gameId: gameState.gameId, playerId });
+    };
 
     return (
         <div className="poker-player">
@@ -80,6 +84,7 @@ const PokerPlayer = () => {
                         handleCheck={() => handleCheck(player.id)}
                         handleRaise={(amount) => handleRaise(player.id, amount)}
                         handleFold={() => handleFold(player.id)}
+                        handleReady={() => handleReady(player.id)}
                     />
                 ))}
                 <div className="community-cards-area" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
