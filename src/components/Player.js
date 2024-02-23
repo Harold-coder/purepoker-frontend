@@ -7,7 +7,7 @@ const getSuitClass = (card) => {
     if (card.includes('♣')) return 'clubs';
 };
 
-const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, canCheck, affordMinRaise, affordCall, minRaiseAmount, gameStage, highestBet, hasFolded,smallBlindIndex, playerCount, isReady, winners, handDescription, bestHand, handleCall, handleCheck, handleRaise, handleFold}) => {
+const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, canCheck, affordMinRaise, affordCall, minRaiseAmount, gameStage, highestBet, hasFolded,smallBlindIndex, playerCount, isReady, winners, handDescription, bestHand, handleCall, handleCheck, handleRaise, handleFold, handleReady }) => {
     const isCurrentPlayer = (player.id === currentPlayerId);
     const [raiseValue, setRaiseValue] = useState(minRaiseAmount); // Initial raise amount
     const maxRaiseValue = player.chips - (highestBet - player.bet);
@@ -32,7 +32,7 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
     const onFold = () => {
         handleFold(player.id);
     };
-    const handleReady = () => {
+    const onReady = () => {
         handleReady(player.id);
     };
     const cardClass = isCurrentPlayer ? "current-player-card" : "other-player-card";
@@ -207,7 +207,7 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
                 <div style={readyButtonContainerStyle}> {/* Use the container style here */}
                     <button
                         className={`ready-button ${isReady ? 'button-pressed' : ''}`}
-                        onClick={handleReady}
+                        onClick={onReady}
                         disabled={isReady}
                         style={{ width: 'auto', padding: '5px 10px' }} // Adjust button width and padding as needed
                     >
