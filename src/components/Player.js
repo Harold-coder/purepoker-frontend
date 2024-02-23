@@ -27,7 +27,7 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
         handleRaise(amount);
     };
     const onRaiseAllIn = () => {
-        handleRaise(player.id, maxRaiseValue);
+        handleRaise(maxRaiseValue);
     };
     const onFold = () => {
         handleFold(player.id);

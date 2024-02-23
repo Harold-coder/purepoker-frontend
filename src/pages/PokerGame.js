@@ -27,7 +27,7 @@ const PokerGame = () => {
       };
   
       fetchGameState();
-  }, [gameState]);
+  }, []);
 
 //   if (isLoading) {
 //     return <div>Loading game state...</div>;
