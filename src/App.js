@@ -37,7 +37,6 @@ function App() {
     return (
         <AuthProvider>
                 <Router>
-                <WebSocketProvider>
                     <div className="app-container">
                         <Routes>
                             <Route path="/login" element={<Login />} />
@@ -49,12 +48,11 @@ function App() {
                             <Route path="/groups" element={<GroupsPage />} />                                                   {/* TODO: Add the protectedRoute back */}
                             <Route path="/chat" element={<ChatPage />} />
                             <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-                            <Route path="/poker-game" element={<PokerLobby />} />                                               {/* TODO: Add the protectedRoute back */}
-                            <Route path="/poker-game/:gameId" element={<PokerGame />} />                                        {/* TODO: Add the protectedRoute back */}
+                            <Route path="/poker-game" element={<WebSocketProvider><PokerLobby /></WebSocketProvider>} />                                               {/* TODO: Add the protectedRoute back */}
+                            <Route path="/poker-game/:gameId" element={<WebSocketProvider><PokerGame /></WebSocketProvider>} />                                        {/* TODO: Add the protectedRoute back */}
                             <Route path="/post/:postId" element={<ProtectedRoute><DetailedPostView /></ProtectedRoute>} />
                         </Routes>
                     </div>
-                    </WebSocketProvider>
                 </Router>
         </AuthProvider>
     );
