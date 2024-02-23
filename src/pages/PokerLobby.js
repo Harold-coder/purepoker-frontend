@@ -3,6 +3,7 @@ import { websocketService } from '../context/PokerWebsocketService'; // Adjust t
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useWebSocket } from '../context/PokerWebSocketContext'; // Import the context
+import Loading from '../components/Loading';
 import './PokerLobby.css'; // Importing CSS stylesheet
 
 const PokerLobby = () => {
@@ -11,6 +12,7 @@ const PokerLobby = () => {
     const [minPlayers, setMinPlayers] = useState('');
     const [maxPlayers, setMaxPlayers] = useState('');
     const [buyIn, setBuyIn] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
 
@@ -25,11 +27,13 @@ const PokerLobby = () => {
     const handleJoinGame = () => {
         console.log(`Joining game with ID: ${gameId}`);
         websocketService.sendMessage("joinGame", { gameId, playerId: user.username }); // Adjust `playerUsername` as needed
+        setLoading(true);
     };
 
     const handleCreateGame = () => {
         console.log(`Creating game with minPlayers: ${minPlayers}, maxPlayers: ${maxPlayers}, buyIn: ${buyIn}`);
         websocketService.sendMessage("createGame", { minNumberOfPlayers: minPlayers, maxNumberOfPlayers: maxPlayers, buyIn, playerId: user.username }); // Adjust `playerId` as needed
+        setLoading(true);
     };
 
     // Function to navigate home
@@ -52,36 +56,39 @@ const PokerLobby = () => {
                     />
                     <button className="actionButton" onClick={handleJoinGame}>Join Game</button>
                 </div>
-                <p className="or-text">or</p>
-                <div className="createGameSection">
-                    <button className="toggleFormButton" onClick={() => setShowCreateForm(!showCreateForm)}>Create New <br></br> Game</button>
-                    {showCreateForm && (
-                        <div className="createForm">
-                            <input
-                                className="formInput"
-                                type="number"
-                                placeholder="Minimum Players"
-                                value={minPlayers}
-                                onChange={(e) => setMinPlayers(e.target.value)}
-                            />
-                            <input
-                                className="formInput"
-                                type="number"
-                                placeholder="Maximum Players"
-                                value={maxPlayers}
-                                onChange={(e) => setMaxPlayers(e.target.value)}
-                            />
-                            <input
-                                className="formInput"
-                                type="number"
-                                placeholder="Buy-In"
-                                value={buyIn}
-                                onChange={(e) => setBuyIn(e.target.value)}
-                            />
-                            <button className="submitButton" onClick={handleCreateGame}>Create</button>
-                        </div>
-                    )}
-                </div>
+                {!loading && <p className="or-text">or</p>}
+                {loading && <Loading />}
+                {!loading && 
+                    <div className="createGameSection">
+                        <button className="toggleFormButton" onClick={() => setShowCreateForm(!showCreateForm)}>Create New <br></br> Game</button>
+                        {showCreateForm && (
+                            <div className="createForm">
+                                <input
+                                    className="formInput"
+                                    type="number"
+                                    placeholder="Minimum Players"
+                                    value={minPlayers}
+                                    onChange={(e) => setMinPlayers(e.target.value)}
+                                />
+                                <input
+                                    className="formInput"
+                                    type="number"
+                                    placeholder="Maximum Players"
+                                    value={maxPlayers}
+                                    onChange={(e) => setMaxPlayers(e.target.value)}
+                                />
+                                <input
+                                    className="formInput"
+                                    type="number"
+                                    placeholder="Buy-In"
+                                    value={buyIn}
+                                    onChange={(e) => setBuyIn(e.target.value)}
+                                />
+                                <button className="submitButton" onClick={handleCreateGame}>Create</button>
+                            </div>
+                        )}
+                    </div>
+                }
             </div>
         </div>
     );

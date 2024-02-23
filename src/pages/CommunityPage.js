@@ -8,11 +8,14 @@ import { urlServer } from '../App';
 
 const CommunityPage = () => {
     const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const fetchPosts = () => {
+        setLoading(true);
         axios.get(`${urlServer}/posts`)
             .then(response => {
                 const sortedPosts = response.data.sort((a, b) => b.id - a.id);
+                setLoading(false);
                 setPosts(sortedPosts);
             })
             .catch(error => console.error('Error fetching posts:', error));
@@ -28,7 +31,7 @@ const CommunityPage = () => {
             <div className="feed-container">
                 <Outlet />
             </div>
-            <RightSidebar posts={posts}/>
+            <RightSidebar posts={posts} loading={loading}/>
         </div>
     );
 };

@@ -7,10 +7,13 @@ import axios from 'axios';
 import { urlServer } from '../App';
 import SearchPost from './SearchPost';
 import { useAuth } from '../context/AuthContext';
+import Loading from './Loading';
 
 const PostFeed = () => {
     const [posts, setPosts] = useState([]);
     const [filteredPosts, setFilteredPosts] = useState([]);
+
+    const [loading, setLoading] = useState(false);
 
     const { user } = useAuth(); 
     const navigate = useNavigate();
@@ -29,6 +32,7 @@ const PostFeed = () => {
 
     const fetchPosts = async () => {
         try {
+            setLoading(true);
             const likedPostsIds = await fetchLikedPosts();
             const { data } = await axios.get(`${urlServer}/posts`);
             const postsWithLikeStatus = data.map(post => ({
@@ -36,6 +40,7 @@ const PostFeed = () => {
                 liked: likedPostsIds.includes(post.id) // Add liked status
             }));
             const sortedPosts = postsWithLikeStatus.sort((a, b) => b.id - a.id);
+            setLoading(false);
             setPosts(sortedPosts);
             setFilteredPosts(sortedPosts);
         } catch (error) {
@@ -100,12 +105,15 @@ const PostFeed = () => {
         <div className="post-feed-container">  
             <SearchPost onSearch={handleSearch} />
             <PostComposer onPostCreated={fetchPosts} />
-            <PostsList 
+            {!loading && 
+                <PostsList 
                 posts={filteredPosts} 
                 onLike={handleLike} 
                 onDelete={handleDelete} 
                 onPostClick={handlePostClick}
-            />
+                />
+            }
+            {loading && <Loading/>}
         </div>
     );
 };

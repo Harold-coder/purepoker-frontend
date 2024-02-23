@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { urlServerAuth } from '../App';
 import './SignUp.css';
+import Loading from './Loading';
 
 const SignUp = () => {
     const [username, setUsername] = useState('');
@@ -15,6 +16,8 @@ const SignUp = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
 
+    const [loading, setLoading] = useState(false)
+;
     axios.defaults.withCredentials = true;
 
     const handleSubmit = async (event) => {
@@ -32,6 +35,10 @@ const SignUp = () => {
             setError(error.response.data.message || 'An error occurred during signup.');
         }
     };
+
+    if (loading) { 
+        return <Loading/>;
+    }
 
     return (
         <div className="signup-container">

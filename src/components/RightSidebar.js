@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import Loading from './Loading';
 import './RightSidebar.css';
 
-const RightSidebar = ({ posts }) => {
+const RightSidebar = ({ posts, loading }) => {
     const [mostLikedPosts, setMostLikedPosts] = useState([]);
     const navigate = useNavigate(); // Initialize useNavigate
 
@@ -19,6 +20,7 @@ const RightSidebar = ({ posts }) => {
         <aside className="right-sidebar">
             <div className="most-liked-posts">
                 <h3>Most Liked Posts</h3>
+                {loading && <Loading/>}
                 <ul>
                     {mostLikedPosts.map(post => (
                         <li key={post.id} onClick={() => handlePostSelect(post.id)}>
