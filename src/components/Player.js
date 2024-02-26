@@ -17,7 +17,9 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
     const bigBlindIndex = (smallBlindIndex + 1) % playerCount;
     const isSmallBlind = player.position === smallBlindIndex;
     const isBigBlind = player.position === bigBlindIndex;
-    const isBtn = player.position === btnIdx
+    const isBtn = player.position === btnIdx;
+
+    const [showSlider, setShowSlider] = useState(false);
     const onCheck = () => {
         handleCheck(player.id);
     };
@@ -44,8 +46,7 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
 
     useEffect(() => {
         setRaiseValue(minRaiseAmount);
-        console.log(position);
-        console.log(player);
+        setShowSlider(false);
     }, [minRaiseAmount]);
 
     return (
@@ -63,12 +64,6 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
                     </span>
                 </h3>
                     <p className='margin-zero'>Chips: {player.chips}</p>
-                    {gameStage !== 'gameOver' && (
-                       <p className='margin-zero'>Bet: {player.bet}</p>
-                    )}
-                    {isCurrentPlayer && (
-                        <p className='margin-zero'>Pot Contribution: {player.potContribution}</p>
-                    )}
                     {gameStage === 'gameOver' && isCurrentPlayer && (
                         <>
                             <p className='margin-zero'>Amount Won: {player.amountWon}</p>
@@ -93,32 +88,39 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
             {player.isAllIn && <div className='all-in'>All-In</div>}
             {hasFolded && <span className='fold-style'>X</span>}
             {gameStage !== 'gameOver' && isCurrentTurn && !hasFolded && isCurrentPlayer && (
-        <div className="action-container">
-            {canCheck && <button onClick={onCheck}>Check</button>}
-            {canCall && (
-                <button onClick={onCall}>{affordCall ? 'Call' : 'Call to All-In'}</button>
+                <div className="action-container">
+                    {canCheck && <button onClick={onCheck}>Check</button>}
+                    {canCall && !showSlider && (
+                        <button onClick={onCall}>{affordCall ? 'Call' : 'Call to All-In'}</button>
+                    )}
+                    {!showSlider && <button onClick={onFold}>Fold</button>}
+                    {affordMinRaise && (
+                        <>
+                        {showSlider && 
+                            <>
+                                <input
+                                type="range"
+                                value={raiseValue}
+                                onChange={onRaiseChange}
+                                min={minRaiseAmount}
+                                max={maxRaiseValue}
+                                step="1"
+                                className="raise-slider"
+                                />
+                                <output>{raiseValue}</output>
+                                <button onClick={() => onRaise(raiseValue)}>Raise</button>
+                            </>
+                        }
+                        {!showSlider &&
+                            <button onClick={() => setShowSlider(true)}>Raise</button>
+                        }
+                        </>
+                    )}
+                    {!affordMinRaise && affordCall && (
+                        <button onClick={onRaiseAllIn}>Raise to All-In</button>
+                    )}
+                </div>
             )}
-            {affordMinRaise && (
-                <>
-                    <input
-                        type="range"
-                        value={raiseValue}
-                        onChange={onRaiseChange}
-                        min={minRaiseAmount}
-                        max={maxRaiseValue}
-                        step="1"
-                        className="raise-slider"
-                    />
-                    <output>{raiseValue}</output>
-                    <button onClick={() => onRaise(raiseValue)}>Raise</button>
-                </>
-            )}
-            {!affordMinRaise && affordCall && (
-                <button onClick={onRaiseAllIn}>Raise to All-In</button>
-            )}
-            <button onClick={onFold}>Fold</button>
-        </div>
-    )}
             {gameStage === 'gameOver'  && !hasFolded && bestHand && (
                 <>
                     {handDescription && (

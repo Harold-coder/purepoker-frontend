@@ -1,25 +1,27 @@
 .player {
-    background-color: #d7d7b7;
+    background-color: #121212;
     box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
   }
 
 .current-turn {
-    border: 2px solid black; /* Highlight for the current player's turn */
+    border: 2px solid white; /* Highlight for the current player's turn */
 }
 
 .current-player {
+    color: white;
     padding: 15px;
     border: 1px solid gray;
     border-radius: 10px;
     opacity: 1;
     position: absolute;
-    width: 375px;
+    width: 10rem;
     height: auto;
     z-index: 2;
     transform: translate(-50%, 50%);
 }
 
 .other-player {
+    color: white;
     padding: 5px;
     border: 1px solid gray;
     border-radius: 10px;
@@ -67,13 +69,16 @@
 
 .info-container {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    text-align: center;
     margin-bottom: 10px;
 }
 
 .player-id {
     padding: 3px 8px;
+    padding-left: 0;
     margin-left: 0;
 }
 
@@ -83,7 +88,7 @@
 
 .labels {
     margin: 0;
-    color: black;
+    color: white;
     display: flex;
     align-items: center;
 }
@@ -146,8 +151,6 @@
 }
   
 .raise-slider {
-    width: calc(100% - 150px); /* Assuming there's a total of 20px horizontal padding */
-    max-width: 100%; /* Ensure it doesn't exceed its parent */
     display: block; /* Make it a block element to take the full available width */
     margin-right: 10px; /* Center align if there's any extra space */
     flex: 1

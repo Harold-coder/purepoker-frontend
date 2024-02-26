@@ -1,12 +1,16 @@
 .poker-player {
   width: 100%;
+  height: 100vh;
 }
 .poker-table {
   position: relative;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10rem;
   width: 1100px; /* Reduced width */
   height: 450px; /* Reduced height */
-  margin: 11vh 29vh; /* Adjusted vertical margin */
-  background-color: #006400;
+  background-color: rgb(111, 12, 12);
   border-radius: 15%/50%;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
