@@ -37,6 +37,19 @@
     background-color: lightgray;
 }
 
+.empty-seat {
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    background-color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    transform: translate(-50%, -50%);
+}
+
+
 .game-over {
     width: 200px;
 }

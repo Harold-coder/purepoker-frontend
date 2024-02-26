@@ -44,6 +44,8 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
 
     useEffect(() => {
         setRaiseValue(minRaiseAmount);
+        console.log(position);
+        console.log(player);
     }, [minRaiseAmount]);
 
     return (

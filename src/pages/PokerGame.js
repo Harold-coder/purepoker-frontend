@@ -40,7 +40,7 @@ const PokerGame = () => {
 
   if (gameState.gameStarted) {
     // Placeholder for when the game component is ready
-    return <div><PokerPlay /></div>;
+    return <div className='poker-area'><PokerPlay /></div>;
   }
 
   // Function to navigate home
