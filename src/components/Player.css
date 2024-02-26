@@ -1,0 +1,166 @@
+.player {
+    background-color: #d7d7b7;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+  }
+
+.current-turn {
+    border: 2px solid black; /* Highlight for the current player's turn */
+}
+
+.current-player {
+    padding: 15px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    opacity: 1;
+    position: absolute;
+    width: 375px;
+    height: auto;
+    z-index: 2;
+    transform: translate(-50%, 50%);
+}
+
+.other-player {
+    padding: 5px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    opacity: 1;
+    position: absolute;
+    width: 200px;
+    height: auto;
+    z-index: 1;
+    transform: translate(-50%, 50%);
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.has-folded {
+    background-color: lightgray;
+}
+
+.game-over {
+    width: 200px;
+}
+
+.is-winner {
+    background-color: #d4af37;
+}
+
+.winning-hand-style {
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    color: #800080;
+}
+
+.info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.player-id {
+    padding: 3px 8px;
+    margin-left: 0;
+}
+
+.show-label {
+    margin-left: 10px;
+}
+
+.labels {
+    margin: 0;
+    color: black;
+    display: flex;
+    align-items: center;
+}
+
+.label-style {
+    font-weight: bold;
+    background-color: #f0ad4e;
+    color: #fff;
+    padding: 3px 6px;
+    border-radius: 8px;
+    font-size: 12px;
+    align-self: center;
+}
+
+.player-hand {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px;
+}
+
+.margin-zero {
+    margin: 0;
+}
+
+.ready-button, .action-container button {
+    cursor: pointer;
+    padding: 5px 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+}
+
+.button-pressed,
+.action-container button:hover {
+    background-color: #0056b3;
+}
+
+.all-in {
+    font-weight: bold;
+    color: blue;
+}
+
+.fold-style {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 24px;
+    color: red;
+    font-weight: bold;
+    padding: 5px;
+}
+
+.action-container {
+    display: flex;
+    flex-wrap: nowrap; /* Prevent wrapping */
+    align-items: center; /* Align items vertically */
+    justify-content: space-between; /* Distribute space between items */
+}
+  
+.raise-slider {
+    width: calc(100% - 150px); /* Assuming there's a total of 20px horizontal padding */
+    max-width: 100%; /* Ensure it doesn't exceed its parent */
+    display: block; /* Make it a block element to take the full available width */
+    margin-right: 10px; /* Center align if there's any extra space */
+    flex: 1
+}
+
+.ready-button {
+    padding: 5px 10px;
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    z-index: 1;
+    display: flex;
+}
+
+.ready-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.button-pressed {
+    background-color: #cccccc; /* Grey background */
+    color: #666666; /* Darker text color for contrast */
+    opacity: 0.7; /* Optional: Slightly reduce opacity */
+    cursor: default; /* Change cursor to default to indicate the button is inactive */
+}

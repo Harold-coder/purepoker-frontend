@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './Player.css';
 
 const getSuitClass = (card) => {
     if (card.includes('♥')) return 'hearts';
@@ -45,109 +46,36 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
         setRaiseValue(minRaiseAmount);
     }, [minRaiseAmount]);
 
-    const currentPlayerStyle = {
-        border: (gameStage !== 'gameOver' && isCurrentTurn) ? '2px solid black' : '1px solid gray',
-        padding: '15px',
-        borderRadius: '10px',
-        backgroundColor: isWinner ? '#d4af37' : (hasFolded ? 'lightgray' : ''),
-        opacity: 1,
-        position: 'absolute',
-        left: position.left,
-        width: '375px', 
-        height: 'auto',
-        zIndex: 2,
-        top: position.top,
-        transform: 'translate(-50%, -50%)'
-    };
-
-    const otherPlayerStyle = {
-        border: (gameStage !== 'gameOver' && isCurrentTurn) ? '2px solid black' : '1px solid gray',
-        padding: '5px',
-        borderRadius: '5px',
-        backgroundColor: hasFolded ? 'lightgray' : (isWinner ? '#d4af37' : ''),
-        opacity: 1,
-        position: 'absolute',
-        left: position.left,
-        width: gameStage === 'gameOver' ? '200px' : '150px', // Adjust width based on gameStage
-        minHeight: '100px', // Set a minimum height
-        height: 'auto',
-        zIndex: 1,
-        top: position.top,
-        transform: 'translate(-50%, -50%)',
-        overflow: 'hidden', // Add overflow property if needed
-        whiteSpace: 'nowrap', // Keep content on a single line until there's no more space
-    };
-
-    const playerStyle = isCurrentPlayer ? currentPlayerStyle : otherPlayerStyle;
-
-    const labelStyle = {
-        fontWeight: 'bold',
-        backgroundColor: '#f0ad4e',
-        color: '#fff',
-        padding: '3px 6px',
-        borderRadius: '8px',
-        fontSize: '12px',
-        alignSelf: 'center',
-    };
-
-    const winningHandStyle = {
-        fontWeight: isWinner? 'bold': 'normal',
-        fontSize: '16px',
-        textAlign: 'center',
-        color: isWinner? '#800080': '#000000'
-    };
-    
-    const allInStyle = {
-        color: 'blue',
-        fontWeight: 'bold',
-    };
-
-    const readyButtonContainerStyle = {
-        display: 'flex',
-        justifyContent: 'center',
-        marginTop: '10px',
-    };
-
-    const foldStyle = {
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        fontSize: '24px',
-        color: 'red',
-        fontWeight: 'bold',
-        padding: '5px'
-    };
-
     return (
-        <div className={`player ${isCurrentTurn ? 'current-turn' : ''}`} style={playerStyle}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+        <div className={`player ${isCurrentTurn ? 'current-turn' : ''} ${hasFolded ? 'has-folded' : ''} ${gameStage === 'gameOver' ? 'game-over' : ''} ${isWinner ? 'is-winner' : ''} ${isCurrentPlayer ? 'current-player' : 'other-player'}`} style={{ left: `${position.left}px`, top: `${position.top}px` }}>
+            <div className = 'info-container'>
                 <div>
-                <h3 style={{ margin: '0', color: 'black', display: 'flex', alignItems: 'center' }}>
-                    <div style={{ marginRight: '10px' }}> {/* This div wraps the labels */}
-                        {isSmallBlind && <span style={labelStyle}>SB</span>}
-                        {isBigBlind && <span style={labelStyle}>BB</span>}
-                        {isBtn && <span style={labelStyle}>BTN</span>}
+                <h3 className='labels'>
+                    <div>
+                        {isSmallBlind && <span className='label-style'>SB</span>}
+                        {isBigBlind && <span className='label-style'>BB</span>}
+                        {isBtn && <span className='label-style'>BTN</span>}
                     </div>
-                    <span style={{ padding: '3px 8px', marginLeft: isSmallBlind || isBigBlind || isBtn ? '10px' : '0' }}>
+                    <span className={`player-id ${isSmallBlind || isBigBlind || isBtn ? 'show-label' : ''}`}>
                         {player.id}
                     </span>
                 </h3>
-                    <p style={{ margin: '0' }}>Chips: {player.chips}</p>
+                    <p className='margin-zero'>Chips: {player.chips}</p>
                     {gameStage !== 'gameOver' && (
-                       <p style={{ margin: '0' }}>Bet: {player.bet}</p>
+                       <p className='margin-zero'>Bet: {player.bet}</p>
                     )}
                     {isCurrentPlayer && (
-                        <p style={{ margin: '0' }}>Pot Contribution: {player.potContribution}</p>
+                        <p className='margin-zero'>Pot Contribution: {player.potContribution}</p>
                     )}
                     {gameStage === 'gameOver' && isCurrentPlayer && (
                         <>
-                            <p style={{ margin: '0' }}>Amount Won: {player.amountWon}</p>
-                            <p style={{ margin: '0' }}>Amount Gained: {player.amountWon - player.potContribution}</p>
+                            <p className='margin-zero'>Amount Won: {player.amountWon}</p>
+                            <p className='margin-zero'>Amount Gained: {player.amountWon - player.potContribution}</p>
                         </>
                     )}
                 </div>
                 { (isCurrentPlayer || (gameStage === 'gameOver' && !hasFolded)) && (
-                    <div className="player-hand" style={{ display: 'flex', overflowX: 'auto' }}>
+                    <div className="player-hand">
                         {player.hand.map((card, index) => {
                             const suitClass = getSuitClass(card);
                             const number = card.slice(0, -1).replace('T', '10');
@@ -160,8 +88,8 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
                     </div>
                 )}
             </div>
-            {player.isAllIn && <div style={allInStyle}>All-In</div>}
-            {hasFolded && <span style={foldStyle}>X</span>}
+            {player.isAllIn && <div className='all-in'>All-In</div>}
+            {hasFolded && <span className='fold-style'>X</span>}
             {gameStage !== 'gameOver' && isCurrentTurn && !hasFolded && isCurrentPlayer && (
         <div className="action-container">
             {canCheck && <button onClick={onCheck}>Check</button>}
@@ -192,24 +120,23 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
             {gameStage === 'gameOver'  && !hasFolded && bestHand && (
                 <>
                     {handDescription && (
-                        <div style={winningHandStyle}>
+                        <div className={`winning-hand-style ${isWinner ? 'is-winner' : ''}`}>
                             {handDescription}
                         </div>
                     )}
                     {bestHand && (
-                        <div style={winningHandStyle}>
+                        <div className={`winning-hand-style ${isWinner ? 'is-winner' : ''}`}>
                             {bestHand.join(', ')}
                         </div>
                     )}
                 </>
             )}
             {gameStage === 'gameOver' && isCurrentPlayer && (
-                <div style={readyButtonContainerStyle}> {/* Use the container style here */}
+                <div className='ready-button-container'> {/* Use the container style here */}
                     <button
                         className={`ready-button ${isReady ? 'button-pressed' : ''}`}
                         onClick={onReady}
                         disabled={isReady}
-                        style={{ width: 'auto', padding: '5px 10px' }} // Adjust button width and padding as needed
                     >
                         Ready for Next Game
                     </button>

@@ -1,4 +1,5 @@
 import React from 'react';
+import './CommunityCards.css';
 
 const getSuitClass = (card) => {
     if (card.endsWith('♥')) return 'hearts';
@@ -9,7 +10,7 @@ const getSuitClass = (card) => {
 
 const CommunityCards = ({ cards }) => {
     return (
-        <div className="community-cards" style={{ display: 'flex', justifyContent: 'center', padding: '10px', overflowX: 'auto' }}>
+        <div className="community-cards">
             {cards.map((card, index) => {
                 const number = card.slice(0, -1).replace('T', '10');
                 const suitClass = getSuitClass(card);

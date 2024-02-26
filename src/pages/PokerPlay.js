@@ -87,7 +87,7 @@ const PokerPlayer = () => {
                         handleReady={() => handleReady(player.id)}
                     />
                 ))}
-                <div className="community-cards-area" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                <div className="community-cards-area">
                     <CommunityCards cards={gameState.communityCards} />
                     <Pot pot={gameState.pot} />
                 </div>
@@ -116,8 +116,8 @@ const calculatePlayerPositions = (players, centerX, centerY, ovalWidth, ovalHeig
   
       // Adjust the positions to be relative to the center point
       return {
-        left: `${centerX + x}px`,
-        top: `${centerY + y}px`,
+        left: centerX + x, // Now returns a number
+        top: centerY + y, // Now returns a number
       };
     });
 };
