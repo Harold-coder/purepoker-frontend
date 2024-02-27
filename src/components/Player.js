@@ -84,6 +84,19 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
                         })}
                     </div>
                 )}
+                { (!isCurrentPlayer && (gameStage !== 'gameOver' && !hasFolded)) && (
+                    <div className="player-hand">
+                        {player.hand.map((card, index) => {
+                            const suitClass = getSuitClass(card);
+                            const number = card.slice(0, -1).replace('T', '10');
+                            return (
+                                <div key={index} className={`card`}>
+                                    <span>??</span> {/* Display the card number */}
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
             </div>
             {player.isAllIn && <div className='all-in'>All-In</div>}
             {hasFolded && <span className='fold-style'>X</span>}

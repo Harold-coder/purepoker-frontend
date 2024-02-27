@@ -7,7 +7,7 @@
     border: 2px solid white; /* Highlight for the current player's turn */
 }
 
-.current-player {
+.other-player, .current-player {
     color: white;
     padding: 15px;
     border: 1px solid gray;
@@ -20,7 +20,7 @@
     transform: translate(-50%, 50%);
 }
 
-.other-player {
+/* .other-player {
     color: white;
     padding: 5px;
     border: 1px solid gray;
@@ -33,7 +33,7 @@
     transform: translate(-50%, 50%);
     overflow: hidden;
     white-space: nowrap;
-}
+} */
 
 .has-folded {
     background-color: lightgray;

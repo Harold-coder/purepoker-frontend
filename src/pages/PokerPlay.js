@@ -117,7 +117,7 @@ const calculatePlayerPositions = (players, centerX, centerY, ovalWidth, ovalHeig
       // Adjust the positions to be relative to the center point
       return {
         left: centerX + x, // Now returns a number
-        top: centerY + y -110, // Now returns a number
+        top: centerY + y -200, // Now returns a number
       };
     });
 };
