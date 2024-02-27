@@ -19,7 +19,9 @@ const PokerPlayer = () => {
         const updatePositions = () => {
             if (gameState && gameState.players.length > 0 && tableRef.current) {
                 const { width, height } = tableRef.current.getBoundingClientRect();
-                const newPositions = calculatePlayerPositions(gameState.players, width / 2, height / 2, width / 2, height / 2, gameState.players.find(player => player.id === currentPlayerId).position);
+                let totalPlayers = gameState.players;
+                totalPlayers = fillEmpty(totalPlayers, gameState.maxPlayers)
+                const newPositions = calculatePlayerPositions(gameState, totalPlayers, width / 2, height / 2, width / 2, height / 2, gameState.players.find(player => player.id === currentPlayerId).position);
                 setPlayerPositions(newPositions);
             }
         };
@@ -28,6 +30,14 @@ const PokerPlayer = () => {
         window.addEventListener('resize', updatePositions); // Update positions on window resize
         return () => window.removeEventListener('resize', updatePositions); // Cleanup on component unmount
     }, [gameState, currentPlayerId]);
+
+    const fillEmpty = (totalPlayers, maxPlayers) => {
+        const maxPlayersInt = parseInt(maxPlayers, 10);
+        while (totalPlayers.length !== maxPlayersInt) {
+            totalPlayers.push({id:'empty', position:totalPlayers.length, isEmpty: true});
+        }
+        return totalPlayers;
+    }
 
     const handleCall = (playerId) => {
         // Assuming 'gameState' has a property 'gameId' that identifies the current game
@@ -88,7 +98,7 @@ const PokerPlayer = () => {
                     />
                 ))}
                 <div className="community-cards-area">
-                    <CommunityCards cards={gameState.communityCards} />
+                    <CommunityCards cards={gameState.communityCards} potCards={true} />
                     <Pot pot={gameState.pot} />
                 </div>
             </div>
@@ -96,32 +106,59 @@ const PokerPlayer = () => {
     );
 };
 
-const calculatePlayerPositions = (players, centerX, centerY, ovalWidth, ovalHeight, currentPlayerIndex) => {
-    const playerCount = players.length;
+const calculatePlayerPositions = (gameState, players, centerX, centerY, ovalWidth, ovalHeight, currentPlayerIndex) => {
+    const maxPlayers = gameState.maxPlayers;
   
-    return players.map((_, index) => {
-      // Calculate the angle for this player's position in the circle
-      let angle = (2 * Math.PI / playerCount) * (index - currentPlayerIndex);
-      // Adjust angles to ensure the current player is at the bottom
-      angle += Math.PI / 2; // Rotate by 90 degrees so the bottom position is 0 degrees
-  
-      // Ensure the angle is within the range [0, 2π]
-      if (angle < 0) {
-        angle += 2 * Math.PI;
-      }
-  
-      // Calculate the x and y positions based on the angle
-      const x = Math.cos(angle) * ovalWidth;
-      const y = Math.sin(angle) * ovalHeight;
-  
-      // Adjust the positions to be relative to the center point
-      return {
-        left: centerX + x, // Now returns a number
-        top: centerY + y -200, // Now returns a number
-      };
+    return players.map((player, index) => {
+        let angle = (2 * Math.PI / maxPlayers) * (index - currentPlayerIndex);
+
+        angle += Math.PI / 2; // Rotate by 90 degrees so the bottom position is 0 degrees
+
+        // Ensure the angle is within the range [0, 2π]
+        if (angle < 0) {
+            angle += 2 * Math.PI;
+        }
+
+        // Calculate the x and y positions based on the angle
+        const x = Math.cos(angle) * ovalWidth;
+        let y = Math.sin(angle) * ovalHeight;
+
+        y = Math.min(y, ovalHeight* 0.75)
+
+        return {
+            left: centerX + x, // Now returns a number
+            top: centerY + y ,
+            isEmpty: player.isEmpty ? true : false,
+            index: index
+        };
     });
 };
 
+
+// const calculatePlayerPositions = (players, centerX, centerY, ovalWidth, ovalHeight, currentPlayerIndex) => {
+//     const playerCount = players.length;
+//     const maxPlayers = gameState.maxPlayers;
+  
+//     return players.map((_, index) => {
+//         let angle = (2 * Math.PI / playerCount) * (index - currentPlayerIndex);
+
+//         angle += Math.PI / 2; // Rotate by 90 degrees so the bottom position is 0 degrees
+
+//         // Ensure the angle is within the range [0, 2π]
+//         if (angle < 0) {
+//             angle += 2 * Math.PI;
+//         }
+
+//         // Calculate the x and y positions based on the angle
+//         const x = Math.cos(angle) * ovalWidth;
+//         const y = Math.sin(angle) * ovalHeight;        
+
+//         return {
+//             left: centerX + x, // Now returns a number
+//             top: centerY + y , // Now returns a number
+//         };
+//     });
+// };
 
 
 export default PokerPlayer;

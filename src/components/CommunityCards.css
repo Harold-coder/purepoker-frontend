@@ -10,8 +10,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 75px;
+    width: 30px;
+    height: 50px;
     margin: 5px;
     padding: 10px;
     border: 1px solid #ddd;
@@ -21,16 +21,16 @@
     font-size: 1.2rem;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
 }
-  
+
 .current-player-card {
-  width: 50px;
-  height: 75px;
+  width: 30px;
+  height: 50px;
 }
-  
-.other-player-card {
-  width: 25px;
-  height: 37.5px;
-  font-size: 1rem;
+
+.pot-cards {
+    width: 50px;
+    height: 75px;
+    margin-left: 10px;
 }
   
 .hearts::after{

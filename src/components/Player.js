@@ -19,6 +19,8 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
     const isBigBlind = player.position === bigBlindIndex;
     const isBtn = player.position === btnIdx;
 
+    const isEmpty = position.isEmpty; //TODO: change to a better checl lol
+
     const [showSlider, setShowSlider] = useState(false);
     const onCheck = () => {
         handleCheck(player.id);
@@ -50,7 +52,9 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
     }, [minRaiseAmount]);
 
     return (
-        <div className={`player ${isCurrentTurn ? 'current-turn' : ''} ${hasFolded ? 'has-folded' : ''} ${gameStage === 'gameOver' ? 'game-over' : ''} ${isWinner ? 'is-winner' : ''} ${isCurrentPlayer ? 'current-player' : 'other-player'}`} style={{ left: `${position.left}px`, top: `${position.top}px` }}>
+        <>
+        {!isEmpty &&
+        <div className={`player ${isCurrentTurn ? 'current-turn' : ''} ${hasFolded ? 'has-folded' : ''} ${gameStage === 'gameOver' ? 'game-over' : ''} ${isWinner ? 'is-winner' : ''} ${isCurrentPlayer ? 'current-player' : 'other-player'}`} style={{ position: 'absolute', left: `${position.left}px`, top: `${position.top}px` }}>
             <div className = 'info-container'>
                 <div>
                 <h3 className='labels'>
@@ -63,7 +67,7 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
                         {player.id}
                     </span>
                 </h3>
-                    <p className='margin-zero'>Chips: {player.chips}</p>
+                    {!isEmpty && <p className='margin-zero'>Chips: {player.chips}</p>}
                     {gameStage === 'gameOver' && isCurrentPlayer && (
                         <>
                             <p className='margin-zero'>Amount Won: {player.amountWon}</p>
@@ -87,8 +91,6 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
                 { (!isCurrentPlayer && (gameStage !== 'gameOver' && !hasFolded)) && (
                     <div className="player-hand">
                         {player.hand.map((card, index) => {
-                            const suitClass = getSuitClass(card);
-                            const number = card.slice(0, -1).replace('T', '10');
                             return (
                                 <div key={index} className={`card`}>
                                     <span>??</span> {/* Display the card number */}
@@ -160,6 +162,13 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
                 </div>
             )}
         </div>
+        }
+        {isEmpty && 
+            <div key={`empty-seat-${position.index}`} className="empty-seat" style={{ left: `${position.left}px`, top: `${position.top}px` }}>
+            Empty {position.index}
+            </div>
+        }
+        </>
     );
 };
 

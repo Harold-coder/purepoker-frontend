@@ -1,5 +1,5 @@
 .player {
-    background-color: #121212;
+    background-color: #636262;
     box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
   }
 
@@ -9,15 +9,15 @@
 
 .other-player, .current-player {
     color: white;
-    padding: 15px;
-    border: 1px solid gray;
+    padding: 7px;
+    border: 1px solid #636262;
     border-radius: 10px;
     opacity: 1;
     position: absolute;
-    width: 10rem;
+    width: 15rem;
     height: auto;
     z-index: 2;
-    transform: translate(-50%, 50%);
+    transform: translate(-50%, -50%);
 }
 
 /* .other-player {
@@ -145,7 +145,6 @@
 
 .action-container {
     display: flex;
-    flex-wrap: nowrap; /* Prevent wrapping */
     align-items: center; /* Align items vertically */
     justify-content: space-between; /* Distribute space between items */
 }
