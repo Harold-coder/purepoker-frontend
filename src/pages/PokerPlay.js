@@ -135,30 +135,4 @@ const calculatePlayerPositions = (gameState, players, centerX, centerY, ovalWidt
 };
 
 
-// const calculatePlayerPositions = (players, centerX, centerY, ovalWidth, ovalHeight, currentPlayerIndex) => {
-//     const playerCount = players.length;
-//     const maxPlayers = gameState.maxPlayers;
-  
-//     return players.map((_, index) => {
-//         let angle = (2 * Math.PI / playerCount) * (index - currentPlayerIndex);
-
-//         angle += Math.PI / 2; // Rotate by 90 degrees so the bottom position is 0 degrees
-
-//         // Ensure the angle is within the range [0, 2π]
-//         if (angle < 0) {
-//             angle += 2 * Math.PI;
-//         }
-
-//         // Calculate the x and y positions based on the angle
-//         const x = Math.cos(angle) * ovalWidth;
-//         const y = Math.sin(angle) * ovalHeight;        
-
-//         return {
-//             left: centerX + x, // Now returns a number
-//             top: centerY + y , // Now returns a number
-//         };
-//     });
-// };
-
-
 export default PokerPlayer;

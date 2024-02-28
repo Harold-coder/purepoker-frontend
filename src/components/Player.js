@@ -19,7 +19,15 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
     const isBigBlind = player.position === bigBlindIndex;
     const isBtn = player.position === btnIdx;
 
-    const isEmpty = position.isEmpty; //TODO: change to a better checl lol
+    const isEmpty = position.isEmpty; //TODO: change to a better check lol
+
+    const [sliderBackground, setSliderBackground] = useState('');
+
+    // Update the slider background based on its value
+    useEffect(() => {
+        const percentage = ((raiseValue - minRaiseAmount) / (maxRaiseValue - minRaiseAmount)) * 100;
+        setSliderBackground(`linear-gradient(90deg, rgb(111, 12, 12) ${percentage}%, rgb(233,233,233) ${percentage}%)`);
+    }, [raiseValue, minRaiseAmount, maxRaiseValue]);
 
     const [showSlider, setShowSlider] = useState(false);
     const onCheck = () => {
@@ -102,40 +110,6 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
             </div>
             {player.isAllIn && <div className='all-in'>All-In</div>}
             {hasFolded && <span className='fold-style'>X</span>}
-            {gameStage !== 'gameOver' && isCurrentTurn && !hasFolded && isCurrentPlayer && (
-                <div className="action-container">
-                    {canCheck && <button onClick={onCheck}>Check</button>}
-                    {canCall && !showSlider && (
-                        <button onClick={onCall}>{affordCall ? 'Call' : 'Call to All-In'}</button>
-                    )}
-                    {!showSlider && <button onClick={onFold}>Fold</button>}
-                    {affordMinRaise && (
-                        <>
-                        {showSlider && 
-                            <>
-                                <input
-                                type="range"
-                                value={raiseValue}
-                                onChange={onRaiseChange}
-                                min={minRaiseAmount}
-                                max={maxRaiseValue}
-                                step="1"
-                                className="raise-slider"
-                                />
-                                <output>{raiseValue}</output>
-                                <button onClick={() => onRaise(raiseValue)}>Raise</button>
-                            </>
-                        }
-                        {!showSlider &&
-                            <button onClick={() => setShowSlider(true)}>Raise</button>
-                        }
-                        </>
-                    )}
-                    {!affordMinRaise && affordCall && (
-                        <button onClick={onRaiseAllIn}>Raise to All-In</button>
-                    )}
-                </div>
-            )}
             {gameStage === 'gameOver'  && !hasFolded && bestHand && (
                 <>
                     {handDescription && (
@@ -168,6 +142,44 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
             Empty {position.index}
             </div>
         }
+        {!isEmpty && gameStage !== 'gameOver' && isCurrentTurn && !hasFolded && isCurrentPlayer && (
+                <div className="action-container" style={{position: 'absolute', left: '50%', top: '107%'} }>
+                    {canCheck && <button className='action-button' onClick={onCheck}>Check</button>}
+                    {canCall && (
+                        <button className='action-button' onClick={onCall}>{affordCall ? 'Call' : 'Call to All-In'}</button>
+                    )}
+                    {!showSlider && <button className='action-button' onClick={onFold}>Fold</button>}
+                    {affordMinRaise && (
+                        <>
+                        {showSlider && 
+                            <>
+                                <input
+                                type="range"
+                                value={raiseValue}
+                                onChange={onRaiseChange}
+                                min={minRaiseAmount}
+                                max={maxRaiseValue}
+                                step="1"
+                                className="raise-slider"
+                                style={{ background: sliderBackground }}
+                                />
+                                <output className='raise-value'>{raiseValue}</output>
+                                <button className='action-button back-btn' onClick={() => setShowSlider(false)}>Back</button>
+                                <button className='action-button' onClick={() => onRaise(raiseValue)}>Raise</button>
+                            </>
+                        }
+                        {!showSlider &&
+                            <>
+                                <button className='action-button' onClick={() => setShowSlider(true)}>Raise</button>
+                            </>
+                        }
+                        </>
+                    )}
+                    {!affordMinRaise && affordCall && (
+                        <button className='action-button' onClick={onRaiseAllIn}>Raise to All-In</button>
+                    )}
+                </div>
+            )}
         </>
     );
 };
