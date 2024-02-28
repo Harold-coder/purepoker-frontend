@@ -64,25 +64,6 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
         {!isEmpty &&
         <div className={`player ${isCurrentTurn ? 'current-turn' : ''} ${hasFolded ? 'has-folded' : ''} ${gameStage === 'gameOver' ? 'game-over' : ''} ${isWinner ? 'is-winner' : ''} ${isCurrentPlayer ? 'current-player' : 'other-player'}`} style={{ position: 'absolute', left: `${position.left}px`, top: `${position.top}px` }}>
             <div className = 'info-container'>
-                <div>
-                <h3 className='labels'>
-                    <div>
-                        {isSmallBlind && <span className='label-style'>SB</span>}
-                        {isBigBlind && <span className='label-style'>BB</span>}
-                        {isBtn && <span className='label-style'>BTN</span>}
-                    </div>
-                    <span className={`player-id ${isSmallBlind || isBigBlind || isBtn ? 'show-label' : ''}`}>
-                        {player.id}
-                    </span>
-                </h3>
-                    {!isEmpty && <p className='margin-zero'>Chips: {player.chips}</p>}
-                    {gameStage === 'gameOver' && isCurrentPlayer && (
-                        <>
-                            <p className='margin-zero'>Amount Won: {player.amountWon}</p>
-                            <p className='margin-zero'>Amount Gained: {player.amountWon - player.potContribution}</p>
-                        </>
-                    )}
-                </div>
                 { (isCurrentPlayer || (gameStage === 'gameOver' && !hasFolded)) && (
                     <div className="player-hand">
                         {player.hand.map((card, index) => {
@@ -100,14 +81,33 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
                     <div className="player-hand">
                         {player.hand.map((card, index) => {
                             return (
-                                <div key={index} className={`card`}>
-                                    <span>??</span> {/* Display the card number */}
+                                <div key={index} className={`card card-back`}>
+                                    {/* Don't need anything */}
                                 </div>
                             );
                         })}
                     </div>
                 )}
             </div>
+            <div className='id-container'>
+                <p className='labels'>
+                    {/* <div>
+                        {isSmallBlind && <span className='label-style'>SB</span>}
+                        {isBigBlind && <span className='label-style'>BB</span>}
+                        {isBtn && <span className='label-style'>BTN</span>}
+                    </div> */}
+                    <span className={`player-id ${isSmallBlind || isBigBlind || isBtn ? 'show-label' : ''} ${isCurrentPlayer ? 'current-player-id' : ''}`}>
+                        {player.id}
+                    </span>
+                </p>
+                    {!isEmpty && <p className='margin-zero chips-count'>{player.chips}</p>}
+                    {gameStage === 'gameOver' && isCurrentPlayer && (
+                        <>
+                            <p className='margin-zero'>Amount Won: {player.amountWon}</p>
+                            <p className='margin-zero'>Amount Gained: {player.amountWon - player.potContribution}</p>
+                        </>
+                    )}
+                </div>
             {player.isAllIn && <div className='all-in'>All-In</div>}
             {hasFolded && <span className='fold-style'>X</span>}
             {gameStage === 'gameOver'  && !hasFolded && bestHand && (
@@ -139,11 +139,11 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
         }
         {isEmpty && 
             <div key={`empty-seat-${position.index}`} className="empty-seat" style={{ left: `${position.left}px`, top: `${position.top}px` }}>
-            Empty {position.index}
+            Empty Seat
             </div>
         }
         {!isEmpty && gameStage !== 'gameOver' && isCurrentTurn && !hasFolded && isCurrentPlayer && (
-                <div className="action-container" style={{position: 'absolute', left: '50%', top: '107%'} }>
+                <div className="action-container" style={{position: 'absolute', left: '50%', top: '110%'} }>
                     {canCheck && <button className='action-button' onClick={onCheck}>Check</button>}
                     {canCall && (
                         <button className='action-button' onClick={onCall}>{affordCall ? 'Call' : 'Call to All-In'}</button>

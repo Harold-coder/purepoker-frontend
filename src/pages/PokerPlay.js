@@ -5,6 +5,7 @@ import Player from '../components/Player';
 import Pot from '../components/Pot';
 import { useAuth } from '../context/AuthContext';
 import CommunityCards from '../components/CommunityCards';
+import { useNavigate } from 'react-router-dom';
 import './PokerPlay.css'; 
 
 const PokerPlayer = () => {
@@ -12,6 +13,8 @@ const PokerPlayer = () => {
     const tableRef = useRef(null);
     const { user } = useAuth();
     const currentPlayerId = user.username;
+
+    let navigate = useNavigate();
 
     const { gameState, sendPlayerAction } = useWebSocket(); // Use gameState and sendPlayerAction from context
 
@@ -65,8 +68,16 @@ const PokerPlayer = () => {
         sendPlayerAction('playerReady', { gameId: gameState.gameId, playerId });
     };
 
+    const navigateToLobby = () => navigate('/poker-game'); // TODO: implement the leave game here!!!!!!
+
     return (
         <div className="poker-player">
+            <div>
+                <button className="homeButton" onClick={navigateToLobby} title="Go to home">
+                    <i className="fas fa-home"></i>
+                </button>
+                <p className='poker-title'>Pure Poker</p>
+            </div>
             <div className="poker-table" ref={tableRef}>
                 {gameState.players.map((player, index) => (
                     <Player
