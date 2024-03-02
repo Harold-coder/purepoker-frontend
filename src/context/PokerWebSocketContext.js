@@ -45,7 +45,9 @@ export const WebSocketProvider = ({ children }) => {
                 setGameState(data.game); // Update the gameState with the new game state received
                 break;
               case 'waitingForNextGame':
+                localStorage.setItem('gameId', data.gameDetails.gameId);
                 console.log(data.message); // Log the waiting message or use it to update the state/UI
+                navigate(`/poker-game/${data.gameDetails.gameId}`);
                 break;
               default:
                 console.log('Unhandled message action:', data.action);
