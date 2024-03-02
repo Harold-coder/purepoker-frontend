@@ -17,7 +17,8 @@ export const WebSocketProvider = ({ children }) => {
         const handleMessage = (data) => {
             switch (data.action) {
               case 'updateGameState':
-                setGameState(data.gameDetails);
+                const isSpectatorUpdate = data.gameDetails.waitingPlayers?.some(playerId => playerId === user.username);
+                setGameState({ ...data.gameDetails, isSpectator: isSpectatorUpdate });
                 break;
               case 'createGame':
                 localStorage.setItem('gameId', data.gameDetails.gameId);
@@ -46,7 +47,7 @@ export const WebSocketProvider = ({ children }) => {
                 break;
               case 'waitingForNextGame':
                 localStorage.setItem('gameId', data.gameDetails.gameId);
-                console.log(data.message); // Log the waiting message or use it to update the state/UI
+                setGameState({ ...data.gameDetails, isSpectator: true });
                 navigate(`/poker-game/${data.gameDetails.gameId}`);
                 break;
               default:
