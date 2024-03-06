@@ -32,6 +32,8 @@ const PokerPlayer = () => {
                 const currentPlayerPosition = allPlayers.find(player => player.id === currentPlayerId)?.position;
                 const newPositions = calculatePlayerPositions(gameState, allPlayers, width / 2, height / 2, width / 2, height / 2, currentPlayerPosition);
                 setPlayerPositions(newPositions);
+
+                console.log(gameState);
             }
         };
 
@@ -39,16 +41,6 @@ const PokerPlayer = () => {
         window.addEventListener('resize', updatePositions); // Update positions on window resize
         return () => window.removeEventListener('resize', updatePositions); // Cleanup on component unmount
     }, [gameState, currentPlayerId]);
-
-    const fillEmpty = (players, maxPlayers) => {
-        const maxPlayersInt = parseInt(maxPlayers, 10);
-        // Ensure we're working with a shallow copy to prevent modifying the original array
-        let totalPlayers = players.slice(); // Alternatively, [...players] for a shallow copy
-        while (totalPlayers.length < maxPlayersInt) {
-            totalPlayers.push({ id: 'empty', position: totalPlayers.length, isEmpty: true });
-        }
-        return totalPlayers;
-    };
 
     const fillEmptyWithWaitingPlayers = (players, maxPlayers, waitingPlayers) => {
         const maxPlayersInt = parseInt(maxPlayers, 10);
@@ -159,6 +151,7 @@ const calculatePlayerPositions = (gameState, players, centerX, centerY, ovalWidt
     return players.map((player, index) => {
         let angle = (2 * Math.PI / maxPlayers) * (index - currentPlayerIndex);
 
+        const tolerance = Math.PI / maxPlayers; 
         angle += Math.PI / 2; // Rotate by 90 degrees so the bottom position is 0 degrees
 
         // Ensure the angle is within the range [0, 2π]
@@ -170,7 +163,12 @@ const calculatePlayerPositions = (gameState, players, centerX, centerY, ovalWidt
         const x = Math.cos(angle) * ovalWidth;
         let y = Math.sin(angle) * ovalHeight;
 
-        y = Math.min(y, ovalHeight* 0.75)
+        // Adjust y multiplier for the top center position
+        if (Math.abs(angle - 3 * Math.PI/2) < tolerance) {
+            y = y * 0.95; // Apply a smaller multiplier for the top center position
+        } else {
+            y = Math.min(y, ovalHeight * 0.75); // Apply the general case multiplier
+        }
 
         return {
             left: centerX + x, // Now returns a number

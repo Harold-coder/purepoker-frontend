@@ -24,8 +24,6 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
 
     const [sliderBackground, setSliderBackground] = useState('');
 
-    // console.log(isWaiting)
-
     // Update the slider background based on its value
     useEffect(() => {
         const percentage = ((raiseValue - minRaiseAmount) / (maxRaiseValue - minRaiseAmount)) * 100;
@@ -60,7 +58,6 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
     useEffect(() => {
         setRaiseValue(minRaiseAmount);
         setShowSlider(false);
-        console.log(position);
     }, [minRaiseAmount]);
 
     return (
