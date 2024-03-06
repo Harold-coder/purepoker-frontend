@@ -10,6 +10,7 @@ const getSuitClass = (card) => {
 
 const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, canCheck, affordMinRaise, affordCall, minRaiseAmount, gameStage, highestBet, hasFolded,smallBlindIndex, playerCount, isReady, winners, handDescription, bestHand, handleCall, handleCheck, handleRaise, handleFold, handleReady }) => {
     const isCurrentPlayer = (player.id === currentPlayerId);
+    const isWaiting = player.isWaiting === true;
     const [raiseValue, setRaiseValue] = useState(minRaiseAmount); // Initial raise amount
     const maxRaiseValue = player.chips - (highestBet - player.bet);
     const isWinner = winners.includes(player.id);
@@ -22,6 +23,8 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
     const isEmpty = position.isEmpty; //TODO: change to a better check lol
 
     const [sliderBackground, setSliderBackground] = useState('');
+
+    // console.log(isWaiting)
 
     // Update the slider background based on its value
     useEffect(() => {
@@ -57,11 +60,12 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
     useEffect(() => {
         setRaiseValue(minRaiseAmount);
         setShowSlider(false);
+        console.log(position);
     }, [minRaiseAmount]);
 
     return (
         <>
-        {!isEmpty &&
+        {!isEmpty && !isWaiting &&
         <div className={`player ${isCurrentTurn ? 'current-turn' : ''} ${hasFolded ? 'has-folded' : ''} ${gameStage === 'gameOver' ? 'game-over' : ''} ${isWinner ? 'is-winner' : ''} ${isCurrentPlayer ? 'current-player' : 'other-player'}`} style={{ position: 'absolute', left: `${position.left}px`, top: `${position.top}px` }}>
             <div className = 'info-container'>
                 { (isCurrentPlayer || (gameStage === 'gameOver' && !hasFolded)) && (
@@ -142,7 +146,12 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
             Empty Seat
             </div>
         }
-        {!isEmpty && gameStage !== 'gameOver' && isCurrentTurn && !hasFolded && isCurrentPlayer && (
+        {!isEmpty && isWaiting &&
+            <div className="waiting-seat" style={{ left: `${position.left}px`, top: `${position.top}px` }}>
+                {player.id}
+            </div>
+        }
+        {!isEmpty && !isWaiting && gameStage !== 'gameOver' && isCurrentTurn && !hasFolded && isCurrentPlayer && (
                 <div className="action-container" style={{position: 'absolute', left: '50%', top: '110%'} }>
                     {canCheck && <button className='action-button' onClick={onCheck}>Check</button>}
                     {canCall && (
@@ -179,7 +188,9 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
                         <button className='action-button' onClick={onRaiseAllIn}>Raise to All-In</button>
                     )}
                 </div>
-            )}
+            )
+        }
+
         </>
     );
 };

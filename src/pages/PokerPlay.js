@@ -10,6 +10,7 @@ import './PokerPlay.css';
 
 const PokerPlayer = () => {
     const [playerPositions, setPlayerPositions] = useState([]);
+    const [totalPlayers, setTotalPlayers] = useState([]);
     const tableRef = useRef(null);
     const { user } = useAuth();
     const currentPlayerId = user.username;
@@ -22,9 +23,14 @@ const PokerPlayer = () => {
         const updatePositions = () => {
             if (gameState && gameState.players.length > 0 && tableRef.current) {
                 const { width, height } = tableRef.current.getBoundingClientRect();
-                let totalPlayers = gameState.players;
-                totalPlayers = fillEmpty(totalPlayers, gameState.maxPlayers)
-                const newPositions = calculatePlayerPositions(gameState, totalPlayers, width / 2, height / 2, width / 2, height / 2, gameState.players.find(player => player.id === currentPlayerId).position);
+
+                // Now we also consider waiting players for filling the seats
+                const allPlayers = fillEmptyWithWaitingPlayers(gameState.players, gameState.maxPlayers, gameState.waitingPlayers);
+
+                setTotalPlayers(allPlayers);
+
+                const currentPlayerPosition = allPlayers.find(player => player.id === currentPlayerId)?.position;
+                const newPositions = calculatePlayerPositions(gameState, allPlayers, width / 2, height / 2, width / 2, height / 2, currentPlayerPosition);
                 setPlayerPositions(newPositions);
             }
         };
@@ -34,13 +40,43 @@ const PokerPlayer = () => {
         return () => window.removeEventListener('resize', updatePositions); // Cleanup on component unmount
     }, [gameState, currentPlayerId]);
 
-    const fillEmpty = (totalPlayers, maxPlayers) => {
+    const fillEmpty = (players, maxPlayers) => {
         const maxPlayersInt = parseInt(maxPlayers, 10);
-        while (totalPlayers.length !== maxPlayersInt) {
-            totalPlayers.push({id:'empty', position:totalPlayers.length, isEmpty: true});
+        // Ensure we're working with a shallow copy to prevent modifying the original array
+        let totalPlayers = players.slice(); // Alternatively, [...players] for a shallow copy
+        while (totalPlayers.length < maxPlayersInt) {
+            totalPlayers.push({ id: 'empty', position: totalPlayers.length, isEmpty: true });
         }
         return totalPlayers;
-    }
+    };
+
+    const fillEmptyWithWaitingPlayers = (players, maxPlayers, waitingPlayers) => {
+        const maxPlayersInt = parseInt(maxPlayers, 10);
+        // Start by copying the current players to avoid modifying the original array
+        let totalPlayers = [...players];
+    
+        // Determine how many seats can be filled by waiting players
+        const availableSeats = maxPlayersInt - totalPlayers.length;
+        const playersToSeat = waitingPlayers.slice(0, availableSeats);
+    
+        // Add waiting players to the game up to the number of available seats
+        while (totalPlayers.length < maxPlayersInt && playersToSeat.length !== 0) {
+            totalPlayers.push({
+                id: playersToSeat[0],
+                position: totalPlayers.length,
+                isWaiting: true
+            });
+            playersToSeat.pop();
+        }
+    
+        // Fill the rest with 'empty' placeholders if there are still available seats
+        while (totalPlayers.length < maxPlayersInt) {
+            totalPlayers.push({ id: 'empty', position: totalPlayers.length, isEmpty: true });
+        }
+    
+        return totalPlayers;
+    };
+    
 
     const handleCall = (playerId) => {
         // Assuming 'gameState' has a property 'gameId' that identifies the current game
@@ -79,7 +115,7 @@ const PokerPlayer = () => {
                 <p className='poker-title'>Pure Poker</p>
             </div>
             <div className="poker-table" ref={tableRef}>
-                {gameState.players.map((player, index) => (
+                {totalPlayers.map((player, index) => (
                     <Player
                         key={index}
                         player={player}

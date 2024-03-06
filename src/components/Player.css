@@ -58,6 +58,23 @@
     border: 2px dashed #888; /* Darken border on hover */
 }
 
+.waiting-seat {
+    position: absolute;
+    text-align: center;
+    width: 8rem; /* Match the width of player seats */
+    height: 6rem; /* Auto height for flexibility */
+    background-color: #ddd; /* A slightly lighter shade for distinction */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px; /* Rounded corners like player seats */
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.2); /* Consistent shadow with player seats */
+    color: rgb(111, 12, 12); /* Dimmed text color for empty seats */
+    font-size: 1.2rem; /* Adjust font size as necessary */
+    padding: 7px; /* Padding to match player seats */
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
 
 .game-over {
     width: 200px;

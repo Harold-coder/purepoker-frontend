@@ -32,6 +32,7 @@ const SignUp = () => {
             login(data); // Update AuthContext state and login the user
             navigate('/'); // Redirect to home page after signup
         } catch (error) {
+            setLoading(false);
             console.error("Signup Error:", error.response.data);
             setError(error.response.data.message || 'An error occurred during signup.');
         }

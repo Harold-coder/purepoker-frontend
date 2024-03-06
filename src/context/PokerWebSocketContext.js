@@ -2,80 +2,84 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { websocketService } from './PokerWebsocketService';
+import { useAuth } from '../context/AuthContext';
 
 const WebSocketContext = createContext();
 
 export const WebSocketProvider = ({ children }) => {
-    const [gameState, setGameState] = useState(null);
-    const navigate = useNavigate();
+  const [gameState, setGameState] = useState(null);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!websocketService.ws) {
-            websocketService.connect();
-        }
+  const {user} = useAuth();
 
-        const handleMessage = (data) => {
-            switch (data.action) {
-              case 'updateGameState':
-                const isSpectatorUpdate = data.gameDetails.waitingPlayers?.some(playerId => playerId === user.username);
-                setGameState({ ...data.gameDetails, isSpectator: isSpectatorUpdate });
-                break;
-              case 'createGame':
-                localStorage.setItem('gameId', data.gameDetails.gameId);
-                setGameState(data.gameDetails);
-                navigate(`/poker-game/${data.gameDetails.gameId}`);  
-                break;
-              case 'joinGame':
-                localStorage.setItem('gameId', data.gameDetails.gameId);
-                setGameState(data.gameDetails);
-                navigate(`/poker-game/${data.gameDetails.gameId}`); // Should be handled somewhere else
-                break;
-              case 'playerCall':
-                setGameState(data.game); // Update the gameState with the new game state received
-                break;
-              case 'playerRaise':
-                setGameState(data.game); // Update the gameState with the new game state received
-                break;
-              case 'playerFold':
-                setGameState(data.game); // Update the gameState with the new game state received
-                break;
-              case 'playerCheck':
-                setGameState(data.game); // Update the gameState with the new game state received
-                break;
-              case 'playerReady':
-                setGameState(data.game); // Update the gameState with the new game state received
-                break;
-              case 'waitingForNextGame':
-                localStorage.setItem('gameId', data.gameDetails.gameId);
-                setGameState({ ...data.gameDetails, isSpectator: true });
-                navigate(`/poker-game/${data.gameDetails.gameId}`);
-                break;
-              default:
-                console.log('Unhandled message action:', data.action);
-            }
-          };
+  useEffect(() => {
+      if (!websocketService.ws) {
+          websocketService.connect();
+      }
 
-        websocketService.addMessageListener(handleMessage);
-
-        return () => {
-            // Ensure we only attempt to disconnect if the connection is open.
-            // The readyState of 1 indicates that the connection is open.
-            if (websocketService.ws && websocketService.ws.readyState === WebSocket.OPEN) {
-                websocketService.disconnect();
-                websocketService.removeMessageListener(handleMessage);
-            }
+      const handleMessage = (data) => {
+          switch (data.action) {
+            case 'updateGameState':
+              const isSpectatorUpdate = data.gameDetails.waitingPlayers?.some(playerId => playerId === user.username);
+              setGameState({ ...data.gameDetails, isSpectator: isSpectatorUpdate });
+              break;
+            case 'createGame':
+              localStorage.setItem('gameId', data.gameDetails.gameId);
+              setGameState(data.gameDetails);
+              navigate(`/poker-game/${data.gameDetails.gameId}`);  
+              break;
+            case 'joinGame':
+              localStorage.setItem('gameId', data.gameDetails.gameId);
+              setGameState(data.gameDetails);
+              navigate(`/poker-game/${data.gameDetails.gameId}`); // Should be handled somewhere else
+              break;
+            case 'playerCall':
+              setGameState(data.game); // Update the gameState with the new game state received
+              break;
+            case 'playerRaise':
+              setGameState(data.game); // Update the gameState with the new game state received
+              break;
+            case 'playerFold':
+              setGameState(data.game); // Update the gameState with the new game state received
+              break;
+            case 'playerCheck':
+              setGameState(data.game); // Update the gameState with the new game state received
+              break;
+            case 'playerReady':
+              setGameState(data.game); // Update the gameState with the new game state received
+              break;
+            case 'waitingForNextGame':
+              localStorage.setItem('gameId', data.gameDetails.gameId);
+              // setGameState({ ...data.gameDetails, isSpectator: true });
+              setGameState({ ...data.gameDetails, isSpectator: true });
+              navigate(`/poker-game/${data.gameDetails.gameId}`);
+              break;
+            default:
+              console.log('Unhandled message action:', data.action);
+          }
         };
-    }, []);
 
-    const sendPlayerAction = (action, payload) => {
-        websocketService.sendMessage(action, payload);
-    };
+      websocketService.addMessageListener(handleMessage);
 
-    return (
-        <WebSocketContext.Provider value={{ gameState, sendPlayerAction, setGameState }}>
-            {children}
-        </WebSocketContext.Provider>
-    );
+      return () => {
+          // Ensure we only attempt to disconnect if the connection is open.
+          // The readyState of 1 indicates that the connection is open.
+          if (websocketService.ws && websocketService.ws.readyState === WebSocket.OPEN) {
+              websocketService.disconnect();
+              websocketService.removeMessageListener(handleMessage);
+          }
+      };
+  }, []);
+
+  const sendPlayerAction = (action, payload) => {
+      websocketService.sendMessage(action, payload);
+  };
+
+  return (
+      <WebSocketContext.Provider value={{ gameState, sendPlayerAction, setGameState }}>
+          {children}
+      </WebSocketContext.Provider>
+  );
 };
 
 export const useWebSocket = () => useContext(WebSocketContext);
