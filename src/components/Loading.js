@@ -1,4 +1,4 @@
-// LoadingCircle.js
+// Loading.js
 import React from 'react';
 import './Loading.css'; // Import the CSS file
 

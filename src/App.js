@@ -11,7 +11,7 @@ import PostFeed from './components/PostFeed';
 import Login from './components/Login'; 
 import SignUp from './components/SignUp';
 import PokerGame from './pages/PokerGame';
-import { WebSocketProvider } from './context/PokerWebSocketContext';
+import { PokerWebSocketProvider } from './context/PokerWebSocketContext';
 import { useAuth } from './context/AuthContext';
 import Loading from './components/Loading';
 import ChatPage from './pages/ChatPage';
@@ -48,8 +48,8 @@ function App() {
                             <Route path="/groups" element={<GroupsPage />} />                                                   {/* TODO: Add the protectedRoute back */}
                             <Route path="/chat" element={<ChatPage />} />
                             <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-                            <Route path="/poker-game" element={<WebSocketProvider><PokerLobby /></WebSocketProvider>} />  
-                            <Route path="/poker-game/:gameId" element={<WebSocketProvider><PokerGame /></WebSocketProvider>} />                                        {/* TODO: Add the protectedRoute back */}
+                            <Route path="/poker-game" element={<PokerWebSocketProvider><PokerLobby /></PokerWebSocketProvider>} />  
+                            <Route path="/poker-game/:gameId" element={<PokerWebSocketProvider><PokerGame /></PokerWebSocketProvider>} />                                        {/* TODO: Add the protectedRoute back */}
                             <Route path="/post/:postId" element={<ProtectedRoute><DetailedPostView /></ProtectedRoute>} />
                         </Routes>
                     </div>

@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 
 const WebSocketContext = createContext();
 
-export const WebSocketProvider = ({ children }) => {
+export const PokerWebSocketProvider = ({ children }) => {
   const [gameState, setGameState] = useState(null);
   const navigate = useNavigate();
 
