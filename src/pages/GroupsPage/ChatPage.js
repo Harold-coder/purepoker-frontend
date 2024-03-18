@@ -1,7 +1,7 @@
 // src/pages/ChatPage.js
 import React, { useState, useEffect, useRef } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { webSocketService } from '../context/WebSocketService';
+import { useAuth } from '../../context/AuthContext';
+import { webSocketService } from '../../context/WebSocketService';
 import './ChatPage.css'; // Create and import corresponding CSS for ChatPage
 
 const ChatPage = () => {

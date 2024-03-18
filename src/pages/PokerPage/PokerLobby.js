@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { websocketService } from '../context/PokerWebsocketService'; // Adjust the path as needed
-import { useAuth } from '../context/AuthContext';
+import { websocketService } from '../../context/PokerWebsocketService'; // Adjust the path as needed
+import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { useWebSocket } from '../context/PokerWebSocketContext'; // Import the context
-import Loading from '../components/Loading';
+import { useWebSocket } from '../../context/PokerWebSocketContext'; // Import the context
+import Loading from '../../components/Loading';
 import './PokerLobby.css'; // Importing CSS stylesheet
 
 const PokerLobby = () => {

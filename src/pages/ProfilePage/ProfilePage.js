@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import "./ProfilePage.css";
@@ -27,7 +27,7 @@ const ProfilePage = () => {
                 </button>
             </div>
             <div className='profile-info'>
-                <img src={require("../images/avatar.png")} className="profile-image" alt='avatar' />
+                <img src={require("../../images/avatar.png")} className="profile-image" alt='avatar' />
                 <p className='profile-info-text'><span className='info-label'>Username: </span>{user.username}</p>
                 <p className='profile-info-text'><span className='info-label'>Email: </span>{user.email}</p>
             </div>

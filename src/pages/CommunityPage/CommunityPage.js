@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import RightSidebar from '../components/RightSidebar';
+import RightSidebar from '../../components/CommunityComponents/RightSidebar';
 import './CommunityPage.css';
 import axios from 'axios';
-import NavigationMenu from '../components/NavigationMenu';
-import { urlServer } from '../App';
+import NavigationMenu from '../../components/CommunityComponents/NavigationMenu';
+import { urlServer } from '../../App';
 
 const CommunityPage = () => {
     const [posts, setPosts] = useState([]);

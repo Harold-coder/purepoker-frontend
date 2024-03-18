@@ -19,7 +19,7 @@ const NavigationMenu = () => {
                     <Link to="/profile" className="navigation-link">Profile</Link>
                 </li>
                 <li className="navigation-item">
-                    <Link to="/poker-game" className="navigation-link">Poker Game</Link>
+                    <Link to="/poker-game" className="navigation-link">Poker</Link>
                 </li>
             </ul>
         </nav>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import Loading from './Loading';
+import Loading from '../Loading';
 import './RightSidebar.css';
 
 const RightSidebar = ({ posts, loading }) => {

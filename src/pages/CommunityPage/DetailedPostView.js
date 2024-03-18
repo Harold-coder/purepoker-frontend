@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { urlServer } from '../App';
+import { urlServer } from '../../App';
 import './DetailedPostView.css';
 import moment from 'moment';
-import Loading from '../components/Loading';
-import { useAuth } from '../context/AuthContext';
+import Loading from '../../components/Loading';
+import { useAuth } from '../../context/AuthContext';
 
 const DetailedPostView = () => {
     const { postId } = useParams();

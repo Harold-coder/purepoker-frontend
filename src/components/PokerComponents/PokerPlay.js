@@ -1,10 +1,10 @@
 // PokerPlay.js
 import React, { useState, useEffect, useRef } from 'react';
-import { useWebSocket } from '../context/PokerWebSocketContext'; // Adjust the path as needed
-import Player from '../components/Player';
-import Pot from '../components/Pot';
-import { useAuth } from '../context/AuthContext';
-import CommunityCards from '../components/CommunityCards';
+import { useWebSocket } from '../../context/PokerWebSocketContext'; // Adjust the path as needed
+import Player from './Player';
+import Pot from './Pot';
+import { useAuth } from '../../context/AuthContext';
+import CommunityCards from './CommunityCards';
 import { useNavigate } from 'react-router-dom';
 import './PokerPlay.css'; 
 

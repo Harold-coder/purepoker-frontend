@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import "./PostComposer.css";
-import { urlServer } from '../App';
-import { useAuth } from '../context/AuthContext';
+import { urlServer } from '../../App';
+import { useAuth } from '../../context/AuthContext';
 
 const PostComposer = ({ onPostCreated }) => {
     const [content, setContent] = useState('');

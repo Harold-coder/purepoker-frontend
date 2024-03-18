@@ -1,9 +1,9 @@
 import React, { useEffect} from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useWebSocket } from '../context/PokerWebSocketContext'; 
+import { useWebSocket } from '../../context/PokerWebSocketContext'; 
 import './PokerGame.css';
 import axios from 'axios';
-import PokerPlay from './PokerPlay';
+import PokerPlay from '../../components/PokerComponents/PokerPlay';
 
 const PokerGame = () => {
   const { gameId } = useParams();

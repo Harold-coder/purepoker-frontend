@@ -1,13 +1,13 @@
 // PostFeed.js
 import React, { useEffect, useState } from 'react';
 import {useNavigate } from 'react-router-dom';
-import PostsList from '../components/PostsList';
-import PostComposer from '../components/PostComposer';
+import PostsList from './PostsList';
+import PostComposer from './PostComposer';
 import axios from 'axios';
-import { urlServer } from '../App';
+import { urlServer } from '../../App';
 import SearchPost from './SearchPost';
-import { useAuth } from '../context/AuthContext';
-import Loading from './Loading';
+import { useAuth } from '../../context/AuthContext';
+import Loading from '../Loading';
 
 const PostFeed = () => {
     const [posts, setPosts] = useState([]);
