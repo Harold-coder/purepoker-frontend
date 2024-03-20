@@ -1,31 +1,44 @@
-/* src/pages/GroupsPage.css */
-.groups-page {
+.groups-page-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: rgb(111, 12, 12);
     width: 100%;
+    background-color: #f5f5f5;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.groups-list {
-    margin-bottom: 20px;
-    width: 40%;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    overflow: hidden;
+groups-page-title {
+    color: #007bff;
+}
+  
+.group-id-input,
+.group-name-input,
+.max-members-input {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 300px; /* Adjust width as needed */
+}
+
+.join-group-button,
+.toggle-create-form-button,
+.create-group-button {
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 5px;
+    border: none;
     cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    width: 320px; /* Adjust width to align with inputs */
 }
 
-.group {
-    padding: 15px 20px;
-    border-bottom: 1px solid #ececec;
-    text-align: center;
-    color: rgb(111, 12, 12)
-}
-
-.group:last-child {
-    border-bottom: none;
+.create-group-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

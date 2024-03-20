@@ -1,70 +1,66 @@
-/* src/pages/ChatPage.css */
-.chat-page {
+.chat-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     height: 100vh;
-    background-color: #f0f2f5;
     width: 100%;
+    background-color: #36393f;
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.messages-display {
-    width: 60%;
-    height: 70%;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+.messages-container {
+    flex-grow: 1;
     overflow-y: auto;
     margin-bottom: 20px;
-    padding: 20px;
+    padding-right: 10px;
 }
 
 .message {
-    padding: 10px;
-    margin: 5px;
-    border-radius: 10px;
-    width: fit-content;
-    max-width: 80%;
+    margin-bottom: 10px;
 }
 
-.messages-display {
-    display: flex;
-    flex-direction: column;
-    width: 60%;
-    height: 70%;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    overflow-y: auto;
-    margin-bottom: 20px;
-    padding: 20px;
-}
-
-.message-form {
-    display: flex;
-    justify-content: center;
-    width: 60%;
-}
-
-.message-input {
-    width: 80%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
+.message-author {
+    font-weight: bold;
     margin-right: 10px;
 }
 
-.send-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.2s;
+.message-timestamp {
+    font-size: 0.8em;
+    color: #72767d;
 }
 
-.send-button:hover {
-    background-color: #0056b3;
+.message-content {
+    margin: 5px 0;
+    line-height: 1.4;
+}
+
+.message-input-container {
+    display: flex;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+}
+
+.message-input-container input {
+    flex-grow: 1;
+    border: none;
+    padding: 10px;
+    border-radius: 8px 0 0 8px;
+    outline: none;
+}
+
+.message-input-container button {
+    background-color: #7289da;
+    border: none;
+    color: white;
+    padding: 0 20px;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.message-input-container button:hover {
+    background-color: #5b6eae;
 }

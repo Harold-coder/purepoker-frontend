@@ -1,87 +1,85 @@
-// src/pages/ChatPage.js
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { webSocketService } from '../../context/WebSocketService';
-import './ChatPage.css'; // Create and import corresponding CSS for ChatPage
+import { useGroupsWebSocket } from '../../context/GroupsWebSocketContext'; 
+import { groupsWebSocketService} from '../../context/GroupsWebSocketService';
+import './ChatPage.css';
 
 const ChatPage = () => {
+    const [newMessage, setNewMessage] = useState('');
+    const { groupId } = useParams();
+    const { chatState, sendChatMessage, leaveChatSafely } = useGroupsWebSocket();
+
     const { user } = useAuth();
-    const [input, setInput] = useState('');
-    const [messages, setMessages] = useState([]);
+    const userId = user.username;
 
-    const messagesRef = useRef(messages); // Initialize the ref with the messages state
-
-
-    // Handle incoming WebSocket messages
-    const handleIncomingMessage = (incomingMessage) => {
-        // Directly use messagesRef.current to access the latest state
-        if (!messagesRef.current.some(msg => msg.id === incomingMessage.id)) {
-            setMessages(prevMessages => [...prevMessages, incomingMessage]);
+    useEffect(() => {
+        const userId = user.username;
+      
+        // Ensure the user is in the chat on component mount
+        if (!groupsWebSocketService.isConnected() && groupId && userId) {
+          groupsWebSocketService.connect(groupId, userId);
         }
-    };
-    
-    
-    useEffect(() => {
-        messagesRef.current = messages;
-    }, [messages]);
-    
-    useEffect(() => {
-        webSocketService.connect(handleIncomingMessage);
 
-        // Disconnect on cleanup
+        // Handle the browser's back button or navigation
+        const handleBeforeUnload = (e) => {
+            leaveChatSafely(groupId, userId); // Ensure leaveChat is called before navigating away
+            // Prevent the default unload behavior to ensure async leaveChat finishes
+            e.preventDefault();
+            e.returnValue = '';
+          };
+          window.addEventListener('beforeunload', handleBeforeUnload);
+      
         return () => {
-            webSocketService.disconnect();
+          // Cleanup: remove the event listener and leave chat when the component unmounts
+          window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, []);
+      }, [user.username, groupId, leaveChatSafely]);
 
-    const sendMessage = () => {
-        if (input.trim()) {
-            const uniqueId = Date.now(); // Using the current timestamp as a unique identifier
-            const messageToSend = {
-                id: uniqueId, // Include the unique identifier
-                message: input,
-                author: user.username,
-                isSentByMe: true,
-            };
-            
-            webSocketService.sendMessage(JSON.stringify(messageToSend));
-            console.log("SENT!");
-            setMessages(messages => [...messages, messageToSend]);
-            console.log(messages)
-            setInput('');
-        }
-    };
+    const handleSendMessage = () => {
+        let message = newMessage;
     
-
-    const handleKeyPress = (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) { // Prevent sending on Shift+Enter
-            e.preventDefault(); // Prevent the default action to avoid line break in input
-            sendMessage();
+        if (message.trim() !== '') {
+            console.log("Sending message:", { groupId, userId: userId, message: message }); // Debugging log
+            sendChatMessage(
+                groupId,
+                userId,
+                message
+            );
+            setNewMessage('');
         }
     };
+
+    // Function to handle leaving chat and navigating back to the groups page
+    const handleLeaveChat = () => {
+        if (groupsWebSocketService.isConnected()) {
+            leaveChatSafely(groupId, user.username);
+        }
+      };
 
     return (
-        <div className="chat-page">
-            <div className="messages-display">
-                {messages.map((msg, index) => (
-                    <div 
-                        key={index} 
-                        className="message"
-                    >
-                        <span className="author">{msg.author}: </span>{msg.message}
+        <div className="chat-container">
+            <button className="homeButton" onClick={handleLeaveChat} title="Go to home">
+                <i className="fas fa-home"></i>
+            </button>
+            <div className="messages-container">
+                {chatState.messages.map((msg, index) => (
+                    <div key={index} className="message">
+                        <span className="message-author">{msg.userId}</span>
+                        <span className="message-timestamp">{new Date(msg.timestamp).toLocaleTimeString()}</span>
+                        <p className="message-content">{msg.message}</p>
                     </div>
                 ))}
             </div>
-            <div className="message-form">
+            <div className="message-input-container">
                 <input
                     type="text"
-                    className="message-input"
-                    placeholder="Type a message..."
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyPress={handleKeyPress}
+                    value={newMessage}
+                    onChange={(e) => setNewMessage(e.target.value)}
+                    placeholder="Type your message here..."
+                    onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                 />
-                <button onClick={sendMessage} className="send-button">Send</button>
+                <button onClick={handleSendMessage}>Send</button>
             </div>
         </div>
     );
