@@ -15,6 +15,7 @@ export const GroupsWebSocketProvider = ({ children }) => {
     membersList: [],
     usersConnected: []
   });
+  const [loading, setLoading] = useState(false);
 
   const { user } = useAuth();
   let navigate = useNavigate();
@@ -28,18 +29,22 @@ export const GroupsWebSocketProvider = ({ children }) => {
 
     if (groupId) {
       // Fetch the initial chat state from your REST API
+      setLoading(true);
       axios.get(`${urlGetChatState}?groupId=${groupId}`).then(response => {
         const { data } = response;
         console.log('Chat state fetched:', data);
         // Assuming the response data has the structure { messages, members, usersConnected }
         setChatState({
           groupId,
+          groupName: data.groupName,
           messages: data.messages || [],
           membersList: data.members || [],
           usersConnected: data.usersConnected || []
         });
+        setLoading(false);
       }).catch(error => {
-        console.error('Failed to fetch chat state:', error);
+        alert('Failed to fetch chat state:', error);
+        setLoading(false);
       });
 
       if (!groupsWebSocketService.ws) {
@@ -106,7 +111,7 @@ export const GroupsWebSocketProvider = ({ children }) => {
   };
 
   return (
-      <GroupsWebSocketContext.Provider value={{ chatState, sendChatMessage, joinChat, leaveChat, leaveChatSafely }}>
+      <GroupsWebSocketContext.Provider value={{ chatState, sendChatMessage, joinChat, leaveChat, leaveChatSafely, loading }}>
           {children}
       </GroupsWebSocketContext.Provider>
   );

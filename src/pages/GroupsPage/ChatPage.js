@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import Loading from '../../components/Loading';
 import { useAuth } from '../../context/AuthContext';
 import { useGroupsWebSocket } from '../../context/GroupsWebSocketContext'; 
 import { groupsWebSocketService} from '../../context/GroupsWebSocketService';
@@ -8,7 +9,7 @@ import './ChatPage.css';
 const ChatPage = () => {
     const [newMessage, setNewMessage] = useState('');
     const { groupId } = useParams();
-    const { chatState, sendChatMessage, leaveChatSafely } = useGroupsWebSocket();
+    const { chatState, sendChatMessage, leaveChatSafely, loading } = useGroupsWebSocket();
 
     const { user } = useAuth();
     const userId = user.username;
@@ -27,8 +28,10 @@ const ChatPage = () => {
             // Prevent the default unload behavior to ensure async leaveChat finishes
             e.preventDefault();
             e.returnValue = '';
-          };
-          window.addEventListener('beforeunload', handleBeforeUnload);
+        };
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        
+        console.log(chatState);
       
         return () => {
           // Cleanup: remove the event listener and leave chat when the component unmounts
@@ -55,13 +58,18 @@ const ChatPage = () => {
         if (groupsWebSocketService.isConnected()) {
             leaveChatSafely(groupId, user.username);
         }
-      };
+    };
 
+    if (loading) {
+        return <Loading />;
+    }
+    
     return (
         <div className="chat-container">
             <button className="homeButton" onClick={handleLeaveChat} title="Go to home">
                 <i className="fas fa-home"></i>
             </button>
+            <h1 className='chat-title'>{chatState.groupName}</h1>
             <div className="messages-container">
                 {chatState.messages.map((msg, index) => (
                     <div key={index} className="message">

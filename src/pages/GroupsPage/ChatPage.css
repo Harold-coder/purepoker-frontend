@@ -7,48 +7,65 @@
     color: white;
     margin-left: auto;
     margin-right: auto;
+    padding: 20px; /* Added padding */
 }
 
 .messages-container {
     flex-grow: 1;
     overflow-y: auto;
-    margin-bottom: 20px;
-    padding-right: 10px;
+    padding: 0 20px; /* Adjusted padding for consistency */
+    margin: 0; /* Reset margin */
 }
 
 .message {
-    margin-bottom: 10px;
+    background-color: #42454a; /* Slight background for messages */
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px; /* Increased spacing */
+    display: flex;
+    flex-direction: column;
+}
+
+.message-author,
+.message-timestamp {
+    display: block;
 }
 
 .message-author {
-    font-weight: bold;
-    margin-right: 10px;
+    font-weight: 600; /* Adjusted font weight for clarity */
 }
 
 .message-timestamp {
-    font-size: 0.8em;
-    color: #72767d;
+    font-size: 0.75em; /* Slightly smaller font size */
+    color: #b9bbbe; /* Lighter color for timestamp */
+    align-self: flex-end; /* Align timestamp to the right */
+    margin-top: 8px; /* Spacing between message and timestamp */
 }
 
 .message-content {
-    margin: 5px 0;
-    line-height: 1.4;
+    white-space: pre-wrap; /* Ensure line breaks are respected */
 }
 
 .message-input-container {
     display: flex;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 10px;
+    padding: 10px 20px; /* Consistent padding with the rest of the container */
+    background-color: #40444b; /* Background color for the input area */
+    border-radius: 8px; /* Rounded corners */
+    margin-top: auto; /* Ensure it stays at the bottom */
 }
 
 .message-input-container input {
     flex-grow: 1;
-    border: none;
+    background-color: #35393e; /* Darker background for input */
+    color: white; /* Text color */
     padding: 10px;
-    border-radius: 8px 0 0 8px;
-    outline: none;
+    border-radius: 8px;
+    border: 2px solid transparent; /* Hide border */
+    outline: none; /* Remove focus outline */
+}
+
+.message-input-container input:focus {
+    border-color: #7289da; /* Highlight input when focused */
 }
 
 .message-input-container button {
@@ -56,7 +73,8 @@
     border: none;
     color: white;
     padding: 0 20px;
-    border-radius: 0 8px 8px 0;
+    border-radius: 8px; /* Rounded corners for the button */
+    margin-left: 10px; /* Space between input and button */
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
