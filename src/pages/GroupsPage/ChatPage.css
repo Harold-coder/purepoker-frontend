@@ -10,6 +10,17 @@
     padding: 20px; /* Added padding */
 }
 
+.chat-title {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.groups-page-homeButton {
+    color: rgba(72, 126, 212, 0.904);
+}
+
+/* TODO: Make it scroll from down to up and not up to down. */
 .messages-container {
     flex-grow: 1;
     overflow-y: auto;
@@ -19,7 +30,7 @@
 
 .message {
     background-color: #42454a; /* Slight background for messages */
-    padding: 10px;
+    padding: 15px;
     border-radius: 8px;
     margin-bottom: 15px; /* Increased spacing */
     display: flex;
@@ -33,6 +44,9 @@
 
 .message-author {
     font-weight: 600; /* Adjusted font weight for clarity */
+    font-size: 1.2rem;
+    color: rgba(72, 126, 212, 0.904);
+    margin-bottom: -0.5rem;
 }
 
 .message-timestamp {
@@ -44,14 +58,21 @@
 
 .message-content {
     white-space: pre-wrap; /* Ensure line breaks are respected */
+    margin: 0;
+    font-size: 1.2rem;
+    margin-bottom: 0.7rem;
 }
 
 .message-input-container {
     display: flex;
-    padding: 10px 20px; /* Consistent padding with the rest of the container */
+    padding: 10px 20px;
     background-color: #40444b; /* Background color for the input area */
     border-radius: 8px; /* Rounded corners */
-    margin-top: auto; /* Ensure it stays at the bottom */
+    width: 94%;
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1rem;
 }
 
 .message-input-container input {
@@ -69,7 +90,7 @@
 }
 
 .message-input-container button {
-    background-color: #7289da;
+    background-color: rgba(72, 126, 212, 0.904);
     border: none;
     color: white;
     padding: 0 20px;
@@ -81,4 +102,57 @@
 
 .message-input-container button:hover {
     background-color: #5b6eae;
+}
+
+/* Media Queries for Responsive Design */
+
+@media only screen and (max-width: 600px) {
+    .chat-container {
+        padding: 10px; /* Smaller padding for narrower screens */
+    }
+
+    .message-input-container {
+        flex-direction: column; /* Stack input and button on small screens */
+        padding: 6px;
+        padding-top: 10px;
+        margin: 0;
+        margin-bottom: 1rem;
+        margin-left: auto;
+        margin-right: auto;
+        width: 91%;
+    }
+
+    .message-input-container input,
+    .message-input-container button {
+        width: 90%; /* Full width for input and button */
+        border-radius: 4px; /* Smaller border radius for a softer look */
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 1rem;
+    }
+
+    .message-input-container input {
+        margin-bottom: 10px; /* Extra space between input and button */
+    }
+
+    .message-input-container button {
+        padding: 10px;
+        width: 95%;
+    }
+
+    .message-author {
+        font-size: 0.9rem; /* Smaller font size for author */
+    }
+
+    .message-timestamp {
+        font-size: 0.7rem; /* Smaller font size for timestamp */
+    }
+
+    .message-content {
+        font-size: 0.95rem; /* Adjust font size for message content */
+    }
+
+    .message {
+        margin-bottom: 12px; /* Adjust spacing between messages */
+    }
 }

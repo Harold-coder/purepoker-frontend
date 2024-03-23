@@ -29,7 +29,6 @@ const GroupsPage = () => {
     try {
         setLoading(true);
         const response = await axios.get(`${urlServer}/getUserGroups?userId=${userId}`);
-        console.log(response.data);
         setUserGroups(response.data);
         setLoading(false);
     } catch (error) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import Loading from '../../components/Loading';
 import { useAuth } from '../../context/AuthContext';
@@ -13,6 +13,36 @@ const ChatPage = () => {
 
     const { user } = useAuth();
     const userId = user.username;
+
+    const usernameColors = [
+        "#E57373", // red
+        "#F06292", // pink
+        "#BA68C8", // purple
+        "#64B5F6", // blue
+        "#4DD0E1", // cyan
+        "#81C784", // green
+        "#FFD54F", // yellow
+    ];
+
+    const usernameColorMapRef = useRef({});
+
+    const getUsernameColor = (username) => {
+        if (!usernameColorMapRef.current[username]) {
+          const unusedColors = usernameColors.filter(
+            color => !Object.values(usernameColorMapRef.current).includes(color)
+          );
+          const color = unusedColors[Math.floor(Math.random() * unusedColors.length)];
+          usernameColorMapRef.current[username] = color || "#ffffff"; // Fallback to white if you run out of colors
+        }
+        return usernameColorMapRef.current[username];
+    };
+      
+
+    const messagesEndRef = useRef(null); // this is for the scrolling
+
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [chatState.messages]);
 
     useEffect(() => {
         const userId = user.username;
@@ -66,18 +96,19 @@ const ChatPage = () => {
     
     return (
         <div className="chat-container">
-            <button className="homeButton" onClick={handleLeaveChat} title="Go to home">
+            <button className="homeButton groups-page-homeButton" onClick={handleLeaveChat} title="Go to home">
                 <i className="fas fa-home"></i>
             </button>
             <h1 className='chat-title'>{chatState.groupName}</h1>
             <div className="messages-container">
                 {chatState.messages.map((msg, index) => (
                     <div key={index} className="message">
-                        <span className="message-author">{msg.userId}</span>
+                        <span className="message-author" style={{ color: getUsernameColor(msg.userId) }}>{msg.userId}</span>
                         <span className="message-timestamp">{new Date(msg.timestamp).toLocaleTimeString()}</span>
                         <p className="message-content">{msg.message}</p>
                     </div>
                 ))}
+                <div ref={messagesEndRef} /> {/* Invisible element to scroll to */}
             </div>
             <div className="message-input-container">
                 <input
