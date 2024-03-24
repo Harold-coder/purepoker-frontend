@@ -33,6 +33,8 @@ export const PokerWebSocketProvider = ({ children }) => {
               setGameState(data.gameDetails);
               navigate(`/poker-game/${data.gameDetails.gameId}`); // Should be handled somewhere else
               break;
+            case 'leaveGame':
+              
             case 'playerCall':
               setGameState(data.game); // Update the gameState with the new game state received
               break;

@@ -96,6 +96,11 @@ const PokerPlayer = () => {
         sendPlayerAction('playerReady', { gameId: gameState.gameId, playerId });
     };
 
+    const handleLeaveGame = (playerId) => {
+        sendPlayerAction('leaveGame', { gameId: gameState.gameId, playerId });
+        navigateToLobby();
+    }
+
     const navigateToLobby = () => navigate('/poker-game'); // TODO: implement the leave game here!!!!!!
 
     return (
@@ -134,6 +139,7 @@ const PokerPlayer = () => {
                         handleRaise={(amount) => handleRaise(player.id, amount)}
                         handleFold={() => handleFold(player.id)}
                         handleReady={() => handleReady(player.id)}
+                        handleLeave={() => handleLeave(player.id)}
                     />
                 ))}
                 <div className="community-cards-area">
