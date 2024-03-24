@@ -96,12 +96,10 @@ const PokerPlayer = () => {
         sendPlayerAction('playerReady', { gameId: gameState.gameId, playerId });
     };
 
-    const handleLeaveGame = (playerId) => {
+    const handleLeave = (playerId) => {
         sendPlayerAction('leaveGame', { gameId: gameState.gameId, playerId });
-        navigateToLobby();
+        navigate('/poker-game')
     }
-
-    const navigateToLobby = () => navigate('/poker-game'); // TODO: implement the leave game here!!!!!!
 
     return (
         <div className="poker-player">
