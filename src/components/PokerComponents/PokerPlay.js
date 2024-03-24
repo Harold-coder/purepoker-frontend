@@ -97,14 +97,14 @@ const PokerPlayer = () => {
     };
 
     const handleLeave = (playerId) => {
-        sendPlayerAction('leaveGame', { gameId: gameState.gameId, playerId });
+        sendPlayerAction('leaveGame', { gameId: gameState.gameId, currentPlayerId });
         navigate('/poker-game')
     }
 
     return (
         <div className="poker-player">
             <div>
-                <button className="homeButton" onClick={navigateToLobby} title="Go to home">
+                <button className="homeButton" onClick={handleLeave} title="Go to home">
                     <i className="fas fa-home"></i>
                 </button>
                 <p className='poker-title'>Pure Poker</p>
@@ -137,7 +137,6 @@ const PokerPlayer = () => {
                         handleRaise={(amount) => handleRaise(player.id, amount)}
                         handleFold={() => handleFold(player.id)}
                         handleReady={() => handleReady(player.id)}
-                        handleLeave={() => handleLeave(player.id)}
                     />
                 ))}
                 <div className="community-cards-area">

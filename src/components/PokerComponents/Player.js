@@ -8,7 +8,7 @@ const getSuitClass = (card) => {
     if (card.includes('♣')) return 'clubs';
 };
 
-const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, canCheck, affordMinRaise, affordCall, minRaiseAmount, gameStage, highestBet, hasFolded,smallBlindIndex, playerCount, isReady, winners, handDescription, bestHand, handleCall, handleCheck, handleRaise, handleFold, handleReady, handleLeave }) => {
+const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, canCheck, affordMinRaise, affordCall, minRaiseAmount, gameStage, highestBet, hasFolded,smallBlindIndex, playerCount, isReady, winners, handDescription, bestHand, handleCall, handleCheck, handleRaise, handleFold, handleReady}) => {
     const isCurrentPlayer = (player.id === currentPlayerId);
     const isWaiting = player.isWaiting === true;
     const [raiseValue, setRaiseValue] = useState(minRaiseAmount); // Initial raise amount
@@ -50,9 +50,6 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
         handleReady(player.id);
     };
 
-    const handleLeave = () => {
-        handleLeave(player.id)
-    }
     const cardClass = isCurrentPlayer ? "current-player-card" : "other-player-card";
 
     const onRaiseChange = (event) => {
