@@ -7,6 +7,7 @@ import { useAuth } from '../../context/AuthContext';
 import CommunityCards from './CommunityCards';
 import { useNavigate } from 'react-router-dom';
 import './PokerPlay.css'; 
+import Loading from '../Loading';
 
 const PokerPlayer = () => {
     const [playerPositions, setPlayerPositions] = useState([]);
@@ -14,6 +15,7 @@ const PokerPlayer = () => {
     const tableRef = useRef(null);
     const { user } = useAuth();
     const currentPlayerId = user.username;
+    const [loading, setLoading] = useState(false);
 
     let navigate = useNavigate();
 
@@ -33,12 +35,12 @@ const PokerPlayer = () => {
                 const newPositions = calculatePlayerPositions(gameState, allPlayers, width / 2, height / 2, width / 2, height / 2, currentPlayerPosition);
                 setPlayerPositions(newPositions);
 
-                console.log(gameState);
             }
         };
 
         updatePositions(); // Initial call to set player positions
         window.addEventListener('resize', updatePositions); // Update positions on window resize
+        setLoading(false);
         return () => window.removeEventListener('resize', updatePositions); // Cleanup on component unmount
     }, [gameState, currentPlayerId]);
 
@@ -71,27 +73,31 @@ const PokerPlayer = () => {
     
 
     const handleCall = (playerId) => {
+        setLoading(true);
         // Assuming 'gameState' has a property 'gameId' that identifies the current game
         sendPlayerAction('playerCall', { gameId: gameState.gameId, playerId });
     };
     
     const handleCheck = (playerId) => {
+        setLoading(true);
         // Send a 'playerCheck' action; adjust the action name if your backend expects something different
         sendPlayerAction('playerCheck', { gameId: gameState.gameId, playerId });
     };
     
     const handleRaise = (playerId, amount) => {
-        console.log(amount);
+        setLoading(true);
         // 'amount' parameter should be the raise amount specified by the player
         sendPlayerAction('playerRaise', { gameId: gameState.gameId, playerId, raiseAmount: amount });
     };
     
     const handleFold = (playerId) => {
+        setLoading(true);
         // Send a 'playerFold' action; adjust the action name if your backend expects something different
         sendPlayerAction('playerFold', { gameId: gameState.gameId, playerId });
     };
 
     const handleReady = (playerId) => {
+        setLoading(true);
         // Send a 'playerFold' action; adjust the action name if your backend expects something different
         sendPlayerAction('playerReady', { gameId: gameState.gameId, playerId });
     };
@@ -139,6 +145,7 @@ const PokerPlayer = () => {
                         handleReady={() => handleReady(player.id)}
                     />
                 ))}
+                {loading && <Loading size='small'/>}
                 <div className="community-cards-area">
                     <CommunityCards cards={gameState.communityCards} potCards={true} />
                     <Pot pot={gameState.pot} />

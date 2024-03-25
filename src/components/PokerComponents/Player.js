@@ -66,7 +66,7 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
         {!isEmpty && !isWaiting &&
         <div className={`player ${isCurrentTurn ? 'current-turn' : ''} ${hasFolded ? 'has-folded' : ''} ${gameStage === 'gameOver' ? 'game-over' : ''} ${isWinner ? 'is-winner' : ''} ${isCurrentPlayer ? 'current-player' : 'other-player'}`} style={{ position: 'absolute', left: `${position.left}px`, top: `${position.top}px` }}>
             <div className = 'info-container'>
-                { (isCurrentPlayer || (gameStage === 'gameOver' && !hasFolded)) && (
+                { isCurrentPlayer && (
                     <div className="player-hand">
                         {player.hand.map((card, index) => {
                             const suitClass = getSuitClass(card);
@@ -79,6 +79,33 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
                         })}
                     </div>
                 )}
+                {/* Nobody folded, we need to reveal everyone's cards: */}
+                { !isCurrentPlayer && (gameStage === 'gameOver' && handDescription) && (
+                    <div className="player-hand">
+                        {player.hand.map((card, index) => {
+                            const suitClass = getSuitClass(card);
+                            const number = card.slice(0, -1).replace('T', '10');
+                            return (
+                                <div key={index} className={`card ${cardClass} ${suitClass}`}>
+                                    <span>{number}</span> {/* Display the card number */}
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
+                {/* Game is done,  everyone folded but one person, no need to show the cards: */}
+                { (!isCurrentPlayer && (gameStage === 'gameOver' && !handDescription && !hasFolded)) && (
+                    <div className="player-hand">
+                        {player.hand.map((card, index) => {
+                            return (
+                                <div key={index} className={`card card-back`}>
+                                    {/* Don't need anything */}
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
+                {/* Game is going on and is not the player, we show the back of the cards: */}
                 { (!isCurrentPlayer && (gameStage !== 'gameOver' && !hasFolded)) && (
                     <div className="player-hand">
                         {player.hand.map((card, index) => {
@@ -92,27 +119,22 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
                 )}
             </div>
             <div className='id-container'>
+                <div className='labels'>
+                    {isSmallBlind && <span className='btn-style'>SB</span>}
+                    {isBigBlind && <span className='btn-style'>BB</span>}
+                    {isBtn && <span className='btn-style'>BTN</span>}
+                </div>
                 <p className='labels'>
-                    {/* <div>
-                        {isSmallBlind && <span className='label-style'>SB</span>}
-                        {isBigBlind && <span className='label-style'>BB</span>}
-                        {isBtn && <span className='label-style'>BTN</span>}
-                    </div> */}
                     <span className={`player-id ${isSmallBlind || isBigBlind || isBtn ? 'show-label' : ''} ${isCurrentPlayer ? 'current-player-id' : ''}`}>
                         {player.id}
                     </span>
                 </p>
                     {!isEmpty && <p className='margin-zero chips-count'>{player.chips}</p>}
-                    {gameStage === 'gameOver' && isCurrentPlayer && (
-                        <>
-                            <p className='margin-zero'>Amount Won: {player.amountWon}</p>
-                            <p className='margin-zero'>Amount Gained: {player.amountWon - player.potContribution}</p>
-                        </>
-                    )}
                 </div>
             {player.isAllIn && <div className='all-in'>All-In</div>}
-            {hasFolded && <span className='fold-style'>X</span>}
-            {gameStage === 'gameOver'  && !hasFolded && bestHand && (
+            {/* Cases: */}
+            {/* 1. We show the cards */}
+            {gameStage === 'gameOver'  && !hasFolded && handDescription && (
                 <>
                     {handDescription && (
                         <div className={`winning-hand-style ${isWinner ? 'is-winner' : ''}`}>
@@ -126,6 +148,8 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
                     )}
                 </>
             )}
+            {/* 2. Everyone folded but one. We can see this because there is no handDescription */}
+
             {gameStage === 'gameOver' && isCurrentPlayer && (
                 <div className='ready-button-container'> {/* Use the container style here */}
                     <button

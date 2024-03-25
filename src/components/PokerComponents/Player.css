@@ -99,18 +99,8 @@
     text-align: center;
 }
 
-.player-id {
-    padding: 3px 8px;
-    font-size: 1.1rem;
-    font-weight: bold;
-}
-
 .current-player-id {
     color: orange;
-}
-
-.show-label {
-    /* margin-left: 10px; */
 }
 
 .id-container {
@@ -119,14 +109,16 @@
     display: flex;
     margin-left: auto;
     margin-right: auto;
+    height: auto;
 }
 .labels {
     margin: 0;
     color: white;
     align-items: center;
+    margin-bottom: 0.5rem;
 }
 
-.label-style {
+.btn-style {
     font-weight: bold;
     background-color: #f0ad4e;
     color: #fff;
@@ -134,6 +126,15 @@
     border-radius: 8px;
     font-size: 12px;
     align-self: center;
+    margin-right: 0.25rem;
+    margin-left: 0.25rem;
+}
+
+.player-id {
+    padding: 3px 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 1rem;
 }
 
 .player-hand {
@@ -148,8 +149,8 @@
 
 .chips-count {
     color: #007bff;
-    margin-top: 0.5rem;
     font-size: 1.1rem;
+
 }
 .ready-button {
     cursor: pointer;
