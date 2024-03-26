@@ -2,6 +2,7 @@ class PokerWebsocketService {
     constructor() {
       this.ws = null;
       this.listeners = [];
+      this.messageQueue = [];
     }
   
     connect() {
@@ -35,7 +36,12 @@ class PokerWebsocketService {
   
     onOpen = () => {
       console.log("WebSocket connection opened");
-      this.isConnected = true;
+      
+      // Send all queued messages
+      while (this.messageQueue.length > 0) {
+          const { action, data } = this.messageQueue.shift(); // Remove the message from the queue
+          this.sendMessage(action, data); // Send the message
+      }
     };
 
     // Modify onMessage to handle custom logic
@@ -64,15 +70,20 @@ class PokerWebsocketService {
   
     sendMessage(action, data) {
       if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-        const message = JSON.stringify({ action, ...data });
-        console.log(`Sending message: ${message}`);
-        this.ws.send(message);
+          const message = JSON.stringify({ action, ...data });
+          this.ws.send(message);
       } else {
-        console.error("WebSocket is not connected. Attempting to reconnect...");
-        this.connect(); // Attempt to reconnect if not connected
+          // Queue the message
+          this.messageQueue.push({ action, data });
+  
+          // Attempt to reconnect if not connected
+          if (!this.ws || this.ws.readyState === WebSocket.CLOSED) {
+              console.error("WebSocket is not connected. Attempting to reconnect...");
+              this.connect();
+          }
       }
     }
-  
+
     disconnect() {
       if (this.ws) {
         console.log("Disconnecting WebSocket...");
