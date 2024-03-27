@@ -34,8 +34,7 @@ export const PokerWebSocketProvider = ({ children }) => {
               navigate(`/poker-game/${data.gameDetails.gameId}`); // Should be handled somewhere else
               break;
             case 'leaveGame':
-              localStorage.removeItem('gameId');
-              setGameState(null);
+              setGameState(data.game); // Update the gameState with the new game state received
               break;
             case 'playerCall':
               setGameState(data.game); // Update the gameState with the new game state received

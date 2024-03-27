@@ -102,8 +102,8 @@ const PokerPlayer = () => {
         sendPlayerAction('playerReady', { gameId: gameState.gameId, playerId });
     };
 
-    const handleLeave = (playerId) => {
-        sendPlayerAction('leaveGame', { gameId: gameState.gameId, currentPlayerId });
+    const handleLeave = () => {
+        sendPlayerAction('leaveGame', { gameId: gameState.gameId, playerId: currentPlayerId });
         navigate('/poker-game')
     }
 
