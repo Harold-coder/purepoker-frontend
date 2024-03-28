@@ -11,7 +11,7 @@ const PokerLobby = () => {
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [minPlayers, setMinPlayers] = useState('');
     const [maxPlayers, setMaxPlayers] = useState('');
-    const [buyIn, setBuyIn] = useState('');
+    const [bigBlind, setBigBlind] = useState('');
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
@@ -31,8 +31,9 @@ const PokerLobby = () => {
     };
 
     const handleCreateGame = () => {
-        console.log(`Creating game with minPlayers: ${minPlayers}, maxPlayers: ${maxPlayers}, buyIn: ${buyIn}`);
-        websocketService.sendMessage("createGame", { minNumberOfPlayers: minPlayers, maxNumberOfPlayers: maxPlayers, buyIn, playerId: user.username }); // Adjust `playerId` as needed
+        console.log(`Creating game with minPlayers: ${minPlayers}, maxPlayers: ${maxPlayers}, bigBlind: ${bigBlind}`);
+
+        websocketService.sendMessage("createGame", { minNumberOfPlayers: minPlayers, maxNumberOfPlayers: maxPlayers, bigBlind, playerId: user.username }); // Adjust `playerId` as needed
         setLoading(true);
     };
 
@@ -68,21 +69,21 @@ const PokerLobby = () => {
                                     type="number"
                                     placeholder="Minimum Players"
                                     value={minPlayers}
-                                    onChange={(e) => setMinPlayers(e.target.value)}
+                                    onChange={(e) => setMinPlayers(Number(e.target.value))}
                                 />
                                 <input
                                     className="formInput"
                                     type="number"
                                     placeholder="Maximum Players"
                                     value={maxPlayers}
-                                    onChange={(e) => setMaxPlayers(e.target.value)}
+                                    onChange={(e) => setMaxPlayers(Number(e.target.value))}
                                 />
                                 <input
                                     className="formInput"
                                     type="number"
-                                    placeholder="Buy-In"
-                                    value={buyIn}
-                                    onChange={(e) => setBuyIn(e.target.value)}
+                                    placeholder="Big Blind"
+                                    value={bigBlind}
+                                    onChange={(e) => setBigBlind(Number(e.target.value))}
                                 />
                                 <button className="submitButton" onClick={handleCreateGame}>Create</button>
                             </div>
