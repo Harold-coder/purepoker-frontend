@@ -8,11 +8,13 @@ import './GroupsPage.css'; // Ensure you have this CSS file for styling
 const urlServer = "https://pa82k8l663.execute-api.us-east-1.amazonaws.com/dev"; // Replace with your actual REST API URL
 
 const GroupsPage = () => {
-  const [groupId, setGroupId] = useState('');
   const [userGroups, setUserGroups] = useState([]);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [groupName, setGroupName] = useState('');
+  const [createGroupName, setCreateGroupName] = useState('');
   const [maxMembers, setMaxMembers] = useState('');
+
+  const [error, setError] = useState('');
 
   const [loading, setLoading] = useState(false);
 
@@ -39,14 +41,19 @@ const GroupsPage = () => {
 
   const handleJoinGroup = async () => {
     try {
-      const response = await axios.post(`${urlServer}/joinGroup`, { groupId, userId: user.username });
+      setLoading(true);
+      const response = await axios.post(`${urlServer}/joinGroup`, { groupName, userId: user.username });
+      console.log(response);
       if (response.status === 200) {
-        localStorage.setItem('groupId', groupId);
-        navigate(`/chat/${groupId}`); // Assume this is your route for the chat page
+        localStorage.setItem('groupId', response.data.groupId);
+        navigate(`/chat/${response.data.groupId}`); // Assume this is your route for the chat page
       }
     } catch (error) {
-      console.error('Error joining group:', error);
-      // Handle error (e.g., show an error message)
+      console.error('Error joining group HERE:', error);
+      setLoading(false);
+      if (error.response) {
+        setError(error.response.data.message);
+      }
     }
   };
 
@@ -54,7 +61,7 @@ const GroupsPage = () => {
     try {
         setLoading(true);
         const response = await axios.post(`${urlServer}/createGroup`, { 
-            groupName, // Changed from groupId to groupName
+            groupName: createGroupName, // Changed from groupId to groupName
             maxMembers: parseInt(maxMembers, 10), // Ensure maxMembers is sent as a number
             creatorId: user.username
         });
@@ -93,15 +100,20 @@ const GroupsPage = () => {
         </div>
       ))}
 
-      <h2 className='groups-page-subtitle'>Want to join a new group?</h2>
+      <h2 className='groups-page-subtitle'>Join a new group</h2>
       <input
         className="group-id-input"
         type="text"
-        placeholder="Enter Group ID"
-        value={groupId}
-        onChange={(e) => setGroupId(e.target.value)}
+        placeholder="Enter Group Name"
+        value={groupName}
+        onChange={(e) => {
+          setGroupName(e.target.value);
+          setError('');
+          }
+        }
       />
       <button className="join-group-button" onClick={handleJoinGroup}>Join Group</button>
+      {error && <p className='errorMessage'>{error}</p>}
       <button className="toggle-create-form-button" onClick={() => setShowCreateForm(!showCreateForm)}>
         {showCreateForm ? "Cancel" : "Create Group"}
       </button>
@@ -111,8 +123,8 @@ const GroupsPage = () => {
             className="group-name-input"
             type="text"
             placeholder="Group Name"
-            value={groupName}
-            onChange={(e) => setGroupName(e.target.value)}
+            value={createGroupName}
+            onChange={(e) => setCreateGroupName(e.target.value)}
           />
           <input
             className="max-members-input"
