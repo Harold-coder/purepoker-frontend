@@ -30,7 +30,7 @@ export const GroupsWebSocketProvider = ({ children }) => {
     if (groupId) {
       // Fetch the initial chat state from your REST API
       setLoading(true);
-      axios.get(`${urlGetChatState}?groupId=${groupId}`).then(response => {
+      axios.get(`${urlGetChatState}?groupId=${groupId}`, { withCredentials: false }).then(response => {
         const { data } = response;
         console.log('Chat state fetched:', data);
         // Assuming the response data has the structure { messages, members, usersConnected }
@@ -40,7 +40,7 @@ export const GroupsWebSocketProvider = ({ children }) => {
           messages: data.messages || [],
           membersList: data.members || [],
           usersConnected: data.usersConnected || []
-        },  { withCredentials: false });
+        });
         setLoading(false);
       }).catch(error => {
         alert('Failed to fetch chat state:', error);
