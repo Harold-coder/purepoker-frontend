@@ -49,8 +49,8 @@ function App() {
                             <Route path="/groups" element={<ProtectedRoute><GroupsPage /></ProtectedRoute>} />
                             <Route path="/chat/:groupId" element={<ProtectedRoute><GroupsWebSocketProvider><ChatPage /></GroupsWebSocketProvider></ProtectedRoute>} />
                             <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
-                            <Route path="/poker-game" element={<PokerWebSocketProvider><PokerLobby /></PokerWebSocketProvider>} />  
-                            <Route path="/poker-game/:gameId" element={<PokerWebSocketProvider><PokerGame /></PokerWebSocketProvider>} />                                        {/* TODO: Add the protectedRoute back */}
+                            <Route path="/poker-game" element={<ProtectedRoute><PokerWebSocketProvider><PokerLobby /></PokerWebSocketProvider></ProtectedRoute>} />  
+                            <Route path="/poker-game/:gameId" element={<ProtectedRoute><PokerWebSocketProvider><PokerGame /></PokerWebSocketProvider></ProtectedRoute>} />               
                             <Route path="/post/:postId" element={<ProtectedRoute><DetailedPostView /></ProtectedRoute>} />
                         </Routes>
                     </div>
