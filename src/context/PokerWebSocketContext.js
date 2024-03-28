@@ -8,6 +8,7 @@ const WebSocketContext = createContext();
 
 export const PokerWebSocketProvider = ({ children }) => {
   const [gameState, setGameState] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   const {user} = useAuth();
@@ -29,9 +30,13 @@ export const PokerWebSocketProvider = ({ children }) => {
               navigate(`/poker-game/${data.gameDetails.gameId}`);  
               break;
             case 'joinGame':
-              localStorage.setItem('gameId', data.gameDetails.gameId);
-              setGameState(data.gameDetails);
-              navigate(`/poker-game/${data.gameDetails.gameId}`); // Should be handled somewhere else
+              if (data.statusCode === 200) {
+                localStorage.setItem('gameId', data.gameDetails.gameId);
+                setGameState(data.gameDetails);
+                navigate(`/poker-game/${data.gameDetails.gameId}`); // Should be handled somewhere else
+              } else if (data.statusCode === 400) {
+                setErrorMessage(data.message);
+              }
               break;
             case 'leaveGame':
               setGameState(data.game); // Update the gameState with the new game state received
@@ -79,7 +84,7 @@ export const PokerWebSocketProvider = ({ children }) => {
   };
 
   return (
-      <WebSocketContext.Provider value={{ gameState, sendPlayerAction, setGameState }}>
+      <WebSocketContext.Provider value={{ gameState, sendPlayerAction, setGameState, errorMessage, setErrorMessage }}>
           {children}
       </WebSocketContext.Provider>
   );

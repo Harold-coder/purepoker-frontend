@@ -16,26 +16,32 @@ const PokerLobby = () => {
 
     const navigate = useNavigate();
 
-    const { gameState } = useWebSocket(); // Use gameState from context
+    const { gameState, errorMessage, setErrorMessage } = useWebSocket(); // Use gameState from context
 
     const { user } = useAuth();
 
     useEffect(() => {
         // No need to do anything
-      }, [gameState, navigate]);
+    }, [gameState, navigate]);
 
     const handleJoinGame = () => {
+        setErrorMessage('');
         console.log(`Joining game with ID: ${gameId}`);
-        websocketService.sendMessage("joinGame", { gameId, playerId: user.username }); // Adjust `playerUsername` as needed
+        websocketService.sendMessage("joinGame", { gameId, playerId: user.username }); 
         setLoading(true);
     };
 
     const handleCreateGame = () => {
+        setErrorMessage('');
         console.log(`Creating game with minPlayers: ${minPlayers}, maxPlayers: ${maxPlayers}, bigBlind: ${bigBlind}`);
 
         websocketService.sendMessage("createGame", { minNumberOfPlayers: minPlayers, maxNumberOfPlayers: maxPlayers, bigBlind, playerId: user.username }); // Adjust `playerId` as needed
         setLoading(true);
     };
+
+    useEffect(() => {
+        setLoading(false);
+    }, [errorMessage]);
 
     // Function to navigate home
     const navigateHome = () => navigate('/');
@@ -69,14 +75,14 @@ const PokerLobby = () => {
                                     type="number"
                                     placeholder="Minimum Players"
                                     value={minPlayers}
-                                    onChange={(e) => setMinPlayers(Number(e.target.value))}
+                                    onChange={(e) => setMinPlayers(Number(Number(e.target.value)))}
                                 />
                                 <input
                                     className="formInput"
                                     type="number"
                                     placeholder="Maximum Players"
                                     value={maxPlayers}
-                                    onChange={(e) => setMaxPlayers(Number(e.target.value))}
+                                    onChange={(e) => setMaxPlayers(Number(Number(e.target.value)))}
                                 />
                                 <input
                                     className="formInput"
@@ -90,6 +96,7 @@ const PokerLobby = () => {
                         )}
                     </div>
                 }
+                {<p className='errorMessage'>{errorMessage}</p>}
             </div>
         </div>
     );
