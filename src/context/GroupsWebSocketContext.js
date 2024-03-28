@@ -40,7 +40,7 @@ export const GroupsWebSocketProvider = ({ children }) => {
           messages: data.messages || [],
           membersList: data.members || [],
           usersConnected: data.usersConnected || []
-        });
+        },  { withCredentials: false });
         setLoading(false);
       }).catch(error => {
         alert('Failed to fetch chat state:', error);
