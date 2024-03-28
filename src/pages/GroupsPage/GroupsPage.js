@@ -42,7 +42,7 @@ const GroupsPage = () => {
   const handleJoinGroup = async () => {
     try {
       setLoading(true);
-      const response = await axios.post(`${urlServer}/joinGroup`, { groupName, userId: user.username });
+      const response = await axios.post(`${urlServer}/joinGroup`, { groupName, userId: user.username }, { withCredentials: false });
       console.log(response);
       if (response.status === 200) {
         localStorage.setItem('groupId', response.data.groupId);
@@ -64,7 +64,7 @@ const GroupsPage = () => {
             groupName: createGroupName, // Changed from groupId to groupName
             maxMembers: parseInt(maxMembers, 10), // Ensure maxMembers is sent as a number
             creatorId: user.username
-        });
+        }, { withCredentials: false });
         if (response.status === 200 && response.data.groupId) {
             localStorage.setItem('groupId', response.data.groupId);
             setLoading(false);
