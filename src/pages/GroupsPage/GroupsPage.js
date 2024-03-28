@@ -30,7 +30,7 @@ const GroupsPage = () => {
   const fetchUserGroups = async (userId) => {
     try {
         setLoading(true);
-        const response = await axios.get(`${urlServer}/getUserGroups?userId=${userId}`);
+        const response = await axios.get(`${urlServer}/getUserGroups?userId=${userId}`, { withCredentials: false });
         setUserGroups(response.data);
         setLoading(false);
     } catch (error) {
@@ -49,7 +49,7 @@ const GroupsPage = () => {
         navigate(`/chat/${response.data.groupId}`); // Assume this is your route for the chat page
       }
     } catch (error) {
-      console.error('Error joining group HERE:', error);
+      console.error('Error joining group:', error);
       setLoading(false);
       if (error.response) {
         setError(error.response.data.message);

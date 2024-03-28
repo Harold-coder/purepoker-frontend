@@ -59,7 +59,7 @@
 }
 
 /* Responsive adjustments as needed */
-@media (max-width: 1200px) {
+@media (max-width: 1340px) {
     .navigation-item {
         padding-left: 5rem;
     }
@@ -68,7 +68,7 @@
     }
 }
 
-@media (max-width: 950px) {
+@media (max-width: 1030px) {
     .navigation-item {
         padding-left: 1rem;
     }

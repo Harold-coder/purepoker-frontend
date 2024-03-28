@@ -17,7 +17,7 @@ const PokerGame = () => {
   useEffect(() => {
     const fetchGameState = async () => {
         try {
-        const response = await axios.get(`${apiUrl}/games/${gameId}/state`);
+        const response = await axios.get(`${apiUrl}/games/${gameId}/state`, { withCredentials: false });
         setGameState(response.data);
         } catch (error) {
         console.error('Error fetching game state:', error);
