@@ -16,9 +16,10 @@ const Player = ({ player, position, isCurrentTurn, currentPlayerId, canCall, can
     const isWinner = winners.includes(player.id);
     const btnIdx = (smallBlindIndex + playerCount - 1) % playerCount;
     const bigBlindIndex = (smallBlindIndex + 1) % playerCount;
-    const isSmallBlind = player.position === smallBlindIndex;
-    const isBigBlind = player.position === bigBlindIndex;
-    const isBtn = player.position === btnIdx;
+    
+    const isSmallBlind = playerCount > 2 && player.position === smallBlindIndex;
+    const isBigBlind = playerCount > 2 && player.position === bigBlindIndex;
+    const isBtn = playerCount > 2 && player.position === btnIdx;
 
     const isEmpty = position.isEmpty; //TODO: change to a better check lol
 
